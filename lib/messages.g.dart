@@ -237,6 +237,89 @@ const _$PaymentMethodTypeEnumMap = {
   PaymentMethodType.wechat_pay: 'wechat_pay',
 };
 
+CouponAppliesTo _$CouponAppliesToFromJson(Map<String, dynamic> json) =>
+    CouponAppliesTo(
+      products: (json['products'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+    );
+
+Map<String, dynamic> _$CouponAppliesToToJson(CouponAppliesTo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('products', instance.products);
+  return val;
+}
+
+Coupon _$CouponFromJson(Map<String, dynamic> json) => Coupon(
+      object: $enumDecode(_$_CouponObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      duration: $enumDecode(_$CouponDurationEnumMap, json['duration']),
+      created: (json['created'] as num).toInt(),
+      livemode: json['livemode'] as bool,
+      timesRedeemed: (json['times_redeemed'] as num).toInt(),
+      valid: json['valid'] as bool,
+      amountOff: (json['amount_off'] as num?)?.toInt(),
+      currency: json['currency'] as String?,
+      durationInMonths: (json['duration_in_months'] as num?)?.toInt(),
+      metadata: json['metadata'] as Map<String, dynamic>?,
+      name: json['name'] as String?,
+      percentOff: (json['percent_off'] as num?)?.toDouble(),
+      appliesTo: json['applies_to'] == null
+          ? null
+          : CouponAppliesTo.fromJson(
+              json['applies_to'] as Map<String, dynamic>),
+      currencyOptions: json['currency_options'] as Map<String, dynamic>?,
+      maxRedemptions: (json['max_redemptions'] as num?)?.toInt(),
+      redeemBy: (json['redeem_by'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$CouponToJson(Coupon instance) {
+  final val = <String, dynamic>{
+    'object': _$_CouponObjectEnumMap[instance.object]!,
+    'id': instance.id,
+    'duration': _$CouponDurationEnumMap[instance.duration]!,
+    'created': instance.created,
+    'livemode': instance.livemode,
+    'times_redeemed': instance.timesRedeemed,
+    'valid': instance.valid,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('amount_off', instance.amountOff);
+  writeNotNull('currency', instance.currency);
+  writeNotNull('duration_in_months', instance.durationInMonths);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('name', instance.name);
+  writeNotNull('percent_off', instance.percentOff);
+  writeNotNull('applies_to', instance.appliesTo?.toJson());
+  writeNotNull('currency_options', instance.currencyOptions);
+  writeNotNull('max_redemptions', instance.maxRedemptions);
+  writeNotNull('redeem_by', instance.redeemBy);
+  return val;
+}
+
+const _$_CouponObjectEnumMap = {
+  _CouponObject.coupon: 'coupon',
+};
+
+const _$CouponDurationEnumMap = {
+  CouponDuration.forever: 'forever',
+  CouponDuration.once: 'once',
+  CouponDuration.repeating: 'repeating',
+};
+
 Customer _$CustomerFromJson(Map<String, dynamic> json) => Customer(
       object: $enumDecode(_$_CustomerObjectEnumMap, json['object']),
       id: json['id'] as String,
@@ -1534,6 +1617,28 @@ Map<String, dynamic> _$ListSubscriptionItemsRequestToJson(
   return val;
 }
 
+ListSubscriptionSchedulesRequest _$ListSubscriptionSchedulesRequestFromJson(
+        Map<String, dynamic> json) =>
+    ListSubscriptionSchedulesRequest(
+      customer: json['customer'] as String?,
+      limit: (json['limit'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$ListSubscriptionSchedulesRequestToJson(
+    ListSubscriptionSchedulesRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('customer', instance.customer);
+  writeNotNull('limit', instance.limit);
+  return val;
+}
+
 ListSubscriptionsRequest _$ListSubscriptionsRequestFromJson(
         Map<String, dynamic> json) =>
     ListSubscriptionsRequest(
@@ -1569,28 +1674,6 @@ const _$SubscriptionStatusEnumMap = {
   SubscriptionStatus.all: 'all',
   SubscriptionStatus.ended: 'ended',
 };
-
-ListSubscriptionSchedulesRequest _$ListSubscriptionSchedulesRequestFromJson(
-        Map<String, dynamic> json) =>
-    ListSubscriptionSchedulesRequest(
-      customer: json['customer'] as String?,
-      limit: (json['limit'] as num?)?.toInt(),
-    );
-
-Map<String, dynamic> _$ListSubscriptionSchedulesRequestToJson(
-    ListSubscriptionSchedulesRequest instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('customer', instance.customer);
-  writeNotNull('limit', instance.limit);
-  return val;
-}
 
 UpdateCustomerRequest _$UpdateCustomerRequestFromJson(
         Map<String, dynamic> json) =>
