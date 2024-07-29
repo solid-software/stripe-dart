@@ -108,6 +108,10 @@ class Subscription extends Message {
   /// The most recent invoice this subscription has generated.
   final String? latestInvoice;
 
+  /// The discounts applied to the subscription. Subscription item discounts are
+  /// applied before subscription discounts. Can be expanded.
+  final List<String>? discounts;
+
   Subscription({
     required this.object,
     required this.id,
@@ -124,6 +128,7 @@ class Subscription extends Message {
     this.endedAt,
     this.metadata,
     this.latestInvoice,
+    this.discounts,
   });
 
   factory Subscription.fromJson(Map<String, dynamic> json) =>

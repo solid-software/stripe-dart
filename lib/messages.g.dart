@@ -1962,6 +1962,9 @@ Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
           json['ended_at'], const TimestampConverter().fromJson),
       metadata: json['metadata'] as Map<String, dynamic>?,
       latestInvoice: json['latest_invoice'] as String?,
+      discounts: (json['discounts'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$SubscriptionToJson(Subscription instance) {
@@ -2000,6 +2003,7 @@ Map<String, dynamic> _$SubscriptionToJson(Subscription instance) {
   );
   writeNotNull('metadata', instance.metadata);
   writeNotNull('latest_invoice', instance.latestInvoice);
+  writeNotNull('discounts', instance.discounts);
   return val;
 }
 
