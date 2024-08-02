@@ -400,6 +400,50 @@ const _$_SubListObjectEnumMap = {
   _SubListObject.searchResult: 'search_result',
 };
 
+Discount _$DiscountFromJson(Map<String, dynamic> json) => Discount(
+      object: $enumDecode(_$_DiscountObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      coupon: Coupon.fromJson(json['coupon'] as Map<String, dynamic>),
+      start: (json['start'] as num).toInt(),
+      customer: json['customer'] as String?,
+      end: (json['end'] as num?)?.toInt(),
+      subscription: json['subscription'] as String?,
+      checkoutSession: json['checkout_session'] as String?,
+      invoice: json['invoice'] as String?,
+      invoiceItem: json['invoice_item'] as String?,
+      promotionCode: json['promotion_code'] as String?,
+      subscriptionItem: json['subscription_item'] as String?,
+    );
+
+Map<String, dynamic> _$DiscountToJson(Discount instance) {
+  final val = <String, dynamic>{
+    'object': _$_DiscountObjectEnumMap[instance.object]!,
+    'id': instance.id,
+    'coupon': instance.coupon.toJson(),
+    'start': instance.start,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('customer', instance.customer);
+  writeNotNull('end', instance.end);
+  writeNotNull('subscription', instance.subscription);
+  writeNotNull('checkout_session', instance.checkoutSession);
+  writeNotNull('invoice', instance.invoice);
+  writeNotNull('invoice_item', instance.invoiceItem);
+  writeNotNull('promotion_code', instance.promotionCode);
+  writeNotNull('subscription_item', instance.subscriptionItem);
+  return val;
+}
+
+const _$_DiscountObjectEnumMap = {
+  _DiscountObject.discount: 'discount',
+};
+
 EventData<T> _$EventDataFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
