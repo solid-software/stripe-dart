@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
+import 'package:stripe/messages.dart';
 import 'package:stripe/src/exceptions.dart';
 
 const _defaultUrl = 'https://api.stripe.com/v1/';
@@ -149,13 +150,18 @@ class DioClient extends Client {
         throw InvalidRequestException(
             'The status code returned was $responseStatusCode but no error was provided.');
       }
-      final error = data['error'] as Map;
-      switch (error['type'].toString()) {
-        case 'invalid_request_error':
-          throw InvalidRequestException(error['message'].toString());
+      final errorJson = data['error'] as Map<String, dynamic>;
+      final error = StripeApiError.fromJson(errorJson);
+
+      switch (error.type) {
+        case StripeApiErrorType.invalidRequestError:
+          throw InvalidRequestException(error.message.toString(), error: error);
         default:
           throw UnknownTypeException(
-              'The status code returned was $responseStatusCode but the error type is unknown.');
+            'The status code returned was $responseStatusCode but the error '
+            'type is unknown.',
+            error: error,
+          );
       }
     }
     if (data == null) {
