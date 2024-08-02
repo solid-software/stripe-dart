@@ -72,7 +72,7 @@ class Stripe {
   final BalanceTransactionResource balanceTransaction;
 
   /// https://docs.stripe.com/api/promotion_codes
-  final PromotionCodeResource promotionCodeResource;
+  final PromotionCodeResource promotionCode;
 
   factory Stripe(String apiKey) {
     final client = DioClient(apiKey: apiKey);
@@ -92,5 +92,5 @@ class Stripe {
         subscriptionSchedule = SubscriptionScheduleResource(client),
         charge = ChargeResource(client),
         balanceTransaction = BalanceTransactionResource(client),
-        promotionCodeResource = PromotionCodeResource(client);
+        promotionCode = PromotionCodeResource(client);
 }
