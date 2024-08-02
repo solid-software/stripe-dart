@@ -8,12 +8,12 @@ import 'package:stripe/src/resources/customer.dart';
 import 'package:test/test.dart';
 
 void main() {
-  late Client client;
+  late DioClient client;
   late CustomerResource customerResource;
   setUp(() {
     // We set the baseUrl to something unreachable, because we define
     // interceptors in the tests.
-    client = Client(apiKey: 'sk_foobar', baseUrl: 'http://void/');
+    client = DioClient(apiKey: 'sk_foobar', baseUrl: 'http://void/');
     customerResource = CustomerResource(client);
   });
   group('CustomerResource', () {

@@ -8,23 +8,52 @@ import 'package:stripe/src/exceptions.dart';
 const _defaultUrl = 'https://api.stripe.com/v1/';
 const _defaultVersion = '2020-08-27';
 
+/// The http client that will make requests to the stripe API.
+abstract class Client {
+  /// Makes a post request to the Stripe API
+  Future<Map<String, dynamic>> post(
+    final String path, {
+    final Map<String, dynamic>? data,
+    final String? idempotencyKey,
+  });
+
+  /// Makes a DELETE request to the Stripe API
+  Future<Map<String, dynamic>> delete(
+    final String path, {
+    final Map<String, dynamic>? data,
+    final String? idempotencyKey,
+  });
+
+  /// Makes a get request to the Stripe API
+  Future<Map<String, dynamic>> get(
+    final String path, {
+    String? idempotencyKey,
+    Map<String, dynamic>? queryParameters,
+  });
+}
+
 /// The http client implementation that will make requests to the stripe API.
 ///
 /// Internally this uses a [Dio] http client.
-class Client {
+class DioClient extends Client {
   final String version;
   final String apiKey;
 
   /// Creates a [Dio] client that will make requests to [baseUrl].
-  factory Client({
+  factory DioClient({
     required String apiKey,
     String baseUrl = _defaultUrl,
     String version = _defaultVersion,
   }) =>
-      Client.withDio(Dio(), baseUrl: baseUrl, version: version, apiKey: apiKey);
+      DioClient.withDio(
+        Dio(),
+        baseUrl: baseUrl,
+        version: version,
+        apiKey: apiKey,
+      );
 
   @visibleForTesting
-  Client.withDio(
+  DioClient.withDio(
     this.dio, {
     required this.apiKey,
     String baseUrl = _defaultUrl,
@@ -48,6 +77,7 @@ class Client {
   final Dio dio;
 
   /// Makes a post request to the Stripe API
+  @override
   Future<Map<String, dynamic>> post(
     final String path, {
     final Map<String, dynamic>? data,
@@ -68,6 +98,7 @@ class Client {
   }
 
   /// Makes a DELETE request to the Stripe API
+  @override
   Future<Map<String, dynamic>> delete(
     final String path, {
     final Map<String, dynamic>? data,
@@ -88,6 +119,7 @@ class Client {
   }
 
   /// Makes a get request to the Stripe API
+  @override
   Future<Map<String, dynamic>> get(
     final String path, {
     String? idempotencyKey,

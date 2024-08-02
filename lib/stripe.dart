@@ -1,6 +1,5 @@
 library stripe;
 
-import 'package:meta/meta.dart';
 import 'package:stripe/src/resources/subscription_schedule.dart';
 
 import 'src/client.dart';
@@ -17,6 +16,7 @@ import 'src/resources/subscription.dart';
 import 'src/resources/subscription_item.dart';
 
 export 'messages.dart';
+export 'src/client.dart';
 export 'src/webhook.dart';
 
 /// [Stripe] is the Class that provides the Interface for external calls via the
@@ -70,11 +70,10 @@ class Stripe {
   final BalanceTransactionResource balanceTransaction;
 
   factory Stripe(String apiKey) {
-    final client = Client(apiKey: apiKey);
+    final client = DioClient(apiKey: apiKey);
     return Stripe.withClient(client);
   }
 
-  @visibleForTesting
   Stripe.withClient(this.client)
       : checkoutSession = CheckoutSessionResource(client),
         portalSession = PortalSessionResource(client),

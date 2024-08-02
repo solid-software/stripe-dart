@@ -8,12 +8,12 @@ import 'package:stripe/src/resources/subscription.dart';
 import 'package:test/test.dart';
 
 void main() {
-  late Client client;
+  late DioClient client;
   late SubscriptionResource subscriptionResource;
   setUp(() {
     // We set the baseUrl to something unreachable, because we define
     // interceptors in the tests.
-    client = Client(apiKey: 'sk_foobar', baseUrl: 'http://void/');
+    client = DioClient(apiKey: 'sk_foobar', baseUrl: 'http://void/');
     subscriptionResource = SubscriptionResource(client);
   });
   group('SubscriptionResource', () {

@@ -8,12 +8,12 @@ import 'package:stripe/src/resources/checkout_session.dart';
 import 'package:test/test.dart';
 
 void main() {
-  late Client client;
+  late DioClient client;
   late CheckoutSessionResource checkoutSessionResource;
   setUp(() {
     // We set the baseUrl to something unreachable, because we define
     // interceptors in the tests.
-    client = Client(apiKey: 'sk_foobar', baseUrl: 'http://void/');
+    client = DioClient(apiKey: 'sk_foobar', baseUrl: 'http://void/');
     checkoutSessionResource = CheckoutSessionResource(client);
   });
   group('CheckoutSessionResource', () {

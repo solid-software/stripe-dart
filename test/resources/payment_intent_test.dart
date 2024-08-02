@@ -14,12 +14,12 @@ import 'package:stripe/src/resources/payment_intent.dart';
 import 'package:test/test.dart';
 
 void main() {
-  late Client client;
+  late DioClient client;
   late PaymentIntentResource paymentIntentResource;
   setUp(() {
     // We set the baseUrl to something unreachable, because we define
     // interceptors in the tests.
-    client = Client(apiKey: 'sk_foobar', baseUrl: 'http://void/');
+    client = DioClient(apiKey: 'sk_foobar', baseUrl: 'http://void/');
     paymentIntentResource = PaymentIntentResource(client);
   });
   group('PaymentIntentResource', () {
