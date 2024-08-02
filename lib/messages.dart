@@ -34,6 +34,7 @@ part 'src/messages/requests/create_refund.dart';
 part 'src/messages/requests/create_subscription_schedule.dart';
 part 'src/messages/requests/list_prices.dart';
 part 'src/messages/requests/list_products.dart';
+part 'src/messages/requests/list_promotion_codes.dart';
 part 'src/messages/requests/list_subscription_items.dart';
 part 'src/messages/requests/list_subscription_schedules.dart';
 part 'src/messages/requests/list_subscriptions.dart';
