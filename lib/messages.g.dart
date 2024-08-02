@@ -984,6 +984,81 @@ const _$_ProductObjectEnumMap = {
   _ProductObject.product: 'product',
 };
 
+PromotionCode _$PromotionCodeFromJson(Map<String, dynamic> json) =>
+    PromotionCode(
+      object: $enumDecode(_$_PromotionCodeObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      code: json['code'] as String,
+      coupon: Coupon.fromJson(json['coupon'] as Map<String, dynamic>),
+      active: json['active'] as bool,
+      created: (json['created'] as num).toInt(),
+      livemode: json['livemode'] as bool,
+      restrictions: PromotionCodeRestrictions.fromJson(
+          json['restrictions'] as Map<String, dynamic>),
+      timesRedeemed: (json['times_redeemed'] as num).toInt(),
+      metadata: json['metadata'] as Map<String, dynamic>?,
+      customer: json['customer'] as String?,
+      expiresAt: (json['expires_at'] as num?)?.toInt(),
+      maxRedemptions: (json['max_redemptions'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$PromotionCodeToJson(PromotionCode instance) {
+  final val = <String, dynamic>{
+    'object': _$_PromotionCodeObjectEnumMap[instance.object]!,
+    'id': instance.id,
+    'code': instance.code,
+    'coupon': instance.coupon.toJson(),
+    'active': instance.active,
+    'created': instance.created,
+    'livemode': instance.livemode,
+    'restrictions': instance.restrictions.toJson(),
+    'times_redeemed': instance.timesRedeemed,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('customer', instance.customer);
+  writeNotNull('expires_at', instance.expiresAt);
+  writeNotNull('max_redemptions', instance.maxRedemptions);
+  return val;
+}
+
+const _$_PromotionCodeObjectEnumMap = {
+  _PromotionCodeObject.promotionCode: 'promotion_code',
+};
+
+PromotionCodeRestrictions _$PromotionCodeRestrictionsFromJson(
+        Map<String, dynamic> json) =>
+    PromotionCodeRestrictions(
+      firstTimeTransaction: json['first_time_transaction'] as bool,
+      currencyOptions: json['currency_options'] as Map<String, dynamic>?,
+      minimumAmount: (json['minimum_amount'] as num?)?.toInt(),
+      minimumAmountCurrency: json['minimum_amount_currency'] as String?,
+    );
+
+Map<String, dynamic> _$PromotionCodeRestrictionsToJson(
+    PromotionCodeRestrictions instance) {
+  final val = <String, dynamic>{
+    'first_time_transaction': instance.firstTimeTransaction,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('currency_options', instance.currencyOptions);
+  writeNotNull('minimum_amount', instance.minimumAmount);
+  writeNotNull('minimum_amount_currency', instance.minimumAmountCurrency);
+  return val;
+}
+
 Refund _$RefundFromJson(Map<String, dynamic> json) => Refund(
       object: $enumDecode(_$_RefundObjectEnumMap, json['object']),
       id: json['id'] as String,
