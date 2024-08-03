@@ -43,6 +43,7 @@ abstract class Client {
           data['error'] == null) {
         throw InvalidRequestException(
           'The status code returned was $statusCode but no error was provided.',
+          statusCode: statusCode,
         );
       }
       final errorJson = data['error'] as Map<String, dynamic>;
@@ -50,18 +51,25 @@ abstract class Client {
 
       switch (error.type) {
         case StripeApiErrorType.invalidRequestError:
-          throw InvalidRequestException(error.message.toString(), error: error);
+          throw InvalidRequestException(
+            error.message.toString(),
+            statusCode: statusCode,
+            error: error,
+          );
         default:
           throw UnknownTypeException(
             'The status code returned was $statusCode but the error '
             'type is unknown.',
+            statusCode: statusCode,
             error: error,
           );
       }
     }
     if (data == null || data is! Map<String, dynamic>) {
       throw InvalidRequestException(
-          'The JSON returned was unparsable ($data).');
+        'The JSON returned was unparsable ($data).',
+        statusCode: statusCode,
+      );
     }
 
     return data;
@@ -129,7 +137,10 @@ class DioClient extends Client {
       if (e.response?.data != null) {
         message += '${e.response!.data}';
       }
-      throw InvalidRequestException(message);
+      throw InvalidRequestException(
+        message,
+        statusCode: e.response?.statusCode,
+      );
     }
   }
 
@@ -150,7 +161,10 @@ class DioClient extends Client {
       if (e.response?.data != null) {
         message += '${e.response!.data}';
       }
-      throw InvalidRequestException(message);
+      throw InvalidRequestException(
+        message,
+        statusCode: e.response?.statusCode,
+      );
     }
   }
 
