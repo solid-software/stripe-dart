@@ -31,6 +31,41 @@ abstract class Client {
     String? idempotencyKey,
     Map<String, dynamic>? queryParameters,
   });
+
+  @protected
+  Map<String, dynamic> processResponse({
+    required int? statusCode,
+    required Object? data,
+  }) {
+    if (statusCode != 200) {
+      if (data == null ||
+          data is! Map<String, dynamic> ||
+          data['error'] == null) {
+        throw InvalidRequestException(
+          'The status code returned was $statusCode but no error was provided.',
+        );
+      }
+      final errorJson = data['error'] as Map<String, dynamic>;
+      final error = StripeApiError.fromJson(errorJson);
+
+      switch (error.type) {
+        case StripeApiErrorType.invalidRequestError:
+          throw InvalidRequestException(error.message.toString(), error: error);
+        default:
+          throw UnknownTypeException(
+            'The status code returned was $statusCode but the error '
+            'type is unknown.',
+            error: error,
+          );
+      }
+    }
+    if (data == null || data is! Map<String, dynamic>) {
+      throw InvalidRequestException(
+          'The JSON returned was unparsable ($data).');
+    }
+
+    return data;
+  }
 }
 
 /// The http client implementation that will make requests to the stripe API.
@@ -88,7 +123,7 @@ class DioClient extends Client {
       final response = await dio.post<Map<String, dynamic>>(path,
           data: data,
           options: _createRequestOptions(idempotencyKey: idempotencyKey));
-      return processResponse(response);
+      return _processDioResponse(response);
     } on DioException catch (e) {
       var message = e.message ?? '';
       if (e.response?.data != null) {
@@ -109,7 +144,7 @@ class DioClient extends Client {
       final response = await dio.delete<Map<String, dynamic>>(path,
           data: data,
           options: _createRequestOptions(idempotencyKey: idempotencyKey));
-      return processResponse(response);
+      return _processDioResponse(response);
     } on DioException catch (e) {
       var message = e.message ?? '';
       if (e.response?.data != null) {
@@ -131,7 +166,7 @@ class DioClient extends Client {
       queryParameters: queryParameters,
       options: _createRequestOptions(idempotencyKey: idempotencyKey),
     );
-    return processResponse(response);
+    return _processDioResponse(response);
   }
 
   Options? _createRequestOptions({String? idempotencyKey}) =>
@@ -139,36 +174,13 @@ class DioClient extends Client {
           ? null
           : Options(headers: {'Idempotency-Key': idempotencyKey});
 
-  Map<String, dynamic> processResponse(
-      Response<Map<String, dynamic>> response) {
-    final responseStatusCode = response.statusCode;
-
-    final data = response.data;
-
-    if (responseStatusCode != 200) {
-      if (data == null || data['error'] == null) {
-        throw InvalidRequestException(
-            'The status code returned was $responseStatusCode but no error was provided.');
-      }
-      final errorJson = data['error'] as Map<String, dynamic>;
-      final error = StripeApiError.fromJson(errorJson);
-
-      switch (error.type) {
-        case StripeApiErrorType.invalidRequestError:
-          throw InvalidRequestException(error.message.toString(), error: error);
-        default:
-          throw UnknownTypeException(
-            'The status code returned was $responseStatusCode but the error '
-            'type is unknown.',
-            error: error,
-          );
-      }
-    }
-    if (data == null) {
-      throw InvalidRequestException(
-          'The JSON returned was unparsable (${response.data}).');
-    }
-    return data;
+  Map<String, dynamic> _processDioResponse(
+    Response<Map<String, dynamic>> response,
+  ) {
+    return processResponse(
+      statusCode: response.statusCode,
+      data: response.data,
+    );
   }
 }
 
