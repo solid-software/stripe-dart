@@ -15,8 +15,8 @@ abstract class ExpandableListField<T> extends ExpandableField<List<T>?> {
         expandedFieldJsonList?.map(parseElement).toList();
     final expandedFieldReplacement =
         expandedFieldParsed?.map(elementReplacement).toList();
-    // Replace the initial field value with a List of IDs to allow parsing the
-    // JSON using the regular non-expanded model.
+    // Replace the initial field value to allow parsing the JSON using the
+    // regular non-expanded model.
     json[field] = expandedFieldReplacement;
 
     return expandedFieldParsed;
