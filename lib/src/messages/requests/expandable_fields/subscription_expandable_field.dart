@@ -1,0 +1,3 @@
+enum SubscriptionExpandableField {
+  discounts,
+}

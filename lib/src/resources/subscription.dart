@@ -112,10 +112,6 @@ class SubscriptionResource extends Resource<Subscription> {
   }
 }
 
-enum SubscriptionExpandableField {
-  discounts,
-}
-
 class _DiscountsExpandableField extends ExpandableListField<Discount> {
   @override
   String get field => 'discounts';
