@@ -662,6 +662,28 @@ Map<String, dynamic> _$InvoiceEventToJson(InvoiceEvent instance) =>
       'livemode': instance.livemode,
     };
 
+CouponEvent _$CouponEventFromJson(Map<String, dynamic> json) => CouponEvent(
+      object: $enumDecode(_$_EventObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      created: (json['created'] as num).toInt(),
+      type: json['type'] as String,
+      data: EventData<Coupon>.fromJson(json['data'] as Map<String, dynamic>,
+          (value) => Coupon.fromJson(value as Map<String, dynamic>)),
+      livemode: json['livemode'] as bool,
+    );
+
+Map<String, dynamic> _$CouponEventToJson(CouponEvent instance) =>
+    <String, dynamic>{
+      'object': _$_EventObjectEnumMap[instance.object]!,
+      'id': instance.id,
+      'created': instance.created,
+      'data': instance.data.toJson(
+        (value) => value.toJson(),
+      ),
+      'type': instance.type,
+      'livemode': instance.livemode,
+    };
+
 Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       id: json['id'] as String,
       currency: json['currency'] as String,
