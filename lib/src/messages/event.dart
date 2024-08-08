@@ -58,6 +58,8 @@ abstract class Event<T extends Message> extends Message {
         return PaymentMethodEvent.fromJson(json) as T;
       case 'invoice':
         return InvoiceEvent.fromJson(json) as T;
+      case 'coupon':
+        return CouponEvent.fromJson(json) as T;
       default:
         throw FormatException(
             'Unrecognized/unsupported Stripe object `${json['object']}` in event webhook');
@@ -289,4 +291,29 @@ class InvoiceEvent extends Event<Invoice> {
 
   @override
   Map<String, dynamic> toJson() => _$InvoiceEventToJson(this);
+}
+
+@JsonSerializable()
+class CouponEvent extends Event<Coupon> {
+  CouponEvent({
+    required _EventObject object,
+    required String id,
+    required int created,
+    required String type,
+    required EventData<Coupon> data,
+    required bool livemode,
+  }) : super(
+          object: object,
+          id: id,
+          created: created,
+          data: data,
+          type: type,
+          livemode: livemode,
+        );
+
+  factory CouponEvent.fromJson(Map<String, dynamic> json) =>
+      _$CouponEventFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$CouponEventToJson(this);
 }

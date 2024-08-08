@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
+import 'package:stripe/messages.dart';
 import 'package:stripe/src/exceptions.dart';
 
 const _defaultUrl = 'https://api.stripe.com/v1/';
@@ -30,6 +31,49 @@ abstract class Client {
     String? idempotencyKey,
     Map<String, dynamic>? queryParameters,
   });
+
+  @protected
+  Map<String, dynamic> processResponse({
+    required int? statusCode,
+    required Object? data,
+  }) {
+    if (statusCode != 200) {
+      if (data == null ||
+          data is! Map<String, dynamic> ||
+          data['error'] == null) {
+        throw InvalidRequestException(
+          'The status code returned was $statusCode but no error was provided.',
+          statusCode: statusCode,
+        );
+      }
+      final errorJson = data['error'] as Map<String, dynamic>;
+      final error = StripeApiError.fromJson(errorJson);
+
+      switch (error.type) {
+        case StripeApiErrorType.invalidRequestError:
+          throw InvalidRequestException(
+            error.message.toString(),
+            statusCode: statusCode,
+            error: error,
+          );
+        default:
+          throw UnknownTypeException(
+            'The status code returned was $statusCode but the error '
+            'type is unknown.',
+            statusCode: statusCode,
+            error: error,
+          );
+      }
+    }
+    if (data == null || data is! Map<String, dynamic>) {
+      throw InvalidRequestException(
+        'The JSON returned was unparsable ($data).',
+        statusCode: statusCode,
+      );
+    }
+
+    return data;
+  }
 }
 
 /// The http client implementation that will make requests to the stripe API.
@@ -87,13 +131,16 @@ class DioClient extends Client {
       final response = await dio.post<Map<String, dynamic>>(path,
           data: data,
           options: _createRequestOptions(idempotencyKey: idempotencyKey));
-      return processResponse(response);
+      return _processDioResponse(response);
     } on DioException catch (e) {
       var message = e.message ?? '';
       if (e.response?.data != null) {
         message += '${e.response!.data}';
       }
-      throw InvalidRequestException(message);
+      throw InvalidRequestException(
+        message,
+        statusCode: e.response?.statusCode,
+      );
     }
   }
 
@@ -108,13 +155,16 @@ class DioClient extends Client {
       final response = await dio.delete<Map<String, dynamic>>(path,
           data: data,
           options: _createRequestOptions(idempotencyKey: idempotencyKey));
-      return processResponse(response);
+      return _processDioResponse(response);
     } on DioException catch (e) {
       var message = e.message ?? '';
       if (e.response?.data != null) {
         message += '${e.response!.data}';
       }
-      throw InvalidRequestException(message);
+      throw InvalidRequestException(
+        message,
+        statusCode: e.response?.statusCode,
+      );
     }
   }
 
@@ -130,7 +180,7 @@ class DioClient extends Client {
       queryParameters: queryParameters,
       options: _createRequestOptions(idempotencyKey: idempotencyKey),
     );
-    return processResponse(response);
+    return _processDioResponse(response);
   }
 
   Options? _createRequestOptions({String? idempotencyKey}) =>
@@ -138,31 +188,13 @@ class DioClient extends Client {
           ? null
           : Options(headers: {'Idempotency-Key': idempotencyKey});
 
-  Map<String, dynamic> processResponse(
-      Response<Map<String, dynamic>> response) {
-    final responseStatusCode = response.statusCode;
-
-    final data = response.data;
-
-    if (responseStatusCode != 200) {
-      if (data == null || data['error'] == null) {
-        throw InvalidRequestException(
-            'The status code returned was $responseStatusCode but no error was provided.');
-      }
-      final error = data['error'] as Map;
-      switch (error['type'].toString()) {
-        case 'invalid_request_error':
-          throw InvalidRequestException(error['message'].toString());
-        default:
-          throw UnknownTypeException(
-              'The status code returned was $responseStatusCode but the error type is unknown.');
-      }
-    }
-    if (data == null) {
-      throw InvalidRequestException(
-          'The JSON returned was unparsable (${response.data}).');
-    }
-    return data;
+  Map<String, dynamic> _processDioResponse(
+    Response<Map<String, dynamic>> response,
+  ) {
+    return processResponse(
+      statusCode: response.statusCode,
+      data: response.data,
+    );
   }
 }
 

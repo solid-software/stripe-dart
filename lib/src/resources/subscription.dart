@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/expanded/subscription_expanded.dart';
+import 'package:stripe/src/utils/expandable_field.dart';
+import 'package:stripe/src/utils/expandable_list_field.dart';
 
 import '../client.dart';
 import '_resource.dart';
@@ -11,6 +14,46 @@ class SubscriptionResource extends Resource<Subscription> {
   Future<Subscription> retrieve(String id) async {
     final response = await get('subscriptions/$id');
     return Subscription.fromJson(response);
+  }
+
+  Future<SubscriptionExpanded> retrieveExpanded(
+    String id, {
+    required Set<SubscriptionExpandableField> expand,
+  }) async {
+    final expandableFields = _expandableFields(expand);
+    final response = await get(
+      'subscriptions/$id',
+      queryParameters: {
+        'expand': expandableFields.map((e) => e.field).toList(),
+      },
+    );
+
+    List<Discount>? discounts;
+    if (expand.contains(SubscriptionExpandableField.discounts)) {
+      discounts = _DiscountsExpandableField().extract(response);
+    }
+
+    return SubscriptionExpanded(
+      subscription: Subscription.fromJson(response),
+      discounts: discounts,
+    );
+  }
+
+  Iterable<ExpandableField> _expandableFields(
+    Set<SubscriptionExpandableField> fields,
+  ) {
+    return fields.map(
+      (field) => _expandableField(field),
+    );
+  }
+
+  ExpandableField _expandableField(
+    SubscriptionExpandableField field,
+  ) {
+    switch (field) {
+      case SubscriptionExpandableField.discounts:
+        return _DiscountsExpandableField();
+    }
   }
 
   Future<DataList<Subscription>> list(
@@ -67,4 +110,18 @@ class SubscriptionResource extends Resource<Subscription> {
 
     return Subscription.fromJson(response);
   }
+}
+
+class _DiscountsExpandableField extends ExpandableListField<Discount> {
+  @override
+  String get field => 'discounts';
+
+  const _DiscountsExpandableField();
+
+  @override
+  String elementReplacement(Discount element) => element.id;
+
+  @override
+  Discount parseElement(Map<String, dynamic> element) =>
+      Discount.fromJson(element);
 }

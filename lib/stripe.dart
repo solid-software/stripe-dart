@@ -11,6 +11,7 @@ import 'src/resources/payment_intent.dart';
 import 'src/resources/portal_session.dart';
 import 'src/resources/price.dart';
 import 'src/resources/product.dart';
+import 'src/resources/promotion_code.dart';
 import 'src/resources/refund.dart';
 import 'src/resources/subscription.dart';
 import 'src/resources/subscription_item.dart';
@@ -18,6 +19,7 @@ import 'src/resources/subscription_item.dart';
 export 'messages.dart';
 export 'src/client.dart';
 export 'src/exceptions.dart';
+export 'src/expanded.dart';
 export 'src/webhook.dart';
 
 /// [Stripe] is the Class that provides the Interface for external calls via the
@@ -70,6 +72,9 @@ class Stripe {
   /// https://stripe.com/docs/api/balance_transactions
   final BalanceTransactionResource balanceTransaction;
 
+  /// https://docs.stripe.com/api/promotion_codes
+  final PromotionCodeResource promotionCode;
+
   factory Stripe(String apiKey) {
     final client = DioClient(apiKey: apiKey);
     return Stripe.withClient(client);
@@ -87,5 +92,6 @@ class Stripe {
         subscriptionItem = SubscriptionItemResource(client),
         subscriptionSchedule = SubscriptionScheduleResource(client),
         charge = ChargeResource(client),
-        balanceTransaction = BalanceTransactionResource(client);
+        balanceTransaction = BalanceTransactionResource(client),
+        promotionCode = PromotionCodeResource(client);
 }

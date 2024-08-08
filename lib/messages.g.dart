@@ -662,6 +662,28 @@ Map<String, dynamic> _$InvoiceEventToJson(InvoiceEvent instance) =>
       'livemode': instance.livemode,
     };
 
+CouponEvent _$CouponEventFromJson(Map<String, dynamic> json) => CouponEvent(
+      object: $enumDecode(_$_EventObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      created: (json['created'] as num).toInt(),
+      type: json['type'] as String,
+      data: EventData<Coupon>.fromJson(json['data'] as Map<String, dynamic>,
+          (value) => Coupon.fromJson(value as Map<String, dynamic>)),
+      livemode: json['livemode'] as bool,
+    );
+
+Map<String, dynamic> _$CouponEventToJson(CouponEvent instance) =>
+    <String, dynamic>{
+      'object': _$_EventObjectEnumMap[instance.object]!,
+      'id': instance.id,
+      'created': instance.created,
+      'data': instance.data.toJson(
+        (value) => value.toJson(),
+      ),
+      'type': instance.type,
+      'livemode': instance.livemode,
+    };
+
 Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       id: json['id'] as String,
       currency: json['currency'] as String,
@@ -1707,6 +1729,69 @@ Map<String, dynamic> _$ListProductsRequestToJson(ListProductsRequest instance) {
   }
 
   writeNotNull('active', instance.active);
+  return val;
+}
+
+ListPromotionCodesRequest _$ListPromotionCodesRequestFromJson(
+        Map<String, dynamic> json) =>
+    ListPromotionCodesRequest(
+      active: json['active'] as bool?,
+      code: json['code'] as String?,
+      coupon: json['coupon'] as String?,
+      created: json['created'] == null
+          ? null
+          : ListPromotionCodesCreatedRequest.fromJson(
+              json['created'] as Map<String, dynamic>),
+      customer: json['customer'] as String?,
+      endingBefore: json['ending_before'] as String?,
+      limit: (json['limit'] as num?)?.toInt(),
+      startingAfter: json['starting_after'] as String?,
+    );
+
+Map<String, dynamic> _$ListPromotionCodesRequestToJson(
+    ListPromotionCodesRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('active', instance.active);
+  writeNotNull('code', instance.code);
+  writeNotNull('coupon', instance.coupon);
+  writeNotNull('created', instance.created?.toJson());
+  writeNotNull('customer', instance.customer);
+  writeNotNull('ending_before', instance.endingBefore);
+  writeNotNull('limit', instance.limit);
+  writeNotNull('starting_after', instance.startingAfter);
+  return val;
+}
+
+ListPromotionCodesCreatedRequest _$ListPromotionCodesCreatedRequestFromJson(
+        Map<String, dynamic> json) =>
+    ListPromotionCodesCreatedRequest(
+      gt: (json['gt'] as num?)?.toInt(),
+      gte: (json['gte'] as num?)?.toInt(),
+      lt: (json['lt'] as num?)?.toInt(),
+      lte: (json['lte'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$ListPromotionCodesCreatedRequestToJson(
+    ListPromotionCodesCreatedRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('gt', instance.gt);
+  writeNotNull('gte', instance.gte);
+  writeNotNull('lt', instance.lt);
+  writeNotNull('lte', instance.lte);
   return val;
 }
 
