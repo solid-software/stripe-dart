@@ -10,7 +10,7 @@ const _defaultVersion = '2020-08-27';
 
 /// The http client that will make requests to the stripe API.
 abstract class Client {
-  /// Makes a post request to the Stripe API
+  /// Makes a POST request to the Stripe API
   Future<Map<String, dynamic>> post(
     final String path, {
     final Map<String, dynamic>? data,
@@ -24,7 +24,7 @@ abstract class Client {
     final String? idempotencyKey,
   });
 
-  /// Makes a get request to the Stripe API
+  /// Makes a GET request to the Stripe API
   Future<Map<String, dynamic>> get(
     final String path, {
     String? idempotencyKey,
