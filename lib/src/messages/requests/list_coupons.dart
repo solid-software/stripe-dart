@@ -1,24 +1,12 @@
 part of '../../../messages.dart';
 
-/// https://docs.stripe.com/api/promotion_codes/list
+/// https://docs.stripe.com/api/coupons/list
 @JsonSerializable()
-class ListPromotionCodesRequest {
-  /// Filter promotion codes by whether they are active.
-  final bool? active;
-
-  /// Only return promotion codes that have this case-insensitive code.
-  final String? code;
-
-  /// Only return promotion codes for this coupon.
-  final String? coupon;
-
+class ListCouponsRequest {
   /// A filter on the list, based on the object created field. The value can be
   /// a string with an integer Unix timestamp, or it can be a dictionary with a
   /// number of different query options.
   final CreatedRequest? created;
-
-  /// Only return promotion codes that are restricted to this customer.
-  final String? customer;
 
   /// A cursor for use in pagination. ending_before is an object ID that defines
   /// your place in the list. For instance, if you make a list request and
@@ -38,19 +26,15 @@ class ListPromotionCodesRequest {
   /// list.
   final String? startingAfter;
 
-  ListPromotionCodesRequest({
-    this.active,
-    this.code,
-    this.coupon,
+  ListCouponsRequest({
     this.created,
-    this.customer,
     this.endingBefore,
     this.limit,
     this.startingAfter,
   });
 
-  factory ListPromotionCodesRequest.fromJson(Map<String, dynamic> json) =>
-      _$ListPromotionCodesRequestFromJson(json);
+  factory ListCouponsRequest.fromJson(Map<String, dynamic> json) =>
+      _$ListCouponsRequestFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ListPromotionCodesRequestToJson(this);
+  Map<String, dynamic> toJson() => _$ListCouponsRequestToJson(this);
 }

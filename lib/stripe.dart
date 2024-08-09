@@ -6,6 +6,7 @@ import 'src/client.dart';
 import 'src/resources/balance_transaction.dart';
 import 'src/resources/charge.dart';
 import 'src/resources/checkout_session.dart';
+import 'src/resources/coupon.dart';
 import 'src/resources/customer.dart';
 import 'src/resources/payment_intent.dart';
 import 'src/resources/portal_session.dart';
@@ -75,6 +76,9 @@ class Stripe {
   /// https://docs.stripe.com/api/promotion_codes
   final PromotionCodeResource promotionCode;
 
+  /// https://docs.stripe.com/api/coupons
+  final CouponResource coupon;
+
   factory Stripe(String apiKey) {
     final client = DioClient(apiKey: apiKey);
     return Stripe.withClient(client);
@@ -93,5 +97,6 @@ class Stripe {
         subscriptionSchedule = SubscriptionScheduleResource(client),
         charge = ChargeResource(client),
         balanceTransaction = BalanceTransactionResource(client),
-        promotionCode = PromotionCodeResource(client);
+        promotionCode = PromotionCodeResource(client),
+        coupon = CouponResource(client);
 }
