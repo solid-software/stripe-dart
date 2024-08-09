@@ -75,7 +75,7 @@ class SubscriptionResource extends Resource<Subscription> {
       _resourceName,
       queryParameters: {
         ...?request?.toJson(),
-        'expand': expandableFields.map((e) => e.field).toList(),
+        'expand': expandableFields.map((e) => 'data.${e.field}').toList(),
       },
     );
 
