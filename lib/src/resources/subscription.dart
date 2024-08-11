@@ -9,10 +9,12 @@ import '../client.dart';
 import '_resource.dart';
 
 class SubscriptionResource extends Resource<Subscription> {
+  static const _resourceName = 'subscriptions';
+
   SubscriptionResource(Client client) : super(client);
 
   Future<Subscription> retrieve(String id) async {
-    final response = await get('subscriptions/$id');
+    final response = await get('$_resourceName/$id');
     return Subscription.fromJson(response);
   }
 
@@ -22,7 +24,7 @@ class SubscriptionResource extends Resource<Subscription> {
   }) async {
     final expandableFields = _expandableFields(expand);
     final response = await get(
-      'subscriptions/$id',
+      '$_resourceName/$id',
       queryParameters: {
         'expand': expandableFields.map((e) => e.field).toList(),
       },
@@ -58,9 +60,47 @@ class SubscriptionResource extends Resource<Subscription> {
 
   Future<DataList<Subscription>> list(
       [ListSubscriptionsRequest? request]) async {
-    final map = await get('subscriptions', queryParameters: request?.toJson());
+    final map = await get(_resourceName, queryParameters: request?.toJson());
     return DataList<Subscription>.fromJson(
         map, (value) => Subscription.fromJson(value as Map<String, dynamic>));
+  }
+
+  Future<DataList<SubscriptionExpanded>> listExpanded({
+    required Set<SubscriptionExpandableField> expand,
+    ListSubscriptionsRequest? request,
+  }) async {
+    final expandableFields = _expandableFields(expand);
+
+    final response = await get(
+      _resourceName,
+      queryParameters: {
+        ...?request?.toJson(),
+        'expand': expandableFields.map((e) => 'data.${e.field}').toList(),
+      },
+    );
+
+    return DataList<SubscriptionExpanded>.fromJson(
+      response,
+      (value) => _parseSubscriptionExpanded(
+        value as Map<String, dynamic>,
+        expand,
+      ),
+    );
+  }
+
+  SubscriptionExpanded _parseSubscriptionExpanded(
+    Map<String, dynamic> json,
+    Set<SubscriptionExpandableField> expand,
+  ) {
+    List<Discount>? discounts;
+    if (expand.contains(SubscriptionExpandableField.discounts)) {
+      discounts = _DiscountsExpandableField().extract(json);
+    }
+
+    return SubscriptionExpanded(
+      subscription: Subscription.fromJson(json),
+      discounts: discounts,
+    );
   }
 
   Future<DataList<Subscription>> search({
@@ -68,7 +108,7 @@ class SubscriptionResource extends Resource<Subscription> {
     required String queryString,
   }) async {
     final Map<String, dynamic> map = await get(
-      'subscriptions/search',
+      '$_resourceName/search',
       queryParameters: {'query': queryString},
     );
 
@@ -87,7 +127,7 @@ class SubscriptionResource extends Resource<Subscription> {
     required SubscriptionUpdate update,
   }) async {
     final response = await post(
-      'subscriptions/$id',
+      '$_resourceName/$id',
       data: update.toJson(),
     );
 
@@ -101,7 +141,7 @@ class SubscriptionResource extends Resource<Subscription> {
     bool? prorate,
   }) async {
     final response = await delete(
-      'subscriptions/$id',
+      '$_resourceName/$id',
       data: {
         if (invoiceNow != null) 'invoice_now': invoiceNow,
         if (prorate != null) 'prorate': invoiceNow,
