@@ -7,7 +7,7 @@ class CreateSubscriptionRequest {
   final String customer;
 
   /// A list of up to 20 subscription items, each with an attached price.
-  final List<String> items;
+  final List<CreateSubscriptionItemRequest> items;
 
   /// Indicate whether this subscription should cancel at the end of the
   /// current period (current_period_end). Defaults to false.

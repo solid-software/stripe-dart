@@ -1728,7 +1728,10 @@ CreateSubscriptionRequest _$CreateSubscriptionRequestFromJson(
         Map<String, dynamic> json) =>
     CreateSubscriptionRequest(
       customer: json['customer'] as String,
-      items: (json['items'] as List<dynamic>).map((e) => e as String).toList(),
+      items: (json['items'] as List<dynamic>)
+          .map((e) =>
+              CreateSubscriptionItemRequest.fromJson(e as Map<String, dynamic>))
+          .toList(),
       cancelAtPeriodEnd: json['cancel_at_period_end'] as bool?,
       currency: json['currency'] as String?,
       defaultPaymentMethod: json['default_payment_method'] as String?,
@@ -1776,7 +1779,7 @@ Map<String, dynamic> _$CreateSubscriptionRequestToJson(
     CreateSubscriptionRequest instance) {
   final val = <String, dynamic>{
     'customer': instance.customer,
-    'items': instance.items,
+    'items': instance.items.map((e) => e.toJson()).toList(),
   };
 
   void writeNotNull(String key, dynamic value) {
