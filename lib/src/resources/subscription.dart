@@ -30,15 +30,7 @@ class SubscriptionResource extends Resource<Subscription> {
       },
     );
 
-    List<Discount>? discounts;
-    if (expand.contains(SubscriptionExpandableField.discounts)) {
-      discounts = _DiscountsExpandableField().extract(response);
-    }
-
-    return SubscriptionExpanded(
-      subscription: Subscription.fromJson(response),
-      discounts: discounts,
-    );
+    return _parseSubscriptionExpanded(response, expand);
   }
 
   Iterable<ExpandableField> _expandableFields(
