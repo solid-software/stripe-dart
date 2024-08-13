@@ -1872,6 +1872,9 @@ ListSubscriptionsRequest _$ListSubscriptionsRequestFromJson(
       customer: json['customer'] as String?,
       price: json['price'] as String?,
       status: $enumDecodeNullable(_$SubscriptionStatusEnumMap, json['status']),
+      endingBefore: json['ending_before'] as String?,
+      limit: (json['limit'] as num?)?.toInt(),
+      startingAfter: json['starting_after'] as String?,
     );
 
 Map<String, dynamic> _$ListSubscriptionsRequestToJson(
@@ -1887,6 +1890,9 @@ Map<String, dynamic> _$ListSubscriptionsRequestToJson(
   writeNotNull('customer', instance.customer);
   writeNotNull('price', instance.price);
   writeNotNull('status', _$SubscriptionStatusEnumMap[instance.status]);
+  writeNotNull('ending_before', instance.endingBefore);
+  writeNotNull('limit', instance.limit);
+  writeNotNull('starting_after', instance.startingAfter);
   return val;
 }
 
