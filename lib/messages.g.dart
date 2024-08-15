@@ -1511,9 +1511,9 @@ CreatePreviewInvoiceSubscriptionDetailsRequest
     _$CreatePreviewInvoiceSubscriptionDetailsRequestFromJson(
             Map<String, dynamic> json) =>
         CreatePreviewInvoiceSubscriptionDetailsRequest(
-          billingCycleAnchor: json['billing_cycle_anchor'] == null
-              ? null
-              : DateTime.parse(json['billing_cycle_anchor'] as String),
+          billingCycleAnchor: _$JsonConverterFromJson<int, DateTime>(
+              json['billing_cycle_anchor'],
+              const TimestampConverter().fromJson),
           cancelAt: json['cancel_at'] == null
               ? null
               : DateTime.parse(json['cancel_at'] as String),
@@ -1551,7 +1551,9 @@ Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionDetailsRequestToJson(
   }
 
   writeNotNull(
-      'billing_cycle_anchor', instance.billingCycleAnchor?.toIso8601String());
+      'billing_cycle_anchor',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.billingCycleAnchor, const TimestampConverter().toJson));
   writeNotNull('cancel_at', instance.cancelAt?.toIso8601String());
   writeNotNull('cancel_at_period_end', instance.cancelAtPeriodEnd);
   writeNotNull('cancel_now', instance.cancelNow);
@@ -1917,9 +1919,8 @@ CreateSubscriptionRequest _$CreateSubscriptionRequestFromJson(
       backdateStartDate: json['backdate_start_date'] == null
           ? null
           : DateTime.parse(json['backdate_start_date'] as String),
-      billingCycleAnchor: json['billing_cycle_anchor'] == null
-          ? null
-          : DateTime.parse(json['billing_cycle_anchor'] as String),
+      billingCycleAnchor: _$JsonConverterFromJson<int, DateTime>(
+          json['billing_cycle_anchor'], const TimestampConverter().fromJson),
       billingCycleAnchorConfig: json['billing_cycle_anchor_config'] == null
           ? null
           : BillingCycleAnchorConfig.fromJson(
@@ -1971,7 +1972,9 @@ Map<String, dynamic> _$CreateSubscriptionRequestToJson(
   writeNotNull(
       'backdate_start_date', instance.backdateStartDate?.toIso8601String());
   writeNotNull(
-      'billing_cycle_anchor', instance.billingCycleAnchor?.toIso8601String());
+      'billing_cycle_anchor',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.billingCycleAnchor, const TimestampConverter().toJson));
   writeNotNull('billing_cycle_anchor_config',
       instance.billingCycleAnchorConfig?.toJson());
   writeNotNull('cancel_at', instance.cancelAt?.toIso8601String());

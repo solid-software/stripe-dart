@@ -52,6 +52,7 @@ class CreatePreviewInvoiceSubscriptionDetailsRequest {
   /// invoice, and, for plans with month or year intervals, the day of the month
   /// for subsequent invoices. For existing subscriptions, the value can only be
   /// set to now or unchanged.
+  @TimestampConverter()
   final DateTime? billingCycleAnchor;
 
   /// A timestamp at which the subscription should cancel. If set to a date

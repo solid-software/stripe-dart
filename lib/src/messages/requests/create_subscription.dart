@@ -47,6 +47,7 @@ class CreateSubscriptionRequest {
   /// cycle. The anchor is the reference point that aligns future billing cycle
   /// dates. It sets the day of week for week intervals, the day of month for
   /// month and year intervals, and the month of year for year intervals.
+  @TimestampConverter()
   final DateTime? billingCycleAnchor;
 
   /// Mutually exclusive with billing_cycle_anchor and only valid with monthly
