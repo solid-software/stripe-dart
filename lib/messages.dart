@@ -28,6 +28,7 @@ part 'src/messages/refund.dart';
 part 'src/messages/requests/create_checkout_session.dart';
 part 'src/messages/requests/create_customer.dart';
 part 'src/messages/requests/create_discount.dart';
+part 'src/messages/requests/create_invoice_preview_request.dart';
 part 'src/messages/requests/create_payment_intent.dart';
 part 'src/messages/requests/create_portal_session.dart';
 part 'src/messages/requests/create_price.dart';
