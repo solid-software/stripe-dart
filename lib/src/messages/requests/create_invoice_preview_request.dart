@@ -59,6 +59,7 @@ class CreatePreviewInvoiceSubscriptionDetailsRequest {
   /// before the current period ends, this will cause a proration if prorations
   /// have been enabled using proration_behavior. If set during a future period,
   /// this will always cause a proration for that period.
+  @TimestampConverter()
   final DateTime? cancelAt;
 
   /// Indicate whether this subscription should cancel at the end of the current
@@ -93,6 +94,7 @@ class CreatePreviewInvoiceSubscriptionDetailsRequest {
   final DateTime? prorationDate;
 
   /// Date a subscription is intended to start (can be future or past).
+  @TimestampConverter()
   final DateTime? startDate;
 
   /// If provided, the invoice returned will preview updating or creating a

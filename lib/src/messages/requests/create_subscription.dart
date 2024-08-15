@@ -41,6 +41,7 @@ class CreateSubscriptionRequest {
   /// start date to. If set, the first invoice will contain a proration for the
   /// timespan between the start date and the current time. Can be combined with
   /// trials and the billing cycle anchor.
+  @TimestampConverter()
   final DateTime? backdateStartDate;
 
   /// A future timestamp in UTC format to anchor the subscription’s billing
@@ -60,6 +61,7 @@ class CreateSubscriptionRequest {
   /// before the current period ends, this will cause a proration if prorations
   /// have been enabled using proration_behavior. If set during a future period,
   /// this will always cause a proration for that period.
+  @TimestampConverter()
   final DateTime? cancelAt;
 
   /// The tax rates that will apply to any subscription item that does not have
@@ -89,6 +91,7 @@ class CreateSubscriptionRequest {
   /// override the default trial period of the plan the customer is being
   /// subscribed to. The special value now can be provided to end the customer’s
   /// trial immediately. Can be at most two years from billing_cycle_anchor.
+  @TimestampConverter()
   final DateTime? trialEnd;
 
   /// Indicates if a plan’s trial_period_days should be applied to the

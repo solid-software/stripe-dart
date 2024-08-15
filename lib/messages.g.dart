@@ -1514,9 +1514,8 @@ CreatePreviewInvoiceSubscriptionDetailsRequest
           billingCycleAnchor: _$JsonConverterFromJson<int, DateTime>(
               json['billing_cycle_anchor'],
               const TimestampConverter().fromJson),
-          cancelAt: json['cancel_at'] == null
-              ? null
-              : DateTime.parse(json['cancel_at'] as String),
+          cancelAt: _$JsonConverterFromJson<int, DateTime>(
+              json['cancel_at'], const TimestampConverter().fromJson),
           cancelAtPeriodEnd: json['cancel_at_period_end'] as bool?,
           cancelNow: json['cancel_now'] as bool?,
           defaultTaxRates: (json['default_tax_rates'] as List<dynamic>?)
@@ -1532,9 +1531,8 @@ CreatePreviewInvoiceSubscriptionDetailsRequest
           prorationDate: json['proration_date'] == null
               ? null
               : DateTime.parse(json['proration_date'] as String),
-          startDate: json['start_date'] == null
-              ? null
-              : DateTime.parse(json['start_date'] as String),
+          startDate: _$JsonConverterFromJson<int, DateTime>(
+              json['start_date'], const TimestampConverter().fromJson),
           trialEnd: json['trial_end'] == null
               ? null
               : DateTime.parse(json['trial_end'] as String),
@@ -1554,7 +1552,10 @@ Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionDetailsRequestToJson(
       'billing_cycle_anchor',
       _$JsonConverterToJson<int, DateTime>(
           instance.billingCycleAnchor, const TimestampConverter().toJson));
-  writeNotNull('cancel_at', instance.cancelAt?.toIso8601String());
+  writeNotNull(
+      'cancel_at',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.cancelAt, const TimestampConverter().toJson));
   writeNotNull('cancel_at_period_end', instance.cancelAtPeriodEnd);
   writeNotNull('cancel_now', instance.cancelNow);
   writeNotNull('default_tax_rates', instance.defaultTaxRates);
@@ -1562,7 +1563,10 @@ Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionDetailsRequestToJson(
   writeNotNull('proration_behavior',
       _$ProrationBehaviorEnumMap[instance.prorationBehavior]);
   writeNotNull('proration_date', instance.prorationDate?.toIso8601String());
-  writeNotNull('start_date', instance.startDate?.toIso8601String());
+  writeNotNull(
+      'start_date',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.startDate, const TimestampConverter().toJson));
   writeNotNull('trial_end', instance.trialEnd?.toIso8601String());
   return val;
 }
@@ -1916,18 +1920,16 @@ CreateSubscriptionRequest _$CreateSubscriptionRequestFromJson(
       ),
       paymentBehavior: $enumDecodeNullable(
           _$PaymentBehaviorEnumMap, json['payment_behavior']),
-      backdateStartDate: json['backdate_start_date'] == null
-          ? null
-          : DateTime.parse(json['backdate_start_date'] as String),
+      backdateStartDate: _$JsonConverterFromJson<int, DateTime>(
+          json['backdate_start_date'], const TimestampConverter().fromJson),
       billingCycleAnchor: _$JsonConverterFromJson<int, DateTime>(
           json['billing_cycle_anchor'], const TimestampConverter().fromJson),
       billingCycleAnchorConfig: json['billing_cycle_anchor_config'] == null
           ? null
           : BillingCycleAnchorConfig.fromJson(
               json['billing_cycle_anchor_config'] as Map<String, dynamic>),
-      cancelAt: json['cancel_at'] == null
-          ? null
-          : DateTime.parse(json['cancel_at'] as String),
+      cancelAt: _$JsonConverterFromJson<int, DateTime>(
+          json['cancel_at'], const TimestampConverter().fromJson),
       defaultTaxRates: (json['default_tax_rates'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -1942,9 +1944,8 @@ CreateSubscriptionRequest _$CreateSubscriptionRequestFromJson(
               json['payment_settings'] as Map<String, dynamic>),
       prorationBehavior: $enumDecodeNullable(
           _$ProrationBehaviorEnumMap, json['proration_behavior']),
-      trialEnd: json['trial_end'] == null
-          ? null
-          : DateTime.parse(json['trial_end'] as String),
+      trialEnd: _$JsonConverterFromJson<int, DateTime>(
+          json['trial_end'], const TimestampConverter().fromJson),
       trialFromPlan: json['trial_from_plan'] as bool?,
       trialPeriodDays: (json['trial_period_days'] as num?)?.toInt(),
     );
@@ -1970,14 +1971,19 @@ Map<String, dynamic> _$CreateSubscriptionRequestToJson(
   writeNotNull(
       'payment_behavior', _$PaymentBehaviorEnumMap[instance.paymentBehavior]);
   writeNotNull(
-      'backdate_start_date', instance.backdateStartDate?.toIso8601String());
+      'backdate_start_date',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.backdateStartDate, const TimestampConverter().toJson));
   writeNotNull(
       'billing_cycle_anchor',
       _$JsonConverterToJson<int, DateTime>(
           instance.billingCycleAnchor, const TimestampConverter().toJson));
   writeNotNull('billing_cycle_anchor_config',
       instance.billingCycleAnchorConfig?.toJson());
-  writeNotNull('cancel_at', instance.cancelAt?.toIso8601String());
+  writeNotNull(
+      'cancel_at',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.cancelAt, const TimestampConverter().toJson));
   writeNotNull('default_tax_rates', instance.defaultTaxRates);
   writeNotNull(
       'discounts', instance.discounts?.map((e) => e.toJson()).toList());
@@ -1985,7 +1991,10 @@ Map<String, dynamic> _$CreateSubscriptionRequestToJson(
   writeNotNull('payment_settings', instance.paymentSettings?.toJson());
   writeNotNull('proration_behavior',
       _$ProrationBehaviorEnumMap[instance.prorationBehavior]);
-  writeNotNull('trial_end', instance.trialEnd?.toIso8601String());
+  writeNotNull(
+      'trial_end',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.trialEnd, const TimestampConverter().toJson));
   writeNotNull('trial_from_plan', instance.trialFromPlan);
   writeNotNull('trial_period_days', instance.trialPeriodDays);
   return val;
