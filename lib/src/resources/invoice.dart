@@ -12,7 +12,7 @@ class InvoiceResource extends Resource<Invoice> {
 
   Future<Invoice> createPreview(CreatePreviewInvoiceRequest request) async {
     final response =
-        await post('$_resourceName/preview', data: request.toJson());
+        await post('$_resourceName/create_preview', data: request.toJson());
 
     return Invoice.fromJson(response);
   }
