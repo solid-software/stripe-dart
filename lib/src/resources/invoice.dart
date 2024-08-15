@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:stripe/messages.dart';
 import 'package:stripe/src/expanded.dart';
-import 'package:stripe/src/messages/enums/expandable_fields/invoice_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/discounts_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/payment_intent_expandable_field.dart';
@@ -31,7 +30,7 @@ class InvoiceResource extends Resource<Invoice> {
       '$_resourceName/create_preview',
       data: {
         ...request.toJson(),
-        'expand': expandableFields,
+        'expand': expandableFields.map((e) => e.field).toList(),
       },
     );
 
