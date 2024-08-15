@@ -717,6 +717,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       currency: json['currency'] as String,
       customer: json['customer'] as String,
       total: (json['total'] as num).toInt(),
+      totalExcludingTax: (json['total_excluding_tax'] as num).toInt(),
+      subtotal: (json['subtotal'] as num).toInt(),
+      subtotalExcludingTax: (json['subtotal_excluding_tax'] as num).toInt(),
       description: json['description'] as String?,
       hostedInvoiceUrl: json['hosted_invoice_url'] as String?,
       status: json['status'] as String?,
@@ -732,6 +735,7 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     'currency': instance.currency,
     'customer': instance.customer,
     'total': instance.total,
+    'total_excluding_tax': instance.totalExcludingTax,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -744,6 +748,8 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   writeNotNull('hosted_invoice_url', instance.hostedInvoiceUrl);
   writeNotNull('status', instance.status);
   writeNotNull('subscription', instance.subscription);
+  val['subtotal'] = instance.subtotal;
+  val['subtotal_excluding_tax'] = instance.subtotalExcludingTax;
   writeNotNull('payment_intent', instance.paymentIntent);
   writeNotNull('account_country', instance.accountCountry);
   writeNotNull('account_name', instance.accountName);
