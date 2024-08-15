@@ -47,6 +47,9 @@ class Invoice extends Message {
   /// already incorporated
   final int subtotalExcludingTax;
 
+  /// The aggregate amounts calculated per discount across all line items.
+  final List<TotalDiscountAmount> totalDiscountAmounts;
+
   /// The PaymentIntent associated with this invoice. The PaymentIntent is
   /// generated when the invoice is finalized, and can then be used to pay the
   /// invoice. Note that voiding an invoice will cancel the PaymentIntent.
@@ -68,6 +71,7 @@ class Invoice extends Message {
     required this.totalExcludingTax,
     required this.subtotal,
     required this.subtotalExcludingTax,
+    required this.totalDiscountAmounts,
     this.description,
     this.hostedInvoiceUrl,
     this.status,
@@ -82,4 +86,25 @@ class Invoice extends Message {
 
   @override
   Map<String, dynamic> toJson() => _$InvoiceToJson(this);
+}
+
+/// https://docs.stripe.com/api/invoices/object#invoice_object-total_discount_amounts
+@JsonSerializable()
+class TotalDiscountAmount extends Message {
+  /// The amount, in cents, of the discount.
+  final int amount;
+
+  /// The discount that was applied to get this discount amount.
+  final String discount;
+
+  TotalDiscountAmount({
+    required this.amount,
+    required this.discount,
+  });
+
+  factory TotalDiscountAmount.fromJson(Map<String, dynamic> json) =>
+      _$TotalDiscountAmountFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$TotalDiscountAmountToJson(this);
 }
