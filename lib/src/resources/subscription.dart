@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
-import 'package:stripe/src/expanded/subscription_expanded.dart';
+import 'package:stripe/src/expanded.dart';
 import 'package:stripe/src/utils/expandable_field.dart';
-import 'package:stripe/src/utils/expandable_list_field.dart';
+import 'package:stripe/src/utils/expandable_fields/discounts_expandable_field.dart';
+import 'package:stripe/src/utils/expandable_fields/latest_invoice_expanded_expandable_field.dart';
 
 import '../client.dart';
 import '_resource.dart';
@@ -12,6 +13,16 @@ class SubscriptionResource extends Resource<Subscription> {
   static const _resourceName = 'subscriptions';
 
   SubscriptionResource(Client client) : super(client);
+
+  /// https://docs.stripe.com/api/subscriptions/create
+  Future<SubscriptionExpanded> create(CreateSubscriptionRequest request) async {
+    final response = await post(_resourceName, data: request.toJson());
+
+    return SubscriptionExpanded.fromJson(response, {
+      SubscriptionExpandableField.discounts,
+      SubscriptionExpandableField.latestInvoice,
+    });
+  }
 
   Future<Subscription> retrieve(String id) async {
     final response = await get('$_resourceName/$id');
@@ -30,7 +41,7 @@ class SubscriptionResource extends Resource<Subscription> {
       },
     );
 
-    return _parseSubscriptionExpanded(response, expand);
+    return SubscriptionExpanded.fromJson(response, expand);
   }
 
   Iterable<ExpandableField> _expandableFields(
@@ -46,7 +57,11 @@ class SubscriptionResource extends Resource<Subscription> {
   ) {
     switch (field) {
       case SubscriptionExpandableField.discounts:
-        return _DiscountsExpandableField();
+        return DiscountsExpandableField();
+      case SubscriptionExpandableField.latestInvoice:
+        return LatestInvoiceExpandedExpandableField(
+          expand: {InvoiceExpandableField.paymentIntent},
+        );
     }
   }
 
@@ -73,25 +88,10 @@ class SubscriptionResource extends Resource<Subscription> {
 
     return DataList<SubscriptionExpanded>.fromJson(
       response,
-      (value) => _parseSubscriptionExpanded(
+      (value) => SubscriptionExpanded.fromJson(
         value as Map<String, dynamic>,
         expand,
       ),
-    );
-  }
-
-  SubscriptionExpanded _parseSubscriptionExpanded(
-    Map<String, dynamic> json,
-    Set<SubscriptionExpandableField> expand,
-  ) {
-    List<Discount>? discounts;
-    if (expand.contains(SubscriptionExpandableField.discounts)) {
-      discounts = _DiscountsExpandableField().extract(json);
-    }
-
-    return SubscriptionExpanded(
-      subscription: Subscription.fromJson(json),
-      discounts: discounts,
     );
   }
 
@@ -142,18 +142,4 @@ class SubscriptionResource extends Resource<Subscription> {
 
     return Subscription.fromJson(response);
   }
-}
-
-class _DiscountsExpandableField extends ExpandableListField<Discount> {
-  @override
-  String get field => 'discounts';
-
-  const _DiscountsExpandableField();
-
-  @override
-  String elementReplacement(Discount element) => element.id;
-
-  @override
-  Discount parseElement(Map<String, dynamic> element) =>
-      Discount.fromJson(element);
 }

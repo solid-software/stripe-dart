@@ -87,6 +87,34 @@ Map<String, dynamic> _$FeeDetailsToJson(FeeDetails instance) {
   return val;
 }
 
+BillingCycleAnchorConfig _$BillingCycleAnchorConfigFromJson(
+        Map<String, dynamic> json) =>
+    BillingCycleAnchorConfig(
+      month: (json['month'] as num?)?.toInt(),
+      dayOfMonth: (json['day_of_month'] as num?)?.toInt(),
+      hour: (json['hour'] as num?)?.toInt(),
+      minute: (json['minute'] as num?)?.toInt(),
+      second: (json['second'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$BillingCycleAnchorConfigToJson(
+    BillingCycleAnchorConfig instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('month', instance.month);
+  writeNotNull('day_of_month', instance.dayOfMonth);
+  writeNotNull('hour', instance.hour);
+  writeNotNull('minute', instance.minute);
+  writeNotNull('second', instance.second);
+  return val;
+}
+
 BillingDetails _$BillingDetailsFromJson(Map<String, dynamic> json) =>
     BillingDetails(
       address: json['address'] == null
@@ -689,6 +717,12 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       currency: json['currency'] as String,
       customer: json['customer'] as String,
       total: (json['total'] as num).toInt(),
+      totalExcludingTax: (json['total_excluding_tax'] as num).toInt(),
+      subtotal: (json['subtotal'] as num).toInt(),
+      subtotalExcludingTax: (json['subtotal_excluding_tax'] as num).toInt(),
+      totalDiscountAmounts: (json['total_discount_amounts'] as List<dynamic>)
+          .map((e) => TotalDiscountAmount.fromJson(e as Map<String, dynamic>))
+          .toList(),
       description: json['description'] as String?,
       hostedInvoiceUrl: json['hosted_invoice_url'] as String?,
       status: json['status'] as String?,
@@ -704,6 +738,7 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     'currency': instance.currency,
     'customer': instance.customer,
     'total': instance.total,
+    'total_excluding_tax': instance.totalExcludingTax,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -716,11 +751,28 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   writeNotNull('hosted_invoice_url', instance.hostedInvoiceUrl);
   writeNotNull('status', instance.status);
   writeNotNull('subscription', instance.subscription);
+  val['subtotal'] = instance.subtotal;
+  val['subtotal_excluding_tax'] = instance.subtotalExcludingTax;
+  val['total_discount_amounts'] =
+      instance.totalDiscountAmounts.map((e) => e.toJson()).toList();
   writeNotNull('payment_intent', instance.paymentIntent);
   writeNotNull('account_country', instance.accountCountry);
   writeNotNull('account_name', instance.accountName);
   return val;
 }
+
+TotalDiscountAmount _$TotalDiscountAmountFromJson(Map<String, dynamic> json) =>
+    TotalDiscountAmount(
+      amount: (json['amount'] as num).toInt(),
+      discount: json['discount'] as String,
+    );
+
+Map<String, dynamic> _$TotalDiscountAmountToJson(
+        TotalDiscountAmount instance) =>
+    <String, dynamic>{
+      'amount': instance.amount,
+      'discount': instance.discount,
+    };
 
 PaymentIntent _$PaymentIntentFromJson(Map<String, dynamic> json) =>
     PaymentIntent(
@@ -1389,6 +1441,185 @@ Map<String, dynamic> _$CreateCustomerRequestToJson(
   return val;
 }
 
+CreateDiscountRequest _$CreateDiscountRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateDiscountRequest(
+      coupon: json['coupon'] as String?,
+      discount: json['discount'] as String?,
+      promotionCode: json['promotion_code'] as String?,
+    );
+
+Map<String, dynamic> _$CreateDiscountRequestToJson(
+    CreateDiscountRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('coupon', instance.coupon);
+  writeNotNull('discount', instance.discount);
+  writeNotNull('promotion_code', instance.promotionCode);
+  return val;
+}
+
+CreatePreviewInvoiceRequest _$CreatePreviewInvoiceRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreatePreviewInvoiceRequest(
+      customer: json['customer'] as String?,
+      subscription: json['subscription'] as String?,
+      discounts: (json['discounts'] as List<dynamic>?)
+          ?.map(
+              (e) => CreateDiscountRequest.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      previewMode: $enumDecodeNullable(
+          _$PreviewInvoiceModeEnumMap, json['preview_mode']),
+      subscriptionDetails: json['subscription_details'] == null
+          ? null
+          : CreatePreviewInvoiceSubscriptionDetailsRequest.fromJson(
+              json['subscription_details'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$CreatePreviewInvoiceRequestToJson(
+    CreatePreviewInvoiceRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('customer', instance.customer);
+  writeNotNull('subscription', instance.subscription);
+  writeNotNull(
+      'discounts', instance.discounts?.map((e) => e.toJson()).toList());
+  writeNotNull(
+      'preview_mode', _$PreviewInvoiceModeEnumMap[instance.previewMode]);
+  writeNotNull('subscription_details', instance.subscriptionDetails?.toJson());
+  return val;
+}
+
+const _$PreviewInvoiceModeEnumMap = {
+  PreviewInvoiceMode.next: 'next',
+  PreviewInvoiceMode.recurring: 'recurring',
+};
+
+CreatePreviewInvoiceSubscriptionDetailsRequest
+    _$CreatePreviewInvoiceSubscriptionDetailsRequestFromJson(
+            Map<String, dynamic> json) =>
+        CreatePreviewInvoiceSubscriptionDetailsRequest(
+          billingCycleAnchor: _$JsonConverterFromJson<int, DateTime>(
+              json['billing_cycle_anchor'],
+              const TimestampConverter().fromJson),
+          cancelAt: _$JsonConverterFromJson<int, DateTime>(
+              json['cancel_at'], const TimestampConverter().fromJson),
+          cancelAtPeriodEnd: json['cancel_at_period_end'] as bool?,
+          cancelNow: json['cancel_now'] as bool?,
+          defaultTaxRates: (json['default_tax_rates'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList(),
+          items: (json['items'] as List<dynamic>?)
+              ?.map((e) =>
+                  CreatePreviewInvoiceSubscriptionItemDetailsRequest.fromJson(
+                      e as Map<String, dynamic>))
+              .toList(),
+          prorationBehavior: $enumDecodeNullable(
+              _$ProrationBehaviorEnumMap, json['proration_behavior']),
+          prorationDate: json['proration_date'] == null
+              ? null
+              : DateTime.parse(json['proration_date'] as String),
+          startDate: _$JsonConverterFromJson<int, DateTime>(
+              json['start_date'], const TimestampConverter().fromJson),
+          trialEnd: json['trial_end'] == null
+              ? null
+              : DateTime.parse(json['trial_end'] as String),
+        );
+
+Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionDetailsRequestToJson(
+    CreatePreviewInvoiceSubscriptionDetailsRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'billing_cycle_anchor',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.billingCycleAnchor, const TimestampConverter().toJson));
+  writeNotNull(
+      'cancel_at',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.cancelAt, const TimestampConverter().toJson));
+  writeNotNull('cancel_at_period_end', instance.cancelAtPeriodEnd);
+  writeNotNull('cancel_now', instance.cancelNow);
+  writeNotNull('default_tax_rates', instance.defaultTaxRates);
+  writeNotNull('items', instance.items?.map((e) => e.toJson()).toList());
+  writeNotNull('proration_behavior',
+      _$ProrationBehaviorEnumMap[instance.prorationBehavior]);
+  writeNotNull('proration_date', instance.prorationDate?.toIso8601String());
+  writeNotNull(
+      'start_date',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.startDate, const TimestampConverter().toJson));
+  writeNotNull('trial_end', instance.trialEnd?.toIso8601String());
+  return val;
+}
+
+const _$ProrationBehaviorEnumMap = {
+  ProrationBehavior.always_invoice: 'always_invoice',
+  ProrationBehavior.create_prorations: 'create_prorations',
+  ProrationBehavior.none: 'none',
+};
+
+CreatePreviewInvoiceSubscriptionItemDetailsRequest
+    _$CreatePreviewInvoiceSubscriptionItemDetailsRequestFromJson(
+            Map<String, dynamic> json) =>
+        CreatePreviewInvoiceSubscriptionItemDetailsRequest(
+          clearUsage: json['clear_usage'] as bool?,
+          deleted: json['deleted'] as bool?,
+          discounts: (json['discounts'] as List<dynamic>?)
+              ?.map((e) =>
+                  CreateDiscountRequest.fromJson(e as Map<String, dynamic>))
+              .toList(),
+          id: json['id'] as String?,
+          metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
+            (k, e) => MapEntry(k, e as String),
+          ),
+          price: json['price'] as String?,
+          quantity: (json['quantity'] as num?)?.toInt(),
+          taxRates: (json['tax_rates'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList(),
+        );
+
+Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionItemDetailsRequestToJson(
+    CreatePreviewInvoiceSubscriptionItemDetailsRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('clear_usage', instance.clearUsage);
+  writeNotNull('deleted', instance.deleted);
+  writeNotNull(
+      'discounts', instance.discounts?.map((e) => e.toJson()).toList());
+  writeNotNull('id', instance.id);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('price', instance.price);
+  writeNotNull('quantity', instance.quantity);
+  writeNotNull('tax_rates', instance.taxRates);
+  return val;
+}
+
 CreatePaymentIntentRequest _$CreatePaymentIntentRequestFromJson(
         Map<String, dynamic> json) =>
     CreatePaymentIntentRequest(
@@ -1672,6 +1903,146 @@ Map<String, dynamic> _$CreateRefundRequestToJson(CreateRefundRequest instance) {
   return val;
 }
 
+CreateSubscriptionRequest _$CreateSubscriptionRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateSubscriptionRequest(
+      customer: json['customer'] as String,
+      items: (json['items'] as List<dynamic>)
+          .map((e) =>
+              CreateSubscriptionItemRequest.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      cancelAtPeriodEnd: json['cancel_at_period_end'] as bool?,
+      currency: json['currency'] as String?,
+      defaultPaymentMethod: json['default_payment_method'] as String?,
+      description: json['description'] as String?,
+      metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      paymentBehavior: $enumDecodeNullable(
+          _$PaymentBehaviorEnumMap, json['payment_behavior']),
+      backdateStartDate: _$JsonConverterFromJson<int, DateTime>(
+          json['backdate_start_date'], const TimestampConverter().fromJson),
+      billingCycleAnchor: _$JsonConverterFromJson<int, DateTime>(
+          json['billing_cycle_anchor'], const TimestampConverter().fromJson),
+      billingCycleAnchorConfig: json['billing_cycle_anchor_config'] == null
+          ? null
+          : BillingCycleAnchorConfig.fromJson(
+              json['billing_cycle_anchor_config'] as Map<String, dynamic>),
+      cancelAt: _$JsonConverterFromJson<int, DateTime>(
+          json['cancel_at'], const TimestampConverter().fromJson),
+      defaultTaxRates: (json['default_tax_rates'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      discounts: (json['discounts'] as List<dynamic>?)
+          ?.map(
+              (e) => CreateDiscountRequest.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      offSession: json['off_session'] as bool?,
+      paymentSettings: json['payment_settings'] == null
+          ? null
+          : SubscriptionPaymentSettingsRequest.fromJson(
+              json['payment_settings'] as Map<String, dynamic>),
+      prorationBehavior: $enumDecodeNullable(
+          _$ProrationBehaviorEnumMap, json['proration_behavior']),
+      trialEnd: _$JsonConverterFromJson<int, DateTime>(
+          json['trial_end'], const TimestampConverter().fromJson),
+      trialFromPlan: json['trial_from_plan'] as bool?,
+      trialPeriodDays: (json['trial_period_days'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$CreateSubscriptionRequestToJson(
+    CreateSubscriptionRequest instance) {
+  final val = <String, dynamic>{
+    'customer': instance.customer,
+    'items': instance.items.map((e) => e.toJson()).toList(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('cancel_at_period_end', instance.cancelAtPeriodEnd);
+  writeNotNull('currency', instance.currency);
+  writeNotNull('default_payment_method', instance.defaultPaymentMethod);
+  writeNotNull('description', instance.description);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull(
+      'payment_behavior', _$PaymentBehaviorEnumMap[instance.paymentBehavior]);
+  writeNotNull(
+      'backdate_start_date',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.backdateStartDate, const TimestampConverter().toJson));
+  writeNotNull(
+      'billing_cycle_anchor',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.billingCycleAnchor, const TimestampConverter().toJson));
+  writeNotNull('billing_cycle_anchor_config',
+      instance.billingCycleAnchorConfig?.toJson());
+  writeNotNull(
+      'cancel_at',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.cancelAt, const TimestampConverter().toJson));
+  writeNotNull('default_tax_rates', instance.defaultTaxRates);
+  writeNotNull(
+      'discounts', instance.discounts?.map((e) => e.toJson()).toList());
+  writeNotNull('off_session', instance.offSession);
+  writeNotNull('payment_settings', instance.paymentSettings?.toJson());
+  writeNotNull('proration_behavior',
+      _$ProrationBehaviorEnumMap[instance.prorationBehavior]);
+  writeNotNull(
+      'trial_end',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.trialEnd, const TimestampConverter().toJson));
+  writeNotNull('trial_from_plan', instance.trialFromPlan);
+  writeNotNull('trial_period_days', instance.trialPeriodDays);
+  return val;
+}
+
+const _$PaymentBehaviorEnumMap = {
+  PaymentBehavior.allow_incomplete: 'allow_incomplete',
+  PaymentBehavior.default_incomplete: 'default_incomplete',
+  PaymentBehavior.error_if_incomplete: 'error_if_incomplete',
+  PaymentBehavior.pending_if_incomplete: 'pending_if_incomplete',
+};
+
+CreateSubscriptionItemRequest _$CreateSubscriptionItemRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateSubscriptionItemRequest(
+      price: json['price'] as String?,
+      discounts: (json['discounts'] as List<dynamic>?)
+          ?.map(
+              (e) => CreateDiscountRequest.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      quantity: (json['quantity'] as num?)?.toInt(),
+      taxRates: (json['tax_rates'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+    );
+
+Map<String, dynamic> _$CreateSubscriptionItemRequestToJson(
+    CreateSubscriptionItemRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('price', instance.price);
+  writeNotNull(
+      'discounts', instance.discounts?.map((e) => e.toJson()).toList());
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('quantity', instance.quantity);
+  writeNotNull('tax_rates', instance.taxRates);
+  return val;
+}
+
 CreateSubscriptionScheduleRequest _$CreateSubscriptionScheduleRequestFromJson(
         Map<String, dynamic> json) =>
     CreateSubscriptionScheduleRequest(
@@ -1908,6 +2279,28 @@ const _$SubscriptionStatusEnumMap = {
   SubscriptionStatus.ended: 'ended',
 };
 
+SubscriptionPaymentSettingsRequest _$SubscriptionPaymentSettingsRequestFromJson(
+        Map<String, dynamic> json) =>
+    SubscriptionPaymentSettingsRequest(
+      paymentMethodTypes: (json['payment_method_types'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+    );
+
+Map<String, dynamic> _$SubscriptionPaymentSettingsRequestToJson(
+    SubscriptionPaymentSettingsRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('payment_method_types', instance.paymentMethodTypes);
+  return val;
+}
+
 UpdateCustomerRequest _$UpdateCustomerRequestFromJson(
         Map<String, dynamic> json) =>
     UpdateCustomerRequest(
@@ -2007,19 +2400,6 @@ Map<String, dynamic> _$SubscriptionItemUpdateToJson(
   writeNotNull('tax_rates', instance.taxRates);
   return val;
 }
-
-const _$PaymentBehaviorEnumMap = {
-  PaymentBehavior.allow_incomplete: 'allow_incomplete',
-  PaymentBehavior.default_incomplete: 'default_incomplete',
-  PaymentBehavior.error_if_incomplete: 'error_if_incomplete',
-  PaymentBehavior.pending_if_incomplete: 'pending_if_incomplete',
-};
-
-const _$ProrationBehaviorEnumMap = {
-  ProrationBehavior.always_invoice: 'always_invoice',
-  ProrationBehavior.create_prorations: 'create_prorations',
-  ProrationBehavior.none: 'none',
-};
 
 UpdateSubscriptionScheduleRequest _$UpdateSubscriptionScheduleRequestFromJson(
         Map<String, dynamic> json) =>

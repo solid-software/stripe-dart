@@ -17,6 +17,10 @@ class Invoice extends Message {
   /// Total after discounts and taxes.
   final int total;
 
+  /// The integer amount in cents representing the total amount of the invoice
+  /// including all discounts but excluding all tax.
+  final int totalExcludingTax;
+
   /// An arbitrary string attached to the object. Often useful for displaying
   /// to users. Referenced as ‘memo’ in the Dashboard.
   final String? description;
@@ -32,6 +36,19 @@ class Invoice extends Message {
 
   /// The subscription that this invoice was prepared for, if any.
   final String? subscription;
+
+  /// Total of all subscriptions, invoice items, and prorations on the invoice
+  /// before any invoice level discount or exclusive tax is applied. Item
+  /// discounts are already incorporated.
+  final int subtotal;
+
+  /// The integer amount in cents representing the subtotal of the invoice
+  /// before any invoice level discount or tax is applied. Item discounts are
+  /// already incorporated
+  final int subtotalExcludingTax;
+
+  /// The aggregate amounts calculated per discount across all line items.
+  final List<TotalDiscountAmount> totalDiscountAmounts;
 
   /// The PaymentIntent associated with this invoice. The PaymentIntent is
   /// generated when the invoice is finalized, and can then be used to pay the
@@ -51,6 +68,10 @@ class Invoice extends Message {
     required this.currency,
     required this.customer,
     required this.total,
+    required this.totalExcludingTax,
+    required this.subtotal,
+    required this.subtotalExcludingTax,
+    required this.totalDiscountAmounts,
     this.description,
     this.hostedInvoiceUrl,
     this.status,
@@ -65,4 +86,25 @@ class Invoice extends Message {
 
   @override
   Map<String, dynamic> toJson() => _$InvoiceToJson(this);
+}
+
+/// https://docs.stripe.com/api/invoices/object#invoice_object-total_discount_amounts
+@JsonSerializable()
+class TotalDiscountAmount extends Message {
+  /// The amount, in cents, of the discount.
+  final int amount;
+
+  /// The discount that was applied to get this discount amount.
+  final String discount;
+
+  TotalDiscountAmount({
+    required this.amount,
+    required this.discount,
+  });
+
+  factory TotalDiscountAmount.fromJson(Map<String, dynamic> json) =>
+      _$TotalDiscountAmountFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$TotalDiscountAmountToJson(this);
 }

@@ -1,3 +1,4 @@
 enum SubscriptionExpandableField {
   discounts,
+  latestInvoice,
 }
