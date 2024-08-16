@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:stripe/messages.dart';
 import 'package:stripe/src/expanded.dart';
-import 'package:stripe/src/messages/enums/expandable_fields/invoice_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/discounts_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/latest_invoice_expanded_expandable_field.dart';
