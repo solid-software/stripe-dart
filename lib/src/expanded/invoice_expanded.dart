@@ -1,5 +1,4 @@
 import 'package:stripe/messages.dart';
-import 'package:stripe/src/messages/enums/expandable_fields/invoice_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/discounts_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/payment_intent_expandable_field.dart';
 
