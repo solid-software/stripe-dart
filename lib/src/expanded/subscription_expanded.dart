@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:stripe/messages.dart';
 import 'package:stripe/src/expanded.dart';
 import 'package:stripe/src/utils/expandable_fields/customer_expandable_field.dart';
