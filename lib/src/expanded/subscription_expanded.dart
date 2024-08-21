@@ -23,23 +23,19 @@ class SubscriptionExpanded {
   ) {
     List<Discount>? discounts;
     if (expand.contains(SubscriptionExpandableField.discounts)) {
-      discounts = DiscountsExpandableField().extract(json);
+      discounts = const DiscountsExpandableField().extract(json);
     }
 
     InvoiceExpanded? latestInvoice;
     if (expand.contains(SubscriptionExpandableField.latestInvoice)) {
-      latestInvoice = LatestInvoiceExpandedExpandableField(
+      latestInvoice = const LatestInvoiceExpandedExpandableField(
         expand: {InvoiceExpandableField.paymentIntent},
       ).extract(json);
     }
 
     Customer? customer;
     if (expand.contains(SubscriptionExpandableField.customer)) {
-      const customerExpander = CustomerExpandableField();
-      customer = customerExpander.extract(json);
-
-      /// A shim so that Subscription gets parsed correctly
-      json[customerExpander.field] = customer.id;
+      customer = const CustomerExpandableField().extract(json);
     }
 
     return SubscriptionExpanded(

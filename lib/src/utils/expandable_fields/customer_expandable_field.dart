@@ -1,12 +1,16 @@
 import 'package:stripe/messages.dart';
-import 'package:stripe/src/utils/expandable_field.dart';
+import 'package:stripe/src/utils/expandable_object_field.dart';
 
-class CustomerExpandableField extends ExpandableField<Customer> {
+class CustomerExpandableField extends ExpandableObjectField<Customer> {
   @override
   String get field => 'customer';
 
   const CustomerExpandableField();
 
   @override
-  Customer extract(Map<String, dynamic> json) => Customer.fromJson(json[field]);
+  Customer parse(Map<String, dynamic> object) =>
+      Customer.fromJson(object[field]);
+
+  @override
+  String replacement(Customer parsedValue) => parsedValue.id;
 }
