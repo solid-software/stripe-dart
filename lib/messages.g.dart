@@ -894,9 +894,8 @@ Map<String, dynamic> _$AutomaticPaymentMethodsToJson(
 PauseCollection _$PauseCollectionFromJson(Map<String, dynamic> json) =>
     PauseCollection(
       behavior: $enumDecode(_$PauseCollectionBehaviorEnumMap, json['behavior']),
-      resumesAt: json['resumes_at'] == null
-          ? null
-          : DateTime.parse(json['resumes_at'] as String),
+      resumesAt: _$JsonConverterFromJson<int, DateTime>(
+          json['resumes_at'], const TimestampConverter().fromJson),
     );
 
 Map<String, dynamic> _$PauseCollectionToJson(PauseCollection instance) {
@@ -910,7 +909,10 @@ Map<String, dynamic> _$PauseCollectionToJson(PauseCollection instance) {
     }
   }
 
-  writeNotNull('resumes_at', instance.resumesAt?.toIso8601String());
+  writeNotNull(
+      'resumes_at',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.resumesAt, const TimestampConverter().toJson));
   return val;
 }
 
