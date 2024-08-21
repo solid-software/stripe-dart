@@ -3,6 +3,7 @@ part of '../../messages.dart';
 @JsonSerializable()
 class PauseCollection extends Message {
   final PauseCollectionBehavior behavior;
+  @TimestampConverter()
   final DateTime? resumesAt;
 
   PauseCollection({
