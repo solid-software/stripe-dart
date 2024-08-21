@@ -8,8 +8,7 @@ class CustomerExpandableField extends ExpandableObjectField<Customer> {
   const CustomerExpandableField();
 
   @override
-  Customer parse(Map<String, dynamic> object) =>
-      Customer.fromJson(object[field]);
+  Customer parse(Map<String, dynamic> object) => Customer.fromJson(object);
 
   @override
   String replacement(Customer parsedValue) => parsedValue.id;
