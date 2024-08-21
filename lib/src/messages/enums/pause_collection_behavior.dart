@@ -6,5 +6,5 @@ enum PauseCollectionBehavior {
   @JsonValue('mark_uncollectible')
   markUncollectible,
   @JsonValue('void')
-  voided,
+  void_,
 }

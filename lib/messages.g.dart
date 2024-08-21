@@ -917,7 +917,7 @@ Map<String, dynamic> _$PauseCollectionToJson(PauseCollection instance) {
 const _$PauseCollectionBehaviorEnumMap = {
   PauseCollectionBehavior.keepAsDraft: 'keep_as_draft',
   PauseCollectionBehavior.markUncollectible: 'mark_uncollectible',
-  PauseCollectionBehavior.voided: 'void',
+  PauseCollectionBehavior.void_: 'void',
 };
 
 PaymentMethod _$PaymentMethodFromJson(Map<String, dynamic> json) =>
