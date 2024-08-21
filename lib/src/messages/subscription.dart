@@ -112,6 +112,11 @@ class Subscription extends Message {
   /// applied before subscription discounts. Can be expanded.
   final List<String>? discounts;
 
+  /// If specified, payment collection for this subscription will be paused.
+  /// Note that the subscription status will be unchanged and will not be
+  /// updated to `paused`.
+  final PauseCollection? pauseCollection;
+
   Subscription({
     required this.object,
     required this.id,
@@ -129,6 +134,7 @@ class Subscription extends Message {
     this.metadata,
     this.latestInvoice,
     this.discounts,
+    this.pauseCollection,
   });
 
   factory Subscription.fromJson(Map<String, dynamic> json) =>
