@@ -31,6 +31,6 @@ class InvoiceResource extends Resource<Invoice> {
       },
     );
 
-    return InvoiceExpanded.fromJson(response, expand: expand);
+    return expand.parse(response);
   }
 }
