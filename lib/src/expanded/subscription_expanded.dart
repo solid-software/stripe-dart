@@ -2,7 +2,7 @@ import 'package:stripe/messages.dart';
 import 'package:stripe/src/expanded.dart';
 import 'package:stripe/src/utils/expandable_fields/customer_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/discounts_expandable_field.dart';
-import 'package:stripe/src/utils/expandable_fields/latest_invoice_expanded_expandable_field.dart';
+import 'package:stripe/src/utils/expandable_fields/latest_invoice_expandable_field.dart';
 
 class SubscriptionExpanded {
   final Subscription subscription;
@@ -28,8 +28,8 @@ class SubscriptionExpanded {
 
     InvoiceExpanded? latestInvoice;
     if (expand.contains(SubscriptionExpandableField.latestInvoice)) {
-      latestInvoice = const LatestInvoiceExpandedExpandableField(
-        expand: {InvoiceExpandableField.paymentIntent},
+      latestInvoice = const LatestInvoiceExpandableField(
+       
       ).extract(json);
     }
 

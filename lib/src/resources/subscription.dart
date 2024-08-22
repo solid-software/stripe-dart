@@ -5,7 +5,8 @@ import 'package:stripe/src/expanded.dart';
 import 'package:stripe/src/utils/expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/customer_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/discounts_expandable_field.dart';
-import 'package:stripe/src/utils/expandable_fields/latest_invoice_expanded_expandable_field.dart';
+import 'package:stripe/src/utils/expandable_fields/latest_invoice_expandable_field.dart';
+import 'package:stripe/src/utils/expandable_fields/payment_intent_expandable_field.dart';
 
 import '../client.dart';
 import '_resource.dart';
@@ -60,8 +61,8 @@ class SubscriptionResource extends Resource<Subscription> {
       case SubscriptionExpandableField.discounts:
         return DiscountsExpandableField();
       case SubscriptionExpandableField.latestInvoice:
-        return LatestInvoiceExpandedExpandableField(
-          expand: {InvoiceExpandableField.paymentIntent},
+        return LatestInvoiceExpandableField(
+          paymentIntentExpansion: PaymentIntentExpandableField(),
         );
       case SubscriptionExpandableField.customer:
         return CustomerExpandableField();

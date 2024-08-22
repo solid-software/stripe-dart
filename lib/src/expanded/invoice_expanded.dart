@@ -1,6 +1,5 @@
 import 'package:stripe/messages.dart';
-import 'package:stripe/src/utils/expandable_fields/discounts_expandable_field.dart';
-import 'package:stripe/src/utils/expandable_fields/payment_intent_expandable_field.dart';
+import 'package:stripe/src/utils/expandable_fields/invoice_expandable_field.dart';
 
 class InvoiceExpanded {
   final Invoice invoice;
@@ -14,17 +13,17 @@ class InvoiceExpanded {
   });
 
   factory InvoiceExpanded.fromJson(
-    Map<String, dynamic> json,
-    Set<InvoiceExpandableField> expand,
-  ) {
+    Map<String, dynamic> json, {
+    InvoiceExpandableField? expand,
+  }) {
     PaymentIntent? paymentIntent;
-    if (expand.contains(InvoiceExpandableField.paymentIntent)) {
-      paymentIntent = PaymentIntentExpandableField().extract(json);
+    if (expand?.paymentIntentExpansion != null) {
+      paymentIntent = expand?.paymentIntentExpansion!.extract(json);
     }
 
     List<Discount>? discounts;
-    if (expand.contains(InvoiceExpandableField.discounts)) {
-      discounts = DiscountsExpandableField().extract(json);
+    if (expand?.discountsExpansion != null) {
+      discounts = expand?.discountsExpansion!.extract(json);
     }
 
     return InvoiceExpanded(
