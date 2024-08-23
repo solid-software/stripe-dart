@@ -7,7 +7,7 @@ class LatestInvoiceExpandedExpandableField
   final Set<InvoiceExpandableField> expand;
 
   @override
-  String get field => 'latest_invoice';
+  String get field => 'latest_invoice.payment_intent';
 
   const LatestInvoiceExpandedExpandableField({
     required this.expand,
