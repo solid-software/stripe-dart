@@ -33,7 +33,7 @@ class SubscriptionResource extends Resource<Subscription> {
     final response = await get(
       '$_resourceName/$id',
       queryParameters: {
-        'expand': _expandParamComponents,
+        'expand': _expandParamComponents(expand),
       },
     );
 
