@@ -2375,18 +2375,19 @@ Map<String, dynamic> _$UpdateCustomerRequestToJson(
 UpdatePaymentIntentRequest _$UpdatePaymentIntentRequestFromJson(
         Map<String, dynamic> json) =>
     UpdatePaymentIntentRequest(
-      (json['amount'] as num?)?.toInt(),
-      json['currency'] as String?,
-      json['customer'] as String?,
-      json['description'] as String?,
-      json['metadata'] as Map<String, dynamic>?,
-      json['payment_method'] as String?,
-      json['receipt_email'] as String?,
-      $enumDecodeNullable(
+      amount: (json['amount'] as num?)?.toInt(),
+      currency: json['currency'] as String?,
+      customer: json['customer'] as String?,
+      description: json['description'] as String?,
+      metadata: json['metadata'] as Map<String, dynamic>?,
+      paymentMethod: json['payment_method'] as String?,
+      receiptEmail: json['receipt_email'] as String?,
+      setupFutureUsage: $enumDecodeNullable(
           _$SetupFutureUsageEnumMap, json['setup_future_usage']),
-      json['statement_descriptor'] as String?,
-      json['statement_descriptor_suffix'] as String?,
-      json['payment_method_configuration'] as String?,
+      statementDescriptor: json['statement_descriptor'] as String?,
+      statementDescriptorSuffix: json['statement_descriptor_suffix'] as String?,
+      paymentMethodConfiguration:
+          json['payment_method_configuration'] as String?,
     );
 
 Map<String, dynamic> _$UpdatePaymentIntentRequestToJson(

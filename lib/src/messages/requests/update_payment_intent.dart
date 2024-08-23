@@ -78,7 +78,7 @@ class UpdatePaymentIntentRequest {
   /// The ID of the payment method configuration to use with this PaymentIntent.
   final String? paymentMethodConfiguration;
 
-  const UpdatePaymentIntentRequest(
+  const UpdatePaymentIntentRequest({
     this.amount,
     this.currency,
     this.customer,
@@ -90,7 +90,7 @@ class UpdatePaymentIntentRequest {
     this.statementDescriptor,
     this.statementDescriptorSuffix,
     this.paymentMethodConfiguration,
-  );
+  });
 
   factory UpdatePaymentIntentRequest.fromJson(Map<String, dynamic> json) =>
       _$UpdatePaymentIntentRequestFromJson(json);
