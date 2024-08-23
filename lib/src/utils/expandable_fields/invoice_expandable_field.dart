@@ -15,7 +15,7 @@ class InvoiceExpandableField extends ExpandableObjectField<InvoiceExpanded> {
   Iterable<String> get nestedFields => [
         ...?paymentIntentExpansion?.nestedFieldPaths,
         ...?discountsExpansion?.nestedFieldPaths,
-      ].nonNulls;
+      ];
 
   const InvoiceExpandableField({
     this.paymentIntentExpansion,
