@@ -1,7 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stripe/src/messages/converters.dart';
 import 'package:stripe/src/messages/enums.dart';
-import 'package:stripe/src/messages/enums/pause_collection_behavior.dart';
 
 export 'package:stripe/src/messages/enums.dart';
 
@@ -19,8 +18,8 @@ part 'src/messages/data_list.dart';
 part 'src/messages/discount.dart';
 part 'src/messages/event.dart';
 part 'src/messages/invoice.dart';
-part 'src/messages/payment_intent.dart';
 part 'src/messages/pause_collection.dart';
+part 'src/messages/payment_intent.dart';
 part 'src/messages/payment_method.dart';
 part 'src/messages/portal_session.dart';
 part 'src/messages/price.dart';
@@ -48,6 +47,7 @@ part 'src/messages/requests/list_subscription_schedules.dart';
 part 'src/messages/requests/list_subscriptions.dart';
 part 'src/messages/requests/subscription_payment_settings.dart';
 part 'src/messages/requests/update_customer.dart';
+part 'src/messages/requests/update_payment_intent.dart';
 part 'src/messages/requests/update_subscription.dart';
 part 'src/messages/requests/update_subscription_item.dart';
 part 'src/messages/requests/update_subscription_schedule.dart';
