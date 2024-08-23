@@ -64,4 +64,17 @@ class PaymentIntentResource extends Resource<PaymentIntent> {
 
     return PaymentIntent.fromJson(response);
   }
+
+  /// https://docs.stripe.com/api/payment_intents/confirm
+  Future<PaymentIntent> confirm(
+    String id, {
+    required ConfirmPaymentIntentRequest request,
+  }) async {
+    final response = await post(
+      '$_resourceName/$id/confirm',
+      data: request.toJson(),
+    );
+
+    return PaymentIntent.fromJson(response);
+  }
 }

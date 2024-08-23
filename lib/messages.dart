@@ -26,6 +26,7 @@ part 'src/messages/price.dart';
 part 'src/messages/product.dart';
 part 'src/messages/promotion_code.dart';
 part 'src/messages/refund.dart';
+part 'src/messages/requests/confirm_payment_intent.dart';
 part 'src/messages/requests/create_checkout_session.dart';
 part 'src/messages/requests/create_customer.dart';
 part 'src/messages/requests/create_discount.dart';

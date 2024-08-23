@@ -1222,6 +1222,44 @@ const _$_RefundObjectEnumMap = {
   _RefundObject.refund: 'refund',
 };
 
+ConfirmPaymentIntentRequest _$ConfirmPaymentIntentRequestFromJson(
+        Map<String, dynamic> json) =>
+    ConfirmPaymentIntentRequest(
+      paymentMethod: json['payment_method'] as String?,
+      receiptEmail: json['receipt_email'] as String?,
+      setupFutureUsage: $enumDecodeNullable(
+          _$SetupFutureUsageEnumMap, json['setup_future_usage']),
+      confirmationToken: json['confirmation_token'] as String?,
+      errorOnRequiresAction: json['error_on_requires_action'] as bool?,
+      mandate: json['mandate'] as String?,
+      offSession: json['off_session'] as bool?,
+      returnUrl: json['return_url'] as String?,
+      useStripeSdk: json['use_stripe_sdk'] as bool?,
+    );
+
+Map<String, dynamic> _$ConfirmPaymentIntentRequestToJson(
+    ConfirmPaymentIntentRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('payment_method', instance.paymentMethod);
+  writeNotNull('receipt_email', instance.receiptEmail);
+  writeNotNull('setup_future_usage',
+      _$SetupFutureUsageEnumMap[instance.setupFutureUsage]);
+  writeNotNull('confirmation_token', instance.confirmationToken);
+  writeNotNull('error_on_requires_action', instance.errorOnRequiresAction);
+  writeNotNull('mandate', instance.mandate);
+  writeNotNull('off_session', instance.offSession);
+  writeNotNull('return_url', instance.returnUrl);
+  writeNotNull('use_stripe_sdk', instance.useStripeSdk);
+  return val;
+}
+
 CreateCheckoutSessionRequest _$CreateCheckoutSessionRequestFromJson(
         Map<String, dynamic> json) =>
     CreateCheckoutSessionRequest(
