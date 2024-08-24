@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:stripe/messages.dart';
 import 'package:stripe/src/expanded.dart';
-import 'package:stripe/src/utils/expandable_field.dart';
-import 'package:stripe/src/utils/expandable_fields/customer_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/discounts_expandable_field.dart';
-import 'package:stripe/src/utils/expandable_fields/latest_invoice_expanded_expandable_field.dart';
+import 'package:stripe/src/utils/expandable_fields/latest_invoice_expandable_field.dart';
+import 'package:stripe/src/utils/expandable_fields/subscription_expandable_field.dart';
 
 import '../client.dart';
 import '_resource.dart';
@@ -19,10 +18,10 @@ class SubscriptionResource extends Resource<Subscription> {
   Future<SubscriptionExpanded> create(CreateSubscriptionRequest request) async {
     final response = await post(_resourceName, data: request.toJson());
 
-    return SubscriptionExpanded.fromJson(response, {
-      SubscriptionExpandableField.discounts,
-      SubscriptionExpandableField.latestInvoice,
-    });
+    return SubscriptionExpandableField(
+      discountsExpansion: DiscountsExpandableField(),
+      latestInvoiceExpansion: LatestInvoiceExpandableField(),
+    ).extract(response)!;
   }
 
   Future<Subscription> retrieve(String id) async {
@@ -32,40 +31,17 @@ class SubscriptionResource extends Resource<Subscription> {
 
   Future<SubscriptionExpanded> retrieveExpanded(
     String id, {
-    required Set<SubscriptionExpandableField> expand,
+    required SubscriptionExpandableField expand,
   }) async {
-    final expandableFields = _expandableFields(expand);
     final response = await get(
       '$_resourceName/$id',
       queryParameters: {
-        'expand': expandableFields.map((e) => e.field).toList(),
+        for (int i = 0; i < expand.innerNestedFields.length; i++)
+          'expand[$i]': expand.innerNestedFields.elementAt(i),
       },
     );
 
-    return SubscriptionExpanded.fromJson(response, expand);
-  }
-
-  Iterable<ExpandableField> _expandableFields(
-    Set<SubscriptionExpandableField> fields,
-  ) {
-    return fields.map(
-      (field) => _expandableField(field),
-    );
-  }
-
-  ExpandableField _expandableField(
-    SubscriptionExpandableField field,
-  ) {
-    switch (field) {
-      case SubscriptionExpandableField.discounts:
-        return DiscountsExpandableField();
-      case SubscriptionExpandableField.latestInvoice:
-        return LatestInvoiceExpandedExpandableField(
-          expand: {InvoiceExpandableField.paymentIntent},
-        );
-      case SubscriptionExpandableField.customer:
-        return CustomerExpandableField();
-    }
+    return expand.parse(response);
   }
 
   Future<DataList<Subscription>> list(
@@ -76,25 +52,20 @@ class SubscriptionResource extends Resource<Subscription> {
   }
 
   Future<DataList<SubscriptionExpanded>> listExpanded({
-    required Set<SubscriptionExpandableField> expand,
+    required SubscriptionExpandableField expand,
     ListSubscriptionsRequest? request,
   }) async {
-    final expandableFields = _expandableFields(expand);
-
     final response = await get(
       _resourceName,
       queryParameters: {
         ...?request?.toJson(),
-        'expand': expandableFields.map((e) => 'data.${e.field}').toList(),
+        'expand': expand.nestedFields.toList(),
       },
     );
 
     return DataList<SubscriptionExpanded>.fromJson(
       response,
-      (value) => SubscriptionExpanded.fromJson(
-        value as Map<String, dynamic>,
-        expand,
-      ),
+      (value) => expand.extract(value as Map<String, Object?>)!,
     );
   }
 
