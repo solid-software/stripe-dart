@@ -774,6 +774,49 @@ Map<String, dynamic> _$TotalDiscountAmountToJson(
       'discount': instance.discount,
     };
 
+PauseCollection _$PauseCollectionFromJson(Map<String, dynamic> json) =>
+    PauseCollection(
+      behavior: $enumDecode(_$PauseCollectionBehaviorEnumMap, json['behavior']),
+      resumesAt: _$JsonConverterFromJson<int, DateTime>(
+          json['resumes_at'], const TimestampConverter().fromJson),
+    );
+
+Map<String, dynamic> _$PauseCollectionToJson(PauseCollection instance) {
+  final val = <String, dynamic>{
+    'behavior': _$PauseCollectionBehaviorEnumMap[instance.behavior]!,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'resumes_at',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.resumesAt, const TimestampConverter().toJson));
+  return val;
+}
+
+const _$PauseCollectionBehaviorEnumMap = {
+  PauseCollectionBehavior.keepAsDraft: 'keep_as_draft',
+  PauseCollectionBehavior.markUncollectible: 'mark_uncollectible',
+  PauseCollectionBehavior.void_: 'void',
+};
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
+
 PaymentIntent _$PaymentIntentFromJson(Map<String, dynamic> json) =>
     PaymentIntent(
       object: $enumDecode(_$_PaymentIntentObjectEnumMap, json['object']),
@@ -862,22 +905,10 @@ const _$_PaymentIntentObjectEnumMap = {
   _PaymentIntentObject.payment_intent: 'payment_intent',
 };
 
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
-
 const _$SetupFutureUsageEnumMap = {
   SetupFutureUsage.on_session: 'on_session',
   SetupFutureUsage.off_session: 'off_session',
 };
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);
 
 AutomaticPaymentMethods _$AutomaticPaymentMethodsFromJson(
         Map<String, dynamic> json) =>
@@ -890,37 +921,6 @@ Map<String, dynamic> _$AutomaticPaymentMethodsToJson(
     <String, dynamic>{
       'enabled': instance.enabled,
     };
-
-PauseCollection _$PauseCollectionFromJson(Map<String, dynamic> json) =>
-    PauseCollection(
-      behavior: $enumDecode(_$PauseCollectionBehaviorEnumMap, json['behavior']),
-      resumesAt: _$JsonConverterFromJson<int, DateTime>(
-          json['resumes_at'], const TimestampConverter().fromJson),
-    );
-
-Map<String, dynamic> _$PauseCollectionToJson(PauseCollection instance) {
-  final val = <String, dynamic>{
-    'behavior': _$PauseCollectionBehaviorEnumMap[instance.behavior]!,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull(
-      'resumes_at',
-      _$JsonConverterToJson<int, DateTime>(
-          instance.resumesAt, const TimestampConverter().toJson));
-  return val;
-}
-
-const _$PauseCollectionBehaviorEnumMap = {
-  PauseCollectionBehavior.keepAsDraft: 'keep_as_draft',
-  PauseCollectionBehavior.markUncollectible: 'mark_uncollectible',
-  PauseCollectionBehavior.void_: 'void',
-};
 
 PaymentMethod _$PaymentMethodFromJson(Map<String, dynamic> json) =>
     PaymentMethod(
@@ -1221,6 +1221,44 @@ Map<String, dynamic> _$RefundToJson(Refund instance) => <String, dynamic>{
 const _$_RefundObjectEnumMap = {
   _RefundObject.refund: 'refund',
 };
+
+ConfirmPaymentIntentRequest _$ConfirmPaymentIntentRequestFromJson(
+        Map<String, dynamic> json) =>
+    ConfirmPaymentIntentRequest(
+      paymentMethod: json['payment_method'] as String?,
+      receiptEmail: json['receipt_email'] as String?,
+      setupFutureUsage: $enumDecodeNullable(
+          _$SetupFutureUsageEnumMap, json['setup_future_usage']),
+      confirmationToken: json['confirmation_token'] as String?,
+      errorOnRequiresAction: json['error_on_requires_action'] as bool?,
+      mandate: json['mandate'] as String?,
+      offSession: json['off_session'] as bool?,
+      returnUrl: json['return_url'] as String?,
+      useStripeSdk: json['use_stripe_sdk'] as bool?,
+    );
+
+Map<String, dynamic> _$ConfirmPaymentIntentRequestToJson(
+    ConfirmPaymentIntentRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('payment_method', instance.paymentMethod);
+  writeNotNull('receipt_email', instance.receiptEmail);
+  writeNotNull('setup_future_usage',
+      _$SetupFutureUsageEnumMap[instance.setupFutureUsage]);
+  writeNotNull('confirmation_token', instance.confirmationToken);
+  writeNotNull('error_on_requires_action', instance.errorOnRequiresAction);
+  writeNotNull('mandate', instance.mandate);
+  writeNotNull('off_session', instance.offSession);
+  writeNotNull('return_url', instance.returnUrl);
+  writeNotNull('use_stripe_sdk', instance.useStripeSdk);
+  return val;
+}
 
 CreateCheckoutSessionRequest _$CreateCheckoutSessionRequestFromJson(
         Map<String, dynamic> json) =>
@@ -2369,6 +2407,51 @@ Map<String, dynamic> _$UpdateCustomerRequestToJson(
   writeNotNull('payment_method', instance.paymentMethod);
   writeNotNull('phone_number', instance.phoneNumber);
   val['id'] = instance.id;
+  return val;
+}
+
+UpdatePaymentIntentRequest _$UpdatePaymentIntentRequestFromJson(
+        Map<String, dynamic> json) =>
+    UpdatePaymentIntentRequest(
+      amount: (json['amount'] as num?)?.toInt(),
+      currency: json['currency'] as String?,
+      customer: json['customer'] as String?,
+      description: json['description'] as String?,
+      metadata: json['metadata'] as Map<String, dynamic>?,
+      paymentMethod: json['payment_method'] as String?,
+      receiptEmail: json['receipt_email'] as String?,
+      setupFutureUsage: $enumDecodeNullable(
+          _$SetupFutureUsageEnumMap, json['setup_future_usage']),
+      statementDescriptor: json['statement_descriptor'] as String?,
+      statementDescriptorSuffix: json['statement_descriptor_suffix'] as String?,
+      paymentMethodConfiguration:
+          json['payment_method_configuration'] as String?,
+    );
+
+Map<String, dynamic> _$UpdatePaymentIntentRequestToJson(
+    UpdatePaymentIntentRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('amount', instance.amount);
+  writeNotNull('currency', instance.currency);
+  writeNotNull('customer', instance.customer);
+  writeNotNull('description', instance.description);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('payment_method', instance.paymentMethod);
+  writeNotNull('receipt_email', instance.receiptEmail);
+  writeNotNull('setup_future_usage',
+      _$SetupFutureUsageEnumMap[instance.setupFutureUsage]);
+  writeNotNull('statement_descriptor', instance.statementDescriptor);
+  writeNotNull(
+      'statement_descriptor_suffix', instance.statementDescriptorSuffix);
+  writeNotNull(
+      'payment_method_configuration', instance.paymentMethodConfiguration);
   return val;
 }
 

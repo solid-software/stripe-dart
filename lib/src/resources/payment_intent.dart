@@ -9,6 +9,8 @@ import '_resource.dart';
 final log = Logger('Stripe PaymentIntentResource');
 
 class PaymentIntentResource extends Resource<PaymentIntent> {
+  static const _resourceName = 'payment_intents';
+
   PaymentIntentResource(Client client) : super(client);
 
   Future<PaymentIntent> create(CreatePaymentIntentRequest request) async {
@@ -48,5 +50,31 @@ class PaymentIntentResource extends Resource<PaymentIntent> {
     );
 
     return intents;
+  }
+
+  /// https://docs.stripe.com/api/payment_intents/update
+  Future<PaymentIntent> update(
+    String id, {
+    required UpdatePaymentIntentRequest request,
+  }) async {
+    final response = await post(
+      '$_resourceName/$id',
+      data: request.toJson(),
+    );
+
+    return PaymentIntent.fromJson(response);
+  }
+
+  /// https://docs.stripe.com/api/payment_intents/confirm
+  Future<PaymentIntent> confirm(
+    String id, {
+    required ConfirmPaymentIntentRequest request,
+  }) async {
+    final response = await post(
+      '$_resourceName/$id/confirm',
+      data: request.toJson(),
+    );
+
+    return PaymentIntent.fromJson(response);
   }
 }
