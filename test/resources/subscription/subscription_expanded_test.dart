@@ -71,7 +71,8 @@ void main() {
 
       expect(
         subscriptionExpanded.discounts,
-        isA<List<DiscountExpanded>>().having((l) => l.isEmpty, 'isEmpty', isTrue),
+        isA<List<DiscountExpanded>>()
+            .having((l) => l.isEmpty, 'isEmpty', isTrue),
       );
 
       final customer = subscriptionExpanded.customer?.customer;
