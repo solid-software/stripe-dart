@@ -27,7 +27,7 @@ class InvoiceResource extends Resource<Invoice> {
       '$_resourceName/create_preview',
       data: {
         ...request.toJson(),
-        'expand': expand.nestedFields.toList(),
+        'expand': expand.innerNestedFields.toList(),
       },
     );
 

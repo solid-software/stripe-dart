@@ -1,6 +1,6 @@
-// ignore_for_file: false
 import 'package:stripe/messages.dart';
 import 'package:stripe/src/expanded/customer_expanded.dart';
+import 'package:stripe/src/expanded/discount_expanded.dart';
 import 'package:stripe/src/expanded/invoice_expanded.dart';
 import 'package:stripe/src/expanded/subscription_expanded.dart';
 import 'package:stripe/src/utils/expandable_fields/customer_expandable_field.dart';
@@ -10,22 +10,29 @@ import 'package:stripe/src/utils/expandable_object_field.dart';
 
 class SubscriptionExpandableField
     extends ExpandableObjectField<SubscriptionExpanded> {
-  DiscountsExpandableField? discountsExpansion;
-  LatestInvoiceExpandableField? latestInvoiceExpansion;
-  CustomerExpandableField? customerExpansion;
+  final DiscountsExpandableField? discountsExpansion;
+  final LatestInvoiceExpandableField? latestInvoiceExpansion;
+  final CustomerExpandableField? customerExpansion;
 
-  SubscriptionExpandableField({
+  const SubscriptionExpandableField({
     this.discountsExpansion,
     this.latestInvoiceExpansion,
     this.customerExpansion,
   });
 
   @override
-  String get field => 'customer';
+  String get field => 'subscription';
+
+  @override
+  Iterable<String> get innerNestedFields => [
+        ...?customerExpansion?.nestedFields,
+        ...?latestInvoiceExpansion?.nestedFields,
+        ...?discountsExpansion?.nestedFields,
+      ];
 
   @override
   SubscriptionExpanded parse(Map<String, dynamic> object) {
-    List<Discount>? discounts;
+    List<DiscountExpanded>? discounts;
     if (discountsExpansion != null) {
       discounts = discountsExpansion!.extract(object);
     }

@@ -36,11 +36,12 @@ class SubscriptionResource extends Resource<Subscription> {
     final response = await get(
       '$_resourceName/$id',
       queryParameters: {
-        'expand': expand.nestedFieldPaths.toList(),
+        for (int i = 0; i < expand.innerNestedFields.length; i++)
+          'expand[$i]': expand.innerNestedFields.elementAt(i),
       },
     );
 
-    return expand.extract(response)!;
+    return expand.parse(response);
   }
 
   Future<DataList<Subscription>> list(
@@ -58,7 +59,7 @@ class SubscriptionResource extends Resource<Subscription> {
       _resourceName,
       queryParameters: {
         ...?request?.toJson(),
-        'expand': expand.nestedFieldPaths.toList(),
+        'expand': expand.nestedFields.toList(),
       },
     );
 
