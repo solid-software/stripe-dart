@@ -28,6 +28,12 @@ class Customer extends Message {
   /// The customer’s full name or business name.
   final String? name;
 
+  /// ID of the default payment source for the customer.
+
+  /// If you use payment methods created through the PaymentMethods API,
+  /// see the invoice_settings.default_payment_method field instead.
+  final String? defaultSource;
+
   Customer({
     required this.object,
     required this.id,
@@ -36,6 +42,7 @@ class Customer extends Message {
     this.email,
     this.metadata,
     this.name,
+    this.defaultSource,
   });
 
   factory Customer.fromJson(Map<String, dynamic> json) =>
