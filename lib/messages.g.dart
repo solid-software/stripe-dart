@@ -2266,24 +2266,6 @@ Map<String, dynamic> _$ListPromotionCodesRequestToJson(
   return val;
 }
 
-ListSourcesRequest _$ListSourcesRequestFromJson(Map<String, dynamic> json) =>
-    ListSourcesRequest(
-      customer: json['customer'] as String?,
-    );
-
-Map<String, dynamic> _$ListSourcesRequestToJson(ListSourcesRequest instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('customer', instance.customer);
-  return val;
-}
-
 ListSubscriptionItemsRequest _$ListSubscriptionItemsRequestFromJson(
         Map<String, dynamic> json) =>
     ListSubscriptionItemsRequest(
