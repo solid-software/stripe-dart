@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
-import 'package:stripe/src/resources/sources.dart';
+import 'package:stripe/src/resources/source.dart';
 
 import '../client.dart';
 import '_resource.dart';
@@ -50,7 +50,7 @@ class CustomerResource extends Resource<Customer> {
 We recommend that you adopt the PaymentMethods API.
 This newer API provides access to our latest features and payment method types.
 ''')
-  SourcesResource sources(String customerId) {
-    return SourcesResource(_client, customerId);
+  SourceResource sources(String customerId) {
+    return SourceResource(_client, customerId);
   }
 }

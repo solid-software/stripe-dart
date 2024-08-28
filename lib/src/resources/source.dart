@@ -13,12 +13,12 @@ import '_resource.dart';
 We recommend that you adopt the PaymentMethods API.
 This newer API provides access to our latest features and payment method types.
 ''')
-class SourcesResource extends Resource<Subscription> {
+class SourceResource extends Resource<Subscription> {
   final String customerId;
 
   String get _resourcePath => 'customers/$customerId/sources';
 
-  SourcesResource(Client client, this.customerId) : super(client);
+  SourceResource(Client client, this.customerId) : super(client);
 
   Future<DataList<Source>> list() async {
     final map = await get(_resourcePath);
