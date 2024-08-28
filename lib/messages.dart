@@ -53,6 +53,7 @@ part 'src/messages/requests/update_subscription.dart';
 part 'src/messages/requests/update_subscription_item.dart';
 part 'src/messages/requests/update_subscription_schedule.dart';
 part 'src/messages/shipping_specification.dart';
+part 'src/messages/source.dart';
 part 'src/messages/stripe_api_error.dart';
 part 'src/messages/subscription.dart';
 part 'src/messages/subscription_item.dart';

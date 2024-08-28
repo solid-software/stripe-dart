@@ -1,12 +1,17 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/resources/source.dart';
 
 import '../client.dart';
 import '_resource.dart';
 
 class CustomerResource extends Resource<Customer> {
-  CustomerResource(Client client) : super(client);
+  final Client _client;
+
+  CustomerResource(Client client)
+      : _client = client,
+        super(client);
 
   Future<Customer> create(CreateCustomerRequest request) async {
     final response = await post('customers', data: request.toJson());
@@ -39,5 +44,13 @@ class CustomerResource extends Resource<Customer> {
     );
 
     return customer;
+  }
+
+  @Deprecated('''Stripe doesn't recommend using the deprecated Sources API.
+We recommend that you adopt the PaymentMethods API.
+This newer API provides access to our latest features and payment method types.
+''')
+  SourceResource sources(String customerId) {
+    return SourceResource(_client, customerId);
   }
 }

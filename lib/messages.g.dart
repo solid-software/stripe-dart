@@ -2634,6 +2634,65 @@ Map<String, dynamic> _$ShippingSpecificationToJson(
   return val;
 }
 
+Source _$SourceFromJson(Map<String, dynamic> json) => Source(
+      id: json['id'] as String,
+      object: json['object'] as String,
+      amount: json['amount'] as int?,
+      created: const TimestampConverter().fromJson(json['created'] as int),
+      currency: json['currency'] as String?,
+      customer: json['customer'] as String?,
+      flow: json['flow'] as String?,
+      livemode: json['livemode'] as bool,
+      statementDescriptor: json['statement_descriptor'] as String?,
+      status: json['status'] as String,
+      type: $enumDecode(_$SourceTypeEnumMap, json['type']),
+      usage: json['usage'] as String,
+    );
+
+Map<String, dynamic> _$SourceToJson(Source instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'object': instance.object,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('amount', instance.amount);
+  val['created'] = const TimestampConverter().toJson(instance.created);
+  writeNotNull('currency', instance.currency);
+  writeNotNull('customer', instance.customer);
+  writeNotNull('flow', instance.flow);
+  val['livemode'] = instance.livemode;
+  writeNotNull('statement_descriptor', instance.statementDescriptor);
+  val['status'] = instance.status;
+  val['type'] = _$SourceTypeEnumMap[instance.type]!;
+  val['usage'] = instance.usage;
+  return val;
+}
+
+const _$SourceTypeEnumMap = {
+  SourceType.achCreditTransfer: 'ach_credit_transfer',
+  SourceType.achDebit: 'ach_debit',
+  SourceType.alipay: 'alipay',
+  SourceType.bancontact: 'bancontact',
+  SourceType.card: 'card',
+  SourceType.cardPresent: 'card_present',
+  SourceType.eps: 'eps',
+  SourceType.giropay: 'giropay',
+  SourceType.ideal: 'ideal',
+  SourceType.multibanco: 'multibanco',
+  SourceType.klarna: 'klarna',
+  SourceType.p24: 'p24',
+  SourceType.sepaDebit: 'sepa_debit',
+  SourceType.sofort: 'sofort',
+  SourceType.threeDSecure: 'three_d_secure',
+  SourceType.wechat: 'wechat',
+};
+
 StripeApiError _$StripeApiErrorFromJson(Map<String, dynamic> json) =>
     StripeApiError(
       type: $enumDecode(_$StripeApiErrorTypeEnumMap, json['type']),
