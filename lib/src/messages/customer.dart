@@ -32,6 +32,7 @@ class Customer extends Message {
 
   /// If you use payment methods created through the PaymentMethods API,
   /// see the invoice_settings.default_payment_method field instead.
+  @Deprecated('Use PaymentMethods API instead.')
   final String? defaultSource;
 
   Customer({
