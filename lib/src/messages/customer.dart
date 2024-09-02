@@ -11,7 +11,7 @@ class Customer extends Message {
   final String id;
 
   /// The customer’s default invoice settings.
-  final InvoiceSettings invoiceSettings;
+  final InvoiceSettings? invoiceSettings;
 
   /// An arbitrary string attached to the object. Often useful for displaying to
   /// users.
