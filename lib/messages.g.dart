@@ -351,8 +351,10 @@ const _$CouponDurationEnumMap = {
 Customer _$CustomerFromJson(Map<String, dynamic> json) => Customer(
       object: $enumDecode(_$_CustomerObjectEnumMap, json['object']),
       id: json['id'] as String,
-      invoiceSettings: InvoiceSettings.fromJson(
-          json['invoice_settings'] as Map<String, dynamic>),
+      invoiceSettings: json['invoice_settings'] == null
+          ? null
+          : InvoiceSettings.fromJson(
+              json['invoice_settings'] as Map<String, dynamic>),
       description: json['description'] as String?,
       email: json['email'] as String?,
       metadata: json['metadata'] as Map<String, dynamic>?,
@@ -364,7 +366,6 @@ Map<String, dynamic> _$CustomerToJson(Customer instance) {
   final val = <String, dynamic>{
     'object': _$_CustomerObjectEnumMap[instance.object]!,
     'id': instance.id,
-    'invoice_settings': instance.invoiceSettings.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -373,6 +374,7 @@ Map<String, dynamic> _$CustomerToJson(Customer instance) {
     }
   }
 
+  writeNotNull('invoice_settings', instance.invoiceSettings?.toJson());
   writeNotNull('description', instance.description);
   writeNotNull('email', instance.email);
   writeNotNull('metadata', instance.metadata);
