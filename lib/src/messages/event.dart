@@ -46,10 +46,10 @@ abstract class Event<T extends Message> extends Message {
         return PaymentIntentEvent.fromJson(json) as T;
       // case 'portal_session'     :
       //   return PortalSessionEvent.fromJson(json) as T;
-      // case 'price'              :
-      //   return PriceEvent.fromJson(json) as T;
       case 'product':
         return ProductEvent.fromJson(json) as T;
+      case 'price':
+        return PriceEvent.fromJson(json) as T;
       case 'refund':
         return RefundEvent.fromJson(json) as T;
       case 'subscription':
@@ -216,6 +216,31 @@ class ProductEvent extends Event<Product> {
 
   @override
   Map<String, dynamic> toJson() => _$ProductEventToJson(this);
+}
+
+@JsonSerializable()
+class PriceEvent extends Event<Price> {
+  PriceEvent({
+    required _EventObject object,
+    required String id,
+    required int created,
+    required String type,
+    required EventData<Price> data,
+    required bool livemode,
+  }) : super(
+          object: object,
+          id: id,
+          created: created,
+          data: data,
+          type: type,
+          livemode: livemode,
+        );
+
+  factory PriceEvent.fromJson(Map<String, dynamic> json) =>
+      _$PriceEventFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$PriceEventToJson(this);
 }
 
 @JsonSerializable()
