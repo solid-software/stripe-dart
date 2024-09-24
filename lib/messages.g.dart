@@ -1115,6 +1115,7 @@ Price _$PriceFromJson(Map<String, dynamic> json) => Price(
           ? null
           : Recurring.fromJson(json['recurring'] as Map<String, dynamic>),
       unitAmount: (json['unit_amount'] as num).toInt(),
+      lookupKey: json['lookup_key'] as String?,
     );
 
 Map<String, dynamic> _$PriceToJson(Price instance) {
@@ -1135,6 +1136,7 @@ Map<String, dynamic> _$PriceToJson(Price instance) {
 
   writeNotNull('recurring', instance.recurring?.toJson());
   val['unit_amount'] = instance.unitAmount;
+  writeNotNull('lookup_key', instance.lookupKey);
   return val;
 }
 

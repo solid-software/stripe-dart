@@ -34,6 +34,10 @@ class Price extends Message {
   /// possible. Only set if billing_scheme=per_unit.
   final int unitAmount;
 
+  /// A lookup key used to retrieve prices dynamically from a static string.
+  /// This may be up to 200 characters.
+  final String? lookupKey;
+
   Price({
     required this.object,
     required this.id,
@@ -43,6 +47,7 @@ class Price extends Message {
     required this.type,
     required this.recurring,
     required this.unitAmount,
+    this.lookupKey,
   });
 
   factory Price.fromJson(Map<String, dynamic> json) => _$PriceFromJson(json);
