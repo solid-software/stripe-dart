@@ -1835,6 +1835,7 @@ CreatePriceRequest _$CreatePriceRequestFromJson(Map<String, dynamic> json) =>
       product: json['product'] as String?,
       unitAmount: (json['unit_amount'] as num?)?.toInt(),
       active: json['active'] as bool?,
+      lookupKey: json['lookup_key'] as String?,
       metadata: json['metadata'] as Map<String, dynamic>?,
       nickname: json['nickname'] as String?,
       recurring: json['recurring'] == null
@@ -1860,6 +1861,7 @@ Map<String, dynamic> _$CreatePriceRequestToJson(CreatePriceRequest instance) {
   writeNotNull('product', instance.product);
   writeNotNull('unit_amount', instance.unitAmount);
   writeNotNull('active', instance.active);
+  writeNotNull('lookup_key', instance.lookupKey);
   writeNotNull('metadata', instance.metadata);
   writeNotNull('nickname', instance.nickname);
   writeNotNull('recurring', instance.recurring?.toJson());
