@@ -16,6 +16,10 @@ class CreatePriceRequest {
   /// Whether the price can be used for new purchases. Defaults to true.
   final bool? active;
 
+  /// A lookup key used to retrieve prices dynamically from a static string.
+  /// This may be up to 200 characters.
+  final String? lookupKey;
+
   /// Set of key-value pairs that you can attach to an object.
   final Map<String, dynamic>? metadata;
 
@@ -33,6 +37,7 @@ class CreatePriceRequest {
     this.product,
     this.unitAmount,
     this.active,
+    this.lookupKey,
     this.metadata,
     this.nickname,
     this.recurring,
@@ -111,6 +116,7 @@ class Recurring {
 
   factory Recurring.fromJson(Map<String, dynamic> json) =>
       _$RecurringFromJson(json);
+
   Map<String, dynamic> toJson() => _$RecurringToJson(this);
 }
 
@@ -166,5 +172,6 @@ class PriceParameters {
 
   factory PriceParameters.fromJson(Map<String, dynamic> json) =>
       _$PriceParametersFromJson(json);
+
   Map<String, dynamic> toJson() => _$PriceParametersToJson(this);
 }
