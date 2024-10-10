@@ -117,6 +117,19 @@ class Subscription extends Message {
   /// updated to `paused`.
   final PauseCollection? pauseCollection;
 
+  /// ID of the default payment method for the subscription. It must belong to
+  /// the customer associated with the subscription. This takes precedence over
+  /// default_source. If neither are set, invoices will use the customer’s
+  /// invoice_settings.default_payment_method or default_source.
+  final String? defaultPaymentMethod;
+
+  /// ID of the default payment source for the subscription. It must belong to
+  /// the customer associated with the subscription and be in a chargeable
+  /// state. If default_payment_method is also set, default_payment_method will
+  /// take precedence. If neither are set, invoices will use the customer’s
+  /// invoice_settings.default_payment_method or default_source.
+  final String? defaultSource;
+
   Subscription({
     required this.object,
     required this.id,
@@ -135,6 +148,8 @@ class Subscription extends Message {
     this.latestInvoice,
     this.discounts,
     this.pauseCollection,
+    this.defaultPaymentMethod,
+    this.defaultSource,
   });
 
   factory Subscription.fromJson(Map<String, dynamic> json) =>

@@ -49,6 +49,10 @@ class SubscriptionResource extends Resource<Subscription> {
           return 'latest_invoice.payment_intent';
         case SubscriptionExpandableField.customer:
           return 'customer';
+        case SubscriptionExpandableField.defaultPaymentMethod:
+          return 'default_payment_method';
+        case SubscriptionExpandableField.defaultSource:
+          return 'default_source';
       }
     }).toList();
   }

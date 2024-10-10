@@ -2814,6 +2814,8 @@ Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
           ? null
           : PauseCollection.fromJson(
               json['pause_collection'] as Map<String, dynamic>),
+      defaultPaymentMethod: json['default_payment_method'] as String?,
+      defaultSource: json['default_source'] as String?,
     );
 
 Map<String, dynamic> _$SubscriptionToJson(Subscription instance) {
@@ -2854,6 +2856,8 @@ Map<String, dynamic> _$SubscriptionToJson(Subscription instance) {
   writeNotNull('latest_invoice', instance.latestInvoice);
   writeNotNull('discounts', instance.discounts);
   writeNotNull('pause_collection', instance.pauseCollection?.toJson());
+  writeNotNull('default_payment_method', instance.defaultPaymentMethod);
+  writeNotNull('default_source', instance.defaultSource);
   return val;
 }
 
