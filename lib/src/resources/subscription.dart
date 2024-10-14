@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
-import 'package:stripe/src/expanded.dart';
+import 'package:stripe/src/messages/expandable_objects/subscription_expandable_object.dart';
 
 import '../client.dart';
 import '_resource.dart';
@@ -12,76 +12,39 @@ class SubscriptionResource extends Resource<Subscription> {
   SubscriptionResource(Client client) : super(client);
 
   /// https://docs.stripe.com/api/subscriptions/create
-  Future<SubscriptionExpanded> create(CreateSubscriptionRequest request) async {
+  Future<Subscription> create(CreateSubscriptionRequest request) async {
     final response = await post(_resourceName, data: request.toJson());
 
-    return SubscriptionExpanded.fromJson(response, {
-      SubscriptionExpandableField.discounts,
-      SubscriptionExpandableField.latestInvoice,
-    });
-  }
-
-  Future<Subscription> retrieve(String id) async {
-    final response = await get('$_resourceName/$id');
     return Subscription.fromJson(response);
   }
 
-  Future<SubscriptionExpanded> retrieveExpanded(
+  Future<Subscription> retrieve(
     String id, {
-    required Set<SubscriptionExpandableField> expand,
+    SubscriptionExpandableObject? expand,
   }) async {
     final response = await get(
       '$_resourceName/$id',
       queryParameters: {
-        'expand': _expandParamComponents(expand),
+        if (expand != null) 'expand': expand.expandQuery(),
       },
     );
-
-    return SubscriptionExpanded.fromJson(response, expand);
+    return Subscription.fromJson(response);
   }
 
-  List<String> _expandParamComponents(Set<SubscriptionExpandableField> fields) {
-    return fields.map((field) {
-      switch (field) {
-        case SubscriptionExpandableField.discounts:
-          return 'discounts';
-        case SubscriptionExpandableField.latestInvoice:
-          return 'latest_invoice.payment_intent';
-        case SubscriptionExpandableField.customer:
-          return 'customer';
-        case SubscriptionExpandableField.defaultPaymentMethod:
-          return 'default_payment_method';
-        case SubscriptionExpandableField.defaultSource:
-          return 'default_source';
-      }
-    }).toList();
-  }
-
-  Future<DataList<Subscription>> list(
-      [ListSubscriptionsRequest? request]) async {
-    final map = await get(_resourceName, queryParameters: request?.toJson());
-    return DataList<Subscription>.fromJson(
-        map, (value) => Subscription.fromJson(value as Map<String, dynamic>));
-  }
-
-  Future<DataList<SubscriptionExpanded>> listExpanded({
-    required Set<SubscriptionExpandableField> expand,
+  Future<DataList<Subscription>> list([
     ListSubscriptionsRequest? request,
-  }) async {
-    final response = await get(
+    SubscriptionExpandableObject? expand,
+  ]) async {
+    final map = await get(
       _resourceName,
       queryParameters: {
         ...?request?.toJson(),
-        'expand': _expandParamComponents(expand).map((e) => 'data.$e').toList(),
+        if (expand != null) 'expand': expand.expandQuery(),
       },
     );
-
-    return DataList<SubscriptionExpanded>.fromJson(
-      response,
-      (value) => SubscriptionExpanded.fromJson(
-        value as Map<String, dynamic>,
-        expand,
-      ),
+    return DataList<Subscription>.fromJson(
+      map,
+      (value) => Subscription.fromJson(value as Map<String, dynamic>),
     );
   }
 

@@ -71,3 +71,13 @@ class Discount extends Message {
   @override
   Map<String, dynamic> toJson() => _$DiscountToJson(this);
 }
+
+class ExpandableDiscountJsonConverter
+    extends ExpandableJsonConverter<Discount> {
+  const ExpandableDiscountJsonConverter() : super(Discount.fromJson);
+}
+
+class ExpandableDiscountListJsonConverter
+    extends ExpandableListJsonConverter<Discount> {
+  const ExpandableDiscountListJsonConverter() : super(Discount.fromJson);
+}

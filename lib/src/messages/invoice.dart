@@ -53,7 +53,8 @@ class Invoice extends Message {
   /// The PaymentIntent associated with this invoice. The PaymentIntent is
   /// generated when the invoice is finalized, and can then be used to pay the
   /// invoice. Note that voiding an invoice will cancel the PaymentIntent.
-  final String? paymentIntent;
+  @ExpandablePaymentIntentJsonConverter()
+  final Expandable<PaymentIntent>? paymentIntent;
 
   /// The country of the business associated with this invoice, most often the
   /// business creating the invoice.
@@ -62,6 +63,11 @@ class Invoice extends Message {
   /// The public name of the business associated with this invoice, most often
   /// the business creating the invoice.
   final String? accountName;
+
+  /// The discounts applied to the invoice. Line item discounts are applied
+  /// before invoice discounts. Use expand[]=discounts to expand each discount.
+  @ExpandableDiscountListJsonConverter()
+  final ExpandableList<Discount>? discounts;
 
   Invoice({
     required this.id,
@@ -79,6 +85,7 @@ class Invoice extends Message {
     this.paymentIntent,
     this.accountCountry,
     this.accountName,
+    this.discounts,
   });
 
   factory Invoice.fromJson(Map<String, dynamic> json) =>

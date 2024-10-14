@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:logging/logging.dart';
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/messages/converters.dart';
 
 import '../client.dart';
 import '_resource.dart';
@@ -77,4 +78,15 @@ class PaymentIntentResource extends Resource<PaymentIntent> {
 
     return PaymentIntent.fromJson(response);
   }
+}
+
+class ExpandablePaymentIntentJsonConverter
+    extends ExpandableJsonConverter<PaymentIntent> {
+  const ExpandablePaymentIntentJsonConverter() : super(PaymentIntent.fromJson);
+}
+
+class ExpandablePaymentIntentListJsonConverter
+    extends ExpandableListJsonConverter<PaymentIntent> {
+  const ExpandablePaymentIntentListJsonConverter()
+      : super(PaymentIntent.fromJson);
 }

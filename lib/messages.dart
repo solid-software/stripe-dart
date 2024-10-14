@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stripe/src/messages/converters.dart';
 import 'package:stripe/src/messages/enums.dart';
+import 'package:stripe/src/resources/payment_intent.dart';
+import 'package:stripe/src/utils/expandable.dart';
 
 export 'package:stripe/src/messages/enums.dart';
 
