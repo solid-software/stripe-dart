@@ -21,7 +21,6 @@ import 'src/resources/subscription_item.dart';
 export 'messages.dart';
 export 'src/client.dart';
 export 'src/exceptions.dart';
-export 'src/expanded.dart';
 export 'src/webhook.dart';
 
 /// [Stripe] is the Class that provides the Interface for external calls via the

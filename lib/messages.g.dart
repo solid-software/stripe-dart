@@ -775,9 +775,15 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       hostedInvoiceUrl: json['hosted_invoice_url'] as String?,
       status: json['status'] as String?,
       subscription: json['subscription'] as String?,
-      paymentIntent: json['payment_intent'] as String?,
+      paymentIntent: _$JsonConverterFromJson<Object, Expandable<PaymentIntent>>(
+          json['payment_intent'],
+          const ExpandablePaymentIntentJsonConverter().fromJson),
       accountCountry: json['account_country'] as String?,
       accountName: json['account_name'] as String?,
+      discounts:
+          _$JsonConverterFromJson<List<dynamic>, ExpandableList<Discount>>(
+              json['discounts'],
+              const ExpandableDiscountListJsonConverter().fromJson),
     );
 
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
@@ -803,11 +809,32 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   val['subtotal_excluding_tax'] = instance.subtotalExcludingTax;
   val['total_discount_amounts'] =
       instance.totalDiscountAmounts.map((e) => e.toJson()).toList();
-  writeNotNull('payment_intent', instance.paymentIntent);
+  writeNotNull(
+      'payment_intent',
+      _$JsonConverterToJson<Object, Expandable<PaymentIntent>>(
+          instance.paymentIntent,
+          const ExpandablePaymentIntentJsonConverter().toJson));
   writeNotNull('account_country', instance.accountCountry);
   writeNotNull('account_name', instance.accountName);
+  writeNotNull(
+      'discounts',
+      _$JsonConverterToJson<List<dynamic>, ExpandableList<Discount>>(
+          instance.discounts,
+          const ExpandableDiscountListJsonConverter().toJson));
   return val;
 }
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
 
 TotalDiscountAmount _$TotalDiscountAmountFromJson(Map<String, dynamic> json) =>
     TotalDiscountAmount(
@@ -852,18 +879,6 @@ const _$PauseCollectionBehaviorEnumMap = {
   PauseCollectionBehavior.markUncollectible: 'mark_uncollectible',
   PauseCollectionBehavior.void_: 'void',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);
 
 PaymentIntent _$PaymentIntentFromJson(Map<String, dynamic> json) =>
     PaymentIntent(
