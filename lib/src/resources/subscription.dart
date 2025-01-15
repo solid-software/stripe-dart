@@ -126,7 +126,7 @@ class SubscriptionResource extends Resource<Subscription> {
       '$_resourceName/$id',
       data: {
         if (invoiceNow != null) 'invoice_now': invoiceNow,
-        if (prorate != null) 'prorate': invoiceNow,
+        if (prorate != null) 'prorate': prorate,
       },
     );
 
