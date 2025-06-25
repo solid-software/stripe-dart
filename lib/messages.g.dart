@@ -1669,9 +1669,9 @@ Map<String, dynamic> _$SubscriptionDataToJson(SubscriptionData instance) {
 CreateCreditGrantRequest _$CreateCreditGrantRequestFromJson(
         Map<String, dynamic> json) =>
     CreateCreditGrantRequest(
-      amount: CreditGrantCreateRequestAmount.fromJson(
+      amount: CreateCreditGrantRequestAmount.fromJson(
           json['amount'] as Map<String, dynamic>),
-      applicabilityConfig: CreditGrantCreateRequestApplicabilityConfig.fromJson(
+      applicabilityConfig: CreateCreditGrantRequestApplicabilityConfig.fromJson(
           json['applicability_config'] as Map<String, dynamic>),
       category: $enumDecode(_$CreditGrantCategoryEnumMap, json['category']),
       customer: json['customer'] as String,
@@ -1703,46 +1703,46 @@ Map<String, dynamic> _$CreateCreditGrantRequestToJson(
   return val;
 }
 
-CreditGrantCreateRequestAmount _$CreditGrantCreateRequestAmountFromJson(
+CreateCreditGrantRequestAmount _$CreateCreditGrantRequestAmountFromJson(
         Map<String, dynamic> json) =>
-    CreditGrantCreateRequestAmount(
+    CreateCreditGrantRequestAmount(
       type: $enumDecode(_$CreditGrantAmountTypeEnumMap, json['type']),
       monetary: CreditGrantAmountMonetary.fromJson(
           json['monetary'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$CreditGrantCreateRequestAmountToJson(
-        CreditGrantCreateRequestAmount instance) =>
+Map<String, dynamic> _$CreateCreditGrantRequestAmountToJson(
+        CreateCreditGrantRequestAmount instance) =>
     <String, dynamic>{
       'type': _$CreditGrantAmountTypeEnumMap[instance.type]!,
       'monetary': instance.monetary.toJson(),
     };
 
-CreditGrantCreateRequestApplicabilityConfig
-    _$CreditGrantCreateRequestApplicabilityConfigFromJson(
+CreateCreditGrantRequestApplicabilityConfig
+    _$CreateCreditGrantRequestApplicabilityConfigFromJson(
             Map<String, dynamic> json) =>
-        CreditGrantCreateRequestApplicabilityConfig(
-          scope: CreditGrantCreateRequestApplicabilityConfigScope.fromJson(
+        CreateCreditGrantRequestApplicabilityConfig(
+          scope: CreateCreditGrantRequestApplicabilityConfigScope.fromJson(
               json['scope'] as Map<String, dynamic>),
         );
 
-Map<String, dynamic> _$CreditGrantCreateRequestApplicabilityConfigToJson(
-        CreditGrantCreateRequestApplicabilityConfig instance) =>
+Map<String, dynamic> _$CreateCreditGrantRequestApplicabilityConfigToJson(
+        CreateCreditGrantRequestApplicabilityConfig instance) =>
     <String, dynamic>{
       'scope': instance.scope.toJson(),
     };
 
-CreditGrantCreateRequestApplicabilityConfigScope
-    _$CreditGrantCreateRequestApplicabilityConfigScopeFromJson(
+CreateCreditGrantRequestApplicabilityConfigScope
+    _$CreateCreditGrantRequestApplicabilityConfigScopeFromJson(
             Map<String, dynamic> json) =>
-        CreditGrantCreateRequestApplicabilityConfigScope(
+        CreateCreditGrantRequestApplicabilityConfigScope(
           priceType: $enumDecodeNullable(
               _$CreditGrantApplicabilityConfigScopePriceTypeEnumMap,
               json['price_type']),
         );
 
-Map<String, dynamic> _$CreditGrantCreateRequestApplicabilityConfigScopeToJson(
-    CreditGrantCreateRequestApplicabilityConfigScope instance) {
+Map<String, dynamic> _$CreateCreditGrantRequestApplicabilityConfigScopeToJson(
+    CreateCreditGrantRequestApplicabilityConfigScope instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

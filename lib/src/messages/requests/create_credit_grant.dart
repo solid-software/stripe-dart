@@ -4,11 +4,11 @@ part of '../../../messages.dart';
 @JsonSerializable()
 class CreateCreditGrantRequest {
   /// Amount of this credit grant.
-  final CreditGrantCreateRequestAmount amount;
+  final CreateCreditGrantRequestAmount amount;
 
   /// Configuration specifying what this credit grant applies to. We currently
   /// only support metered prices that have a Billing Meter attached to them.
-  final CreditGrantCreateRequestApplicabilityConfig applicabilityConfig;
+  final CreateCreditGrantRequestApplicabilityConfig applicabilityConfig;
 
   /// The category of this credit grant.
   final CreditGrantCategory category;
@@ -51,7 +51,7 @@ class CreateCreditGrantRequest {
 
 /// https://docs.stripe.com/api/billing/credit-grant/create#create_billing_credit_grant-amount
 @JsonSerializable()
-class CreditGrantCreateRequestAmount {
+class CreateCreditGrantRequestAmount {
   /// Specify the type of this amount. We currently only support monetary
   /// billing credits.
   final CreditGrantAmountType type;
@@ -59,50 +59,50 @@ class CreditGrantCreateRequestAmount {
   /// The monetary amount.
   final CreditGrantAmountMonetary monetary;
 
-  CreditGrantCreateRequestAmount({
+  CreateCreditGrantRequestAmount({
     required this.type,
     required this.monetary,
   });
 
-  factory CreditGrantCreateRequestAmount.fromJson(Map<String, dynamic> json) =>
-      _$CreditGrantCreateRequestAmountFromJson(json);
+  factory CreateCreditGrantRequestAmount.fromJson(Map<String, dynamic> json) =>
+      _$CreateCreditGrantRequestAmountFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CreditGrantCreateRequestAmountToJson(this);
+  Map<String, dynamic> toJson() => _$CreateCreditGrantRequestAmountToJson(this);
 }
 
 /// https://docs.stripe.com/api/billing/credit-grant/create#create_billing_credit_grant-applicability_config
 @JsonSerializable()
-class CreditGrantCreateRequestApplicabilityConfig {
+class CreateCreditGrantRequestApplicabilityConfig {
   /// Specify the scope of this applicability config.
-  final CreditGrantCreateRequestApplicabilityConfigScope scope;
+  final CreateCreditGrantRequestApplicabilityConfigScope scope;
 
-  CreditGrantCreateRequestApplicabilityConfig({
+  CreateCreditGrantRequestApplicabilityConfig({
     required this.scope,
   });
 
-  factory CreditGrantCreateRequestApplicabilityConfig.fromJson(
+  factory CreateCreditGrantRequestApplicabilityConfig.fromJson(
           Map<String, dynamic> json) =>
-      _$CreditGrantCreateRequestApplicabilityConfigFromJson(json);
+      _$CreateCreditGrantRequestApplicabilityConfigFromJson(json);
 
   Map<String, dynamic> toJson() =>
-      _$CreditGrantCreateRequestApplicabilityConfigToJson(this);
+      _$CreateCreditGrantRequestApplicabilityConfigToJson(this);
 }
 
 /// https://docs.stripe.com/api/billing/credit-grant/create#create_billing_credit_grant-applicability_config
 @JsonSerializable()
-class CreditGrantCreateRequestApplicabilityConfigScope {
+class CreateCreditGrantRequestApplicabilityConfigScope {
   /// The price type that credit grants can apply to. We currently only support
   /// the metered price type. Cannot be used in combination with prices.
   final CreditGrantApplicabilityConfigScopePriceType? priceType;
 
-  CreditGrantCreateRequestApplicabilityConfigScope({
+  CreateCreditGrantRequestApplicabilityConfigScope({
     this.priceType,
   });
 
-  factory CreditGrantCreateRequestApplicabilityConfigScope.fromJson(
+  factory CreateCreditGrantRequestApplicabilityConfigScope.fromJson(
           Map<String, dynamic> json) =>
-      _$CreditGrantCreateRequestApplicabilityConfigScopeFromJson(json);
+      _$CreateCreditGrantRequestApplicabilityConfigScopeFromJson(json);
 
   Map<String, dynamic> toJson() =>
-      _$CreditGrantCreateRequestApplicabilityConfigScopeToJson(this);
+      _$CreateCreditGrantRequestApplicabilityConfigScopeToJson(this);
 }
