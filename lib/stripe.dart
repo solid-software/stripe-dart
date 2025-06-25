@@ -85,7 +85,7 @@ class Stripe {
   final InvoiceResource invoice;
 
   /// https://docs.stripe.com/api/billing/credit-grant
-  final CreditGrantResource creditGrantResource;
+  final CreditGrantResource creditGrant;
 
   factory Stripe(String apiKey) {
     final client = DioClient(apiKey: apiKey);
@@ -108,5 +108,5 @@ class Stripe {
         promotionCode = PromotionCodeResource(client),
         coupon = CouponResource(client),
         invoice = InvoiceResource(client),
-        creditGrantResource = CreditGrantResource(client);
+        creditGrant = CreditGrantResource(client);
 }
