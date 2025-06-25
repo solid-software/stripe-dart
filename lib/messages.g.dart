@@ -348,6 +348,144 @@ const _$CouponDurationEnumMap = {
   CouponDuration.repeating: 'repeating',
 };
 
+CreditGrant _$CreditGrantFromJson(Map<String, dynamic> json) => CreditGrant(
+      object: $enumDecode(_$_CreditGrantObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      amount:
+          CreditGrantAmount.fromJson(json['amount'] as Map<String, dynamic>),
+      applicabilityConfig: CreditGrantApplicabilityConfig.fromJson(
+          json['applicability_config'] as Map<String, dynamic>),
+      category: $enumDecode(_$CreditGrantCategoryEnumMap, json['category']),
+      created: (json['created'] as num).toInt(),
+      customer: json['customer'] as String,
+      livemode: json['livemode'] as bool,
+      updated: (json['updated'] as num).toInt(),
+      effectiveAt: (json['effective_at'] as num?)?.toInt(),
+      expiresAt: (json['expires_at'] as num?)?.toInt(),
+      metadata: json['metadata'] as Map<String, dynamic>?,
+      name: json['name'] as String?,
+      voidedAt: (json['voided_at'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$CreditGrantToJson(CreditGrant instance) {
+  final val = <String, dynamic>{
+    'object': _$_CreditGrantObjectEnumMap[instance.object]!,
+    'id': instance.id,
+    'amount': instance.amount.toJson(),
+    'applicability_config': instance.applicabilityConfig.toJson(),
+    'category': _$CreditGrantCategoryEnumMap[instance.category]!,
+    'created': instance.created,
+    'customer': instance.customer,
+    'livemode': instance.livemode,
+    'updated': instance.updated,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('effective_at', instance.effectiveAt);
+  writeNotNull('expires_at', instance.expiresAt);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('name', instance.name);
+  writeNotNull('voided_at', instance.voidedAt);
+  return val;
+}
+
+const _$_CreditGrantObjectEnumMap = {
+  _CreditGrantObject.billingCreditGrant: 'billing.credit_grant',
+};
+
+const _$CreditGrantCategoryEnumMap = {
+  CreditGrantCategory.paid: 'paid',
+  CreditGrantCategory.promotional: 'promotional',
+};
+
+CreditGrantAmount _$CreditGrantAmountFromJson(Map<String, dynamic> json) =>
+    CreditGrantAmount(
+      type: $enumDecode(_$CreditGrantAmountTypeEnumMap, json['type']),
+      monetary: json['monetary'] == null
+          ? null
+          : CreditGrantAmountMonetary.fromJson(
+              json['monetary'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$CreditGrantAmountToJson(CreditGrantAmount instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('monetary', instance.monetary?.toJson());
+  val['type'] = _$CreditGrantAmountTypeEnumMap[instance.type]!;
+  return val;
+}
+
+const _$CreditGrantAmountTypeEnumMap = {
+  CreditGrantAmountType.monetary: 'monetary',
+};
+
+CreditGrantAmountMonetary _$CreditGrantAmountMonetaryFromJson(
+        Map<String, dynamic> json) =>
+    CreditGrantAmountMonetary(
+      currency: json['currency'] as String,
+      value: (json['value'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$CreditGrantAmountMonetaryToJson(
+        CreditGrantAmountMonetary instance) =>
+    <String, dynamic>{
+      'currency': instance.currency,
+      'value': instance.value,
+    };
+
+CreditGrantApplicabilityConfig _$CreditGrantApplicabilityConfigFromJson(
+        Map<String, dynamic> json) =>
+    CreditGrantApplicabilityConfig(
+      scope: CreditGrantApplicabilityConfigScope.fromJson(
+          json['scope'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$CreditGrantApplicabilityConfigToJson(
+        CreditGrantApplicabilityConfig instance) =>
+    <String, dynamic>{
+      'scope': instance.scope.toJson(),
+    };
+
+CreditGrantApplicabilityConfigScope
+    _$CreditGrantApplicabilityConfigScopeFromJson(Map<String, dynamic> json) =>
+        CreditGrantApplicabilityConfigScope(
+          priceType: $enumDecodeNullable(
+              _$CreditGrantApplicabilityConfigScopePriceTypeEnumMap,
+              json['price_type']),
+        );
+
+Map<String, dynamic> _$CreditGrantApplicabilityConfigScopeToJson(
+    CreditGrantApplicabilityConfigScope instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'price_type',
+      _$CreditGrantApplicabilityConfigScopePriceTypeEnumMap[
+          instance.priceType]);
+  return val;
+}
+
+const _$CreditGrantApplicabilityConfigScopePriceTypeEnumMap = {
+  CreditGrantApplicabilityConfigScopePriceType.metered: 'metered',
+};
+
 Customer _$CustomerFromJson(Map<String, dynamic> json) => Customer(
       object: $enumDecode(_$_CustomerObjectEnumMap, json['object']),
       id: json['id'] as String,
@@ -1528,6 +1666,98 @@ Map<String, dynamic> _$SubscriptionDataToJson(SubscriptionData instance) {
   return val;
 }
 
+CreateCreditGrantRequest _$CreateCreditGrantRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateCreditGrantRequest(
+      amount: CreateCreditGrantRequestAmount.fromJson(
+          json['amount'] as Map<String, dynamic>),
+      applicabilityConfig: CreateCreditGrantRequestApplicabilityConfig.fromJson(
+          json['applicability_config'] as Map<String, dynamic>),
+      category: $enumDecode(_$CreditGrantCategoryEnumMap, json['category']),
+      customer: json['customer'] as String,
+      effectiveAt: (json['effective_at'] as num?)?.toInt(),
+      expiresAt: (json['expires_at'] as num?)?.toInt(),
+      metadata: json['metadata'] as Map<String, dynamic>?,
+      name: json['name'] as String?,
+    );
+
+Map<String, dynamic> _$CreateCreditGrantRequestToJson(
+    CreateCreditGrantRequest instance) {
+  final val = <String, dynamic>{
+    'amount': instance.amount.toJson(),
+    'applicability_config': instance.applicabilityConfig.toJson(),
+    'category': _$CreditGrantCategoryEnumMap[instance.category]!,
+    'customer': instance.customer,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('effective_at', instance.effectiveAt);
+  writeNotNull('expires_at', instance.expiresAt);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('name', instance.name);
+  return val;
+}
+
+CreateCreditGrantRequestAmount _$CreateCreditGrantRequestAmountFromJson(
+        Map<String, dynamic> json) =>
+    CreateCreditGrantRequestAmount(
+      type: $enumDecode(_$CreditGrantAmountTypeEnumMap, json['type']),
+      monetary: CreditGrantAmountMonetary.fromJson(
+          json['monetary'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$CreateCreditGrantRequestAmountToJson(
+        CreateCreditGrantRequestAmount instance) =>
+    <String, dynamic>{
+      'type': _$CreditGrantAmountTypeEnumMap[instance.type]!,
+      'monetary': instance.monetary.toJson(),
+    };
+
+CreateCreditGrantRequestApplicabilityConfig
+    _$CreateCreditGrantRequestApplicabilityConfigFromJson(
+            Map<String, dynamic> json) =>
+        CreateCreditGrantRequestApplicabilityConfig(
+          scope: CreateCreditGrantRequestApplicabilityConfigScope.fromJson(
+              json['scope'] as Map<String, dynamic>),
+        );
+
+Map<String, dynamic> _$CreateCreditGrantRequestApplicabilityConfigToJson(
+        CreateCreditGrantRequestApplicabilityConfig instance) =>
+    <String, dynamic>{
+      'scope': instance.scope.toJson(),
+    };
+
+CreateCreditGrantRequestApplicabilityConfigScope
+    _$CreateCreditGrantRequestApplicabilityConfigScopeFromJson(
+            Map<String, dynamic> json) =>
+        CreateCreditGrantRequestApplicabilityConfigScope(
+          priceType: $enumDecodeNullable(
+              _$CreditGrantApplicabilityConfigScopePriceTypeEnumMap,
+              json['price_type']),
+        );
+
+Map<String, dynamic> _$CreateCreditGrantRequestApplicabilityConfigScopeToJson(
+    CreateCreditGrantRequestApplicabilityConfigScope instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'price_type',
+      _$CreditGrantApplicabilityConfigScopePriceTypeEnumMap[
+          instance.priceType]);
+  return val;
+}
+
 CreateCustomerRequest _$CreateCustomerRequestFromJson(
         Map<String, dynamic> json) =>
     CreateCustomerRequest(
@@ -2234,6 +2464,32 @@ Map<String, dynamic> _$ListCouponsRequestToJson(ListCouponsRequest instance) {
   return val;
 }
 
+ListCreditGrantsRequest _$ListCreditGrantsRequestFromJson(
+        Map<String, dynamic> json) =>
+    ListCreditGrantsRequest(
+      customer: json['customer'] as String?,
+      endingBefore: json['ending_before'] as String?,
+      limit: (json['limit'] as num?)?.toInt(),
+      startingAfter: json['starting_after'] as String?,
+    );
+
+Map<String, dynamic> _$ListCreditGrantsRequestToJson(
+    ListCreditGrantsRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('customer', instance.customer);
+  writeNotNull('ending_before', instance.endingBefore);
+  writeNotNull('limit', instance.limit);
+  writeNotNull('starting_after', instance.startingAfter);
+  return val;
+}
+
 ListPricesRequest _$ListPricesRequestFromJson(Map<String, dynamic> json) =>
     ListPricesRequest(
       active: json['active'] as bool?,
@@ -2425,6 +2681,31 @@ Map<String, dynamic> _$SubscriptionPaymentSettingsRequestToJson(
   }
 
   writeNotNull('payment_method_types', instance.paymentMethodTypes);
+  return val;
+}
+
+UpdateCreditGrantRequest _$UpdateCreditGrantRequestFromJson(
+        Map<String, dynamic> json) =>
+    UpdateCreditGrantRequest(
+      id: json['id'] as String,
+      expiresAt: (json['expires_at'] as num?)?.toInt(),
+      metadata: json['metadata'] as Map<String, dynamic>?,
+    );
+
+Map<String, dynamic> _$UpdateCreditGrantRequestToJson(
+    UpdateCreditGrantRequest instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('expires_at', instance.expiresAt);
+  writeNotNull('metadata', instance.metadata);
   return val;
 }
 
