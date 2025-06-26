@@ -405,6 +405,77 @@ Map<String, dynamic> _$InvoiceSettingsToJson(InvoiceSettings instance) {
   return val;
 }
 
+CustomerBalanceTransaction _$CustomerBalanceTransactionFromJson(
+        Map<String, dynamic> json) =>
+    CustomerBalanceTransaction(
+      object: $enumDecode(
+          _$_CustomerBalanceTransactionObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      amount: (json['amount'] as num).toInt(),
+      currency: json['currency'] as String,
+      customer: json['customer'] as String,
+      endingBalance: (json['ending_balance'] as num).toInt(),
+      type: $enumDecode(_$CustomerBalanceTransactionTypeEnumMap, json['type']),
+      created: (json['created'] as num).toInt(),
+      livemode: json['livemode'] as bool,
+      description: json['description'] as String?,
+      metadata: json['metadata'] as Map<String, dynamic>?,
+      checkoutSession: json['checkout_session'] as String?,
+      creditNote: json['credit_note'] as String?,
+      invoice: json['invoice'] as String?,
+    );
+
+Map<String, dynamic> _$CustomerBalanceTransactionToJson(
+    CustomerBalanceTransaction instance) {
+  final val = <String, dynamic>{
+    'object': _$_CustomerBalanceTransactionObjectEnumMap[instance.object]!,
+    'id': instance.id,
+    'amount': instance.amount,
+    'currency': instance.currency,
+    'customer': instance.customer,
+    'ending_balance': instance.endingBalance,
+    'type': _$CustomerBalanceTransactionTypeEnumMap[instance.type]!,
+    'created': instance.created,
+    'livemode': instance.livemode,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('checkout_session', instance.checkoutSession);
+  writeNotNull('credit_note', instance.creditNote);
+  writeNotNull('invoice', instance.invoice);
+  return val;
+}
+
+const _$_CustomerBalanceTransactionObjectEnumMap = {
+  _CustomerBalanceTransactionObject.customerBalanceTransaction:
+      'customer_balance_transaction',
+};
+
+const _$CustomerBalanceTransactionTypeEnumMap = {
+  CustomerBalanceTransactionType.adjustment: 'adjustment',
+  CustomerBalanceTransactionType.appliedToInvoice: 'applied_to_invoice',
+  CustomerBalanceTransactionType.checkoutSessionSubscriptionPayment:
+      'checkout_session_subscription_payment',
+  CustomerBalanceTransactionType.checkoutSessionSubscriptionPaymentCanceled:
+      'checkout_session_subscription_payment_canceled',
+  CustomerBalanceTransactionType.creditNote: 'credit_note',
+  CustomerBalanceTransactionType.initial: 'initial',
+  CustomerBalanceTransactionType.invoiceOverpaid: 'invoice_overpaid',
+  CustomerBalanceTransactionType.invoiceTooLarge: 'invoice_too_large',
+  CustomerBalanceTransactionType.invoiceToSmall: 'invoice_too_small',
+  CustomerBalanceTransactionType.migration: 'migration',
+  CustomerBalanceTransactionType.unappliedFromInvoice: 'unapplied_from_invoice',
+  CustomerBalanceTransactionType.unspentReceiverCredit:
+      'unspent_receiver_credit',
+};
+
 DataList<T> _$DataListFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
@@ -1560,6 +1631,34 @@ Map<String, dynamic> _$CreateCustomerRequestToJson(
   return val;
 }
 
+CreateCustomerBalanceTransactionRequest
+    _$CreateCustomerBalanceTransactionRequestFromJson(
+            Map<String, dynamic> json) =>
+        CreateCustomerBalanceTransactionRequest(
+          amount: (json['amount'] as num).toInt(),
+          currency: json['currency'] as String,
+          description: json['description'] as String?,
+          metadata: json['metadata'] as Map<String, dynamic>?,
+        );
+
+Map<String, dynamic> _$CreateCustomerBalanceTransactionRequestToJson(
+    CreateCustomerBalanceTransactionRequest instance) {
+  final val = <String, dynamic>{
+    'amount': instance.amount,
+    'currency': instance.currency,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('metadata', instance.metadata);
+  return val;
+}
+
 CreateDiscountRequest _$CreateDiscountRequestFromJson(
         Map<String, dynamic> json) =>
     CreateDiscountRequest(
@@ -2234,6 +2333,31 @@ Map<String, dynamic> _$ListCouponsRequestToJson(ListCouponsRequest instance) {
   return val;
 }
 
+ListCustomerBalanceTransactionsRequest
+    _$ListCustomerBalanceTransactionsRequestFromJson(
+            Map<String, dynamic> json) =>
+        ListCustomerBalanceTransactionsRequest(
+          endingBefore: json['ending_before'] as String?,
+          limit: (json['limit'] as num?)?.toInt(),
+          startingAfter: json['starting_after'] as String?,
+        );
+
+Map<String, dynamic> _$ListCustomerBalanceTransactionsRequestToJson(
+    ListCustomerBalanceTransactionsRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('ending_before', instance.endingBefore);
+  writeNotNull('limit', instance.limit);
+  writeNotNull('starting_after', instance.startingAfter);
+  return val;
+}
+
 ListPricesRequest _$ListPricesRequestFromJson(Map<String, dynamic> json) =>
     ListPricesRequest(
       active: json['active'] as bool?,
@@ -2459,6 +2583,29 @@ Map<String, dynamic> _$UpdateCustomerRequestToJson(
   writeNotNull('payment_method', instance.paymentMethod);
   writeNotNull('phone_number', instance.phoneNumber);
   val['id'] = instance.id;
+  return val;
+}
+
+UpdateCustomerBalanceTransactionRequest
+    _$UpdateCustomerBalanceTransactionRequestFromJson(
+            Map<String, dynamic> json) =>
+        UpdateCustomerBalanceTransactionRequest(
+          description: json['description'] as String?,
+          metadata: json['metadata'] as Map<String, dynamic>?,
+        );
+
+Map<String, dynamic> _$UpdateCustomerBalanceTransactionRequestToJson(
+    UpdateCustomerBalanceTransactionRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('metadata', instance.metadata);
   return val;
 }
 

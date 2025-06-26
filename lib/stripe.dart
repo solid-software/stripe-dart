@@ -1,13 +1,12 @@
 library stripe;
 
-import 'package:stripe/src/resources/subscription_schedule.dart';
-
 import 'src/client.dart';
 import 'src/resources/balance_transaction.dart';
 import 'src/resources/charge.dart';
 import 'src/resources/checkout_session.dart';
 import 'src/resources/coupon.dart';
 import 'src/resources/customer.dart';
+import 'src/resources/customer_balance_transaction.dart';
 import 'src/resources/invoice.dart';
 import 'src/resources/payment_intent.dart';
 import 'src/resources/portal_session.dart';
@@ -17,6 +16,7 @@ import 'src/resources/promotion_code.dart';
 import 'src/resources/refund.dart';
 import 'src/resources/subscription.dart';
 import 'src/resources/subscription_item.dart';
+import 'src/resources/subscription_schedule.dart';
 
 export 'messages.dart';
 export 'src/client.dart';
@@ -83,6 +83,8 @@ class Stripe {
   /// https://docs.stripe.com/api/invoices
   final InvoiceResource invoice;
 
+  final CustomerBalanceTransactionResource customerBalanceTransaction;
+
   factory Stripe(String apiKey) {
     final client = DioClient(apiKey: apiKey);
     return Stripe.withClient(client);
@@ -103,5 +105,6 @@ class Stripe {
         balanceTransaction = BalanceTransactionResource(client),
         promotionCode = PromotionCodeResource(client),
         coupon = CouponResource(client),
-        invoice = InvoiceResource(client);
+        invoice = InvoiceResource(client),
+        customerBalanceTransaction = CustomerBalanceTransactionResource(client);
 }
