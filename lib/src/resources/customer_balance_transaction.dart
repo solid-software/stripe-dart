@@ -7,23 +7,39 @@ import '_resource.dart';
 
 class CustomerBalanceTransactionResource
     extends Resource<CustomerBalanceTransaction> {
-  static const _resourceName = 'customer_balance_transaction';
+  static const _customersResourceName = 'customers';
+  static const _resourceName = 'customer_balance_transactions';
 
   CustomerBalanceTransactionResource(Client client) : super(client);
 
   Future<CustomerBalanceTransaction> create(
-      CreateCustomerBalanceTransactionRequest request) async {
-    final map = await post(_resourceName, data: request.toJson());
+    String customerId,
+    CreateCustomerBalanceTransactionRequest request,
+  ) async {
+    final map = await post(
+      _buildPath(customerId),
+      data: request.toJson(),
+    );
 
     return CustomerBalanceTransaction.fromJson(map);
   }
 
+  String _buildPath(String customerId, [String? customerBalanceTransactionId]) {
+    return [
+      _customersResourceName,
+      customerId,
+      _resourceName,
+      if (customerBalanceTransactionId != null) customerBalanceTransactionId,
+    ].join('/');
+  }
+
   Future<CustomerBalanceTransaction> update(
+    String customerId,
     String customerBalanceTransactionId,
     UpdateCustomerBalanceTransactionRequest request,
   ) async {
     final map = await post(
-      '$_resourceName/$customerBalanceTransactionId',
+      _buildPath(customerId, customerBalanceTransactionId),
       data: request.toJson(),
     );
 
@@ -31,16 +47,22 @@ class CustomerBalanceTransactionResource
   }
 
   Future<CustomerBalanceTransaction> retrieve(
-      String customerBalanceTransactionId) async {
-    final map = await get('$_resourceName/$customerBalanceTransactionId');
+      String customerId, String customerBalanceTransactionId) async {
+    final map = await get(
+      _buildPath(customerId, customerBalanceTransactionId),
+    );
 
     return CustomerBalanceTransaction.fromJson(map);
   }
 
-  Future<DataList<CustomerBalanceTransaction>> list([
+  Future<DataList<CustomerBalanceTransaction>> list(
+    String customerId, [
     ListCouponsRequest? request,
   ]) async {
-    final map = await get(_resourceName, queryParameters: request?.toJson());
+    final map = await get(
+      _buildPath(customerId),
+      queryParameters: request?.toJson(),
+    );
 
     return DataList<CustomerBalanceTransaction>.fromJson(
       map,
