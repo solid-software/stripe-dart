@@ -7,9 +7,6 @@ import '_resource.dart';
 
 class CustomerBalanceTransactionResource
     extends Resource<CustomerBalanceTransaction> {
-  static const _customersResourceName = 'customers';
-  static const _resourceName = 'customer_balance_transactions';
-
   CustomerBalanceTransactionResource(Client client) : super(client);
 
   Future<CustomerBalanceTransaction> create(
@@ -26,9 +23,9 @@ class CustomerBalanceTransactionResource
 
   String _buildPath(String customerId, [String? customerBalanceTransactionId]) {
     return [
-      _customersResourceName,
+      'customers',
       customerId,
-      _resourceName,
+      'balance_transactions',
       if (customerBalanceTransactionId != null) customerBalanceTransactionId,
     ].join('/');
   }
