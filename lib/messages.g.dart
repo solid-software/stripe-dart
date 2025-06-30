@@ -2931,7 +2931,7 @@ const _$StripeApiErrorTypeEnumMap = {
 };
 
 Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
-      object: $enumDecode(_$_SubscriptionObjectEnumMap, json['object']),
+      object: $enumDecode(_$SubscriptionObjectEnumMap, json['object']),
       id: json['id'] as String,
       created: (json['created'] as num).toInt(),
       customer: json['customer'] as String,
@@ -2967,7 +2967,7 @@ Subscription _$SubscriptionFromJson(Map<String, dynamic> json) => Subscription(
 
 Map<String, dynamic> _$SubscriptionToJson(Subscription instance) {
   final val = <String, dynamic>{
-    'object': _$_SubscriptionObjectEnumMap[instance.object]!,
+    'object': _$SubscriptionObjectEnumMap[instance.object]!,
     'id': instance.id,
     'created': instance.created,
     'customer': instance.customer,
@@ -3008,8 +3008,8 @@ Map<String, dynamic> _$SubscriptionToJson(Subscription instance) {
   return val;
 }
 
-const _$_SubscriptionObjectEnumMap = {
-  _SubscriptionObject.subscription: 'subscription',
+const _$SubscriptionObjectEnumMap = {
+  SubscriptionObject.subscription: 'subscription',
 };
 
 SubscriptionItem _$SubscriptionItemFromJson(Map<String, dynamic> json) =>
