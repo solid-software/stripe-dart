@@ -12,10 +12,12 @@ class CustomerBalanceTransactionResource
   Future<CustomerBalanceTransaction> create(
     String customerId,
     CreateCustomerBalanceTransactionRequest request,
+    String? idempotencyKey,
   ) async {
     final map = await post(
       _buildPath(customerId),
       data: request.toJson(),
+      idempotencyKey: idempotencyKey,
     );
 
     return CustomerBalanceTransaction.fromJson(map);
