@@ -5,10 +5,13 @@ import 'package:stripe/messages.dart';
 import '../client.dart';
 import '_resource.dart';
 
+/// https://docs.stripe.com/api/customer_balance_transactions
 class CustomerBalanceTransactionResource
     extends Resource<CustomerBalanceTransaction> {
   CustomerBalanceTransactionResource(Client client) : super(client);
 
+  /// Creates an immutable transaction that updates the customer’s credit
+  /// balance.
   Future<CustomerBalanceTransaction> create(
     String customerId,
     CreateCustomerBalanceTransactionRequest request, {
@@ -32,6 +35,8 @@ class CustomerBalanceTransactionResource
     ].join('/');
   }
 
+  /// Most credit balance transaction fields are immutable, but you may update
+  /// its description and metadata.
   Future<CustomerBalanceTransaction> update(
     String customerId,
     String customerBalanceTransactionId,
@@ -45,6 +50,8 @@ class CustomerBalanceTransactionResource
     return CustomerBalanceTransaction.fromJson(map);
   }
 
+  /// Retrieves a specific customer balance transaction that updated the
+  /// customer’s balances.
   Future<CustomerBalanceTransaction> retrieve(
       String customerId, String customerBalanceTransactionId) async {
     final map = await get(
@@ -54,6 +61,7 @@ class CustomerBalanceTransactionResource
     return CustomerBalanceTransaction.fromJson(map);
   }
 
+  /// Returns a list of transactions that updated the customer’s balances.
   Future<DataList<CustomerBalanceTransaction>> list(
     String customerId, [
     ListCouponsRequest? request,
