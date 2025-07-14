@@ -1,10 +1,10 @@
 part of '../../messages.dart';
 
-enum _EventObject { event }
+enum EventObject { event }
 
 /// https://stripe.com/docs/api/events/object
 abstract class Event<T extends Message> extends Message {
-  final _EventObject object;
+  final EventObject object;
 
   /// Unique identifier for the object.
   final String id;
@@ -96,7 +96,7 @@ class EventData<T> {
 @JsonSerializable()
 class SubscriptionEvent extends Event<Subscription> {
   SubscriptionEvent({
-    required _EventObject object,
+    required EventObject object,
     required String id,
     required int created,
     required String type,
@@ -121,7 +121,7 @@ class SubscriptionEvent extends Event<Subscription> {
 @JsonSerializable()
 class CustomerEvent extends Event<Customer> {
   CustomerEvent({
-    required _EventObject object,
+    required EventObject object,
     required String id,
     required int created,
     required String type,
@@ -146,7 +146,7 @@ class CustomerEvent extends Event<Customer> {
 @JsonSerializable()
 class ChargeEvent extends Event<Charge> {
   ChargeEvent({
-    required _EventObject object,
+    required EventObject object,
     required String id,
     required int created,
     required String type,
@@ -171,7 +171,7 @@ class ChargeEvent extends Event<Charge> {
 @JsonSerializable()
 class PaymentIntentEvent extends Event<PaymentIntent> {
   PaymentIntentEvent({
-    required _EventObject object,
+    required EventObject object,
     required String id,
     required int created,
     required String type,
@@ -196,7 +196,7 @@ class PaymentIntentEvent extends Event<PaymentIntent> {
 @JsonSerializable()
 class ProductEvent extends Event<Product> {
   ProductEvent({
-    required _EventObject object,
+    required EventObject object,
     required String id,
     required int created,
     required String type,
@@ -221,7 +221,7 @@ class ProductEvent extends Event<Product> {
 @JsonSerializable()
 class PriceEvent extends Event<Price> {
   PriceEvent({
-    required _EventObject object,
+    required EventObject object,
     required String id,
     required int created,
     required String type,
@@ -246,7 +246,7 @@ class PriceEvent extends Event<Price> {
 @JsonSerializable()
 class RefundEvent extends Event<Refund> {
   RefundEvent({
-    required _EventObject object,
+    required EventObject object,
     required String id,
     required int created,
     required String type,
@@ -271,7 +271,7 @@ class RefundEvent extends Event<Refund> {
 @JsonSerializable()
 class CheckoutSessionEvent extends Event<CheckoutSession> {
   CheckoutSessionEvent({
-    required _EventObject object,
+    required EventObject object,
     required String id,
     required int created,
     required String type,
@@ -296,7 +296,7 @@ class CheckoutSessionEvent extends Event<CheckoutSession> {
 @JsonSerializable()
 class PaymentMethodEvent extends Event<PaymentMethod> {
   PaymentMethodEvent({
-    required _EventObject object,
+    required EventObject object,
     required String id,
     required int created,
     required String type,
@@ -321,7 +321,7 @@ class PaymentMethodEvent extends Event<PaymentMethod> {
 @JsonSerializable()
 class InvoiceEvent extends Event<Invoice> {
   InvoiceEvent({
-    required _EventObject object,
+    required EventObject object,
     required String id,
     required int created,
     required String type,
@@ -346,7 +346,7 @@ class InvoiceEvent extends Event<Invoice> {
 @JsonSerializable()
 class CouponEvent extends Event<Coupon> {
   CouponEvent({
-    required _EventObject object,
+    required EventObject object,
     required String id,
     required int created,
     required String type,

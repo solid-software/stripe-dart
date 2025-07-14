@@ -21,9 +21,16 @@ abstract class Resource<T extends Message> {
       _client.get(makeUrl(path), queryParameters: queryParameters);
 
   @protected
-  Future<Map<String, dynamic>> post(final String path,
-          {final Map<String, dynamic>? data}) =>
-      _client.post(makeUrl(path), data: data);
+  Future<Map<String, dynamic>> post(
+    final String path, {
+    final Map<String, dynamic>? data,
+    String? idempotencyKey,
+  }) =>
+      _client.post(
+        makeUrl(path),
+        data: data,
+        idempotencyKey: idempotencyKey,
+      );
 
   @protected
   Future<Map<String, dynamic>> delete(final String path,
