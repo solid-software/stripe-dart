@@ -833,19 +833,26 @@ Map<String, dynamic> _$CouponEventToJson(CouponEvent instance) =>
 
 Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       id: json['id'] as String,
+      amountDue: (json['amount_due'] as num).toInt(),
+      amountOverpaid: (json['amount_overpaid'] as num).toInt(),
+      amountPaid: (json['amount_paid'] as num).toInt(),
+      amountRemaining: (json['amount_remaining'] as num).toInt(),
+      amountShipping: (json['amount_shipping'] as num).toInt(),
       currency: json['currency'] as String,
       customer: json['customer'] as String,
+      startingBalance: (json['starting_balance'] as num).toInt(),
       total: (json['total'] as num).toInt(),
-      totalExcludingTax: (json['total_excluding_tax'] as num).toInt(),
       subtotal: (json['subtotal'] as num).toInt(),
-      subtotalExcludingTax: (json['subtotal_excluding_tax'] as num).toInt(),
       totalDiscountAmounts: (json['total_discount_amounts'] as List<dynamic>)
           .map((e) => TotalDiscountAmount.fromJson(e as Map<String, dynamic>))
           .toList(),
       description: json['description'] as String?,
+      endingBalance: (json['ending_balance'] as num?)?.toInt(),
       hostedInvoiceUrl: json['hosted_invoice_url'] as String?,
       status: json['status'] as String?,
       subscription: json['subscription'] as String?,
+      subtotalExcludingTax: (json['subtotal_excluding_tax'] as num?)?.toInt(),
+      totalExcludingTax: (json['total_excluding_tax'] as num?)?.toInt(),
       paymentIntent: json['payment_intent'] as String?,
       accountCountry: json['account_country'] as String?,
       accountName: json['account_name'] as String?,
@@ -854,10 +861,15 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   final val = <String, dynamic>{
     'id': instance.id,
+    'amount_due': instance.amountDue,
+    'amount_overpaid': instance.amountOverpaid,
+    'amount_paid': instance.amountPaid,
+    'amount_remaining': instance.amountRemaining,
+    'amount_shipping': instance.amountShipping,
     'currency': instance.currency,
     'customer': instance.customer,
+    'starting_balance': instance.startingBalance,
     'total': instance.total,
-    'total_excluding_tax': instance.totalExcludingTax,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -866,12 +878,14 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     }
   }
 
+  writeNotNull('total_excluding_tax', instance.totalExcludingTax);
   writeNotNull('description', instance.description);
+  writeNotNull('ending_balance', instance.endingBalance);
   writeNotNull('hosted_invoice_url', instance.hostedInvoiceUrl);
   writeNotNull('status', instance.status);
   writeNotNull('subscription', instance.subscription);
   val['subtotal'] = instance.subtotal;
-  val['subtotal_excluding_tax'] = instance.subtotalExcludingTax;
+  writeNotNull('subtotal_excluding_tax', instance.subtotalExcludingTax);
   val['total_discount_amounts'] =
       instance.totalDiscountAmounts.map((e) => e.toJson()).toList();
   writeNotNull('payment_intent', instance.paymentIntent);

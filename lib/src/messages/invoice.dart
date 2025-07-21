@@ -7,6 +7,28 @@ class Invoice extends Message {
   /// the invoice is an upcoming invoice.
   final String id;
 
+  /// Final amount due at this time for this invoice. If the invoice’s total is
+  /// smaller than the minimum charge amount, for example, or if there is
+  /// account credit that can be applied to the invoice, the amount_due may
+  /// be 0. If there is a positive starting_balance for the invoice (the
+  /// customer owes money), the amount_due will also take that into account.
+  /// The charge that gets generated for the invoice will be for the amount
+  /// specified in amount_due.
+  final int amountDue;
+
+  /// Amount that was overpaid on the invoice. The amount overpaid is credited
+  /// to the customer’s credit balance.
+  final int amountOverpaid;
+
+  /// The amount, in cents, that was paid.
+  final int amountPaid;
+
+  /// The difference between amount_due and amount_paid, in cents.
+  final int amountRemaining;
+
+  /// This is the sum of all the shipping amounts.
+  final int amountShipping;
+
   /// Three-letter ISO currency code, in lowercase. Must be a supported
   /// currency.
   final String currency;
@@ -14,16 +36,28 @@ class Invoice extends Message {
   /// The ID of the customer who will be billed.
   final String customer;
 
+  /// Starting customer balance before the invoice is finalized. If the invoice
+  /// has not been finalized yet, this will be the current customer balance.
+  /// For revision invoices, this also includes any customer balance that was
+  /// applied to the original invoice.
+  final int startingBalance;
+
   /// Total after discounts and taxes.
   final int total;
 
   /// The integer amount in cents representing the total amount of the invoice
   /// including all discounts but excluding all tax.
-  final int totalExcludingTax;
+  final int? totalExcludingTax;
 
   /// An arbitrary string attached to the object. Often useful for displaying
   /// to users. Referenced as ‘memo’ in the Dashboard.
   final String? description;
+
+  /// Ending customer balance after the invoice is finalized. Invoices are
+  /// finalized approximately an hour after successful webhook delivery or when
+  /// payment collection is attempted for the invoice. If the invoice has not
+  /// been finalized yet, this will be null.
+  final int? endingBalance;
 
   /// The URL for the hosted invoice page, which allows customers to view and
   /// pay an invoice. If the invoice has not been finalized yet, this will be
@@ -45,7 +79,7 @@ class Invoice extends Message {
   /// The integer amount in cents representing the subtotal of the invoice
   /// before any invoice level discount or tax is applied. Item discounts are
   /// already incorporated
-  final int subtotalExcludingTax;
+  final int? subtotalExcludingTax;
 
   /// The aggregate amounts calculated per discount across all line items.
   final List<TotalDiscountAmount> totalDiscountAmounts;
@@ -65,17 +99,24 @@ class Invoice extends Message {
 
   Invoice({
     required this.id,
+    required this.amountDue,
+    required this.amountOverpaid,
+    required this.amountPaid,
+    required this.amountRemaining,
+    required this.amountShipping,
     required this.currency,
     required this.customer,
+    required this.startingBalance,
     required this.total,
-    required this.totalExcludingTax,
     required this.subtotal,
-    required this.subtotalExcludingTax,
     required this.totalDiscountAmounts,
     this.description,
+    this.endingBalance,
     this.hostedInvoiceUrl,
     this.status,
     this.subscription,
+    this.subtotalExcludingTax,
+    this.totalExcludingTax,
     this.paymentIntent,
     this.accountCountry,
     this.accountName,
