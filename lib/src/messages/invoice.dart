@@ -7,14 +7,26 @@ class Invoice extends Message {
   /// the invoice is an upcoming invoice.
   final String id;
 
+  /// Final amount due at this time for this invoice. If the invoice’s total is
+  /// smaller than the minimum charge amount, for example, or if there is
+  /// account credit that can be applied to the invoice, the amount_due may
+  /// be 0. If there is a positive starting_balance for the invoice (the
+  /// customer owes money), the amount_due will also take that into account.
+  /// The charge that gets generated for the invoice will be for the amount
+  /// specified in amount_due.
   final int amountDue;
 
+  /// Amount that was overpaid on the invoice. The amount overpaid is credited
+  /// to the customer’s credit balance.
   final int amountOverpaid;
 
+  /// The amount, in cents, that was paid.
   final int amountPaid;
 
+  /// The difference between amount_due and amount_paid, in cents.
   final int amountRemaining;
 
+  /// This is the sum of all the shipping amounts.
   final int amountShipping;
 
   /// Three-letter ISO currency code, in lowercase. Must be a supported
@@ -24,6 +36,10 @@ class Invoice extends Message {
   /// The ID of the customer who will be billed.
   final String customer;
 
+  /// Starting customer balance before the invoice is finalized. If the invoice
+  /// has not been finalized yet, this will be the current customer balance.
+  /// For revision invoices, this also includes any customer balance that was
+  /// applied to the original invoice.
   final int startingBalance;
 
   /// Total after discounts and taxes.
@@ -37,6 +53,10 @@ class Invoice extends Message {
   /// to users. Referenced as ‘memo’ in the Dashboard.
   final String? description;
 
+  /// Ending customer balance after the invoice is finalized. Invoices are
+  /// finalized approximately an hour after successful webhook delivery or when
+  /// payment collection is attempted for the invoice. If the invoice has not
+  /// been finalized yet, this will be null.
   final int? endingBalance;
 
   /// The URL for the hosted invoice page, which allows customers to view and
