@@ -91,6 +91,7 @@ class CreatePreviewInvoiceSubscriptionDetailsRequest {
   /// subscription, and one of subscription_details.items, or
   /// subscription_details.trial_end are required. Also,
   /// subscription_details.proration_behavior cannot be set to ‘none’.
+  @TimestampConverter()
   final DateTime? prorationDate;
 
   /// Date a subscription is intended to start (can be future or past).
