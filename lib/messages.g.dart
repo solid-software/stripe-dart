@@ -1764,9 +1764,8 @@ CreatePreviewInvoiceSubscriptionDetailsRequest
               json['proration_date'], const TimestampConverter().fromJson),
           startDate: _$JsonConverterFromJson<int, DateTime>(
               json['start_date'], const TimestampConverter().fromJson),
-          trialEnd: json['trial_end'] == null
-              ? null
-              : DateTime.parse(json['trial_end'] as String),
+          trialEnd: _$JsonConverterFromJson<int, DateTime>(
+              json['trial_end'], const TimestampConverter().fromJson),
         );
 
 Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionDetailsRequestToJson(
@@ -1801,7 +1800,10 @@ Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionDetailsRequestToJson(
       'start_date',
       _$JsonConverterToJson<int, DateTime>(
           instance.startDate, const TimestampConverter().toJson));
-  writeNotNull('trial_end', instance.trialEnd?.toIso8601String());
+  writeNotNull(
+      'trial_end',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.trialEnd, const TimestampConverter().toJson));
   return val;
 }
 

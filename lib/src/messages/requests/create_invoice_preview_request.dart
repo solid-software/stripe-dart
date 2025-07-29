@@ -101,6 +101,7 @@ class CreatePreviewInvoiceSubscriptionDetailsRequest {
   /// If provided, the invoice returned will preview updating or creating a
   /// subscription with that trial end. If set, one of
   /// subscription_details.items or subscription is required.
+  @TimestampConverter()
   final DateTime? trialEnd;
 
   CreatePreviewInvoiceSubscriptionDetailsRequest({
