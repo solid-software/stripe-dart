@@ -922,6 +922,13 @@ InvoiceLineItem _$InvoiceLineItemFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       invoice: json['invoice'] as String?,
       metadata: json['metadata'] as Map<String, dynamic>?,
+      period: json['period'] == null
+          ? null
+          : InvoiceLineItemPeriod.fromJson(
+              json['period'] as Map<String, dynamic>),
+      price: json['price'] == null
+          ? null
+          : Price.fromJson(json['price'] as Map<String, dynamic>),
       quantity: (json['quantity'] as num?)?.toInt(),
     );
 
@@ -942,6 +949,8 @@ Map<String, dynamic> _$InvoiceLineItemToJson(InvoiceLineItem instance) {
   writeNotNull('description', instance.description);
   writeNotNull('invoice', instance.invoice);
   writeNotNull('metadata', instance.metadata);
+  writeNotNull('period', instance.period?.toJson());
+  writeNotNull('price', instance.price?.toJson());
   writeNotNull('quantity', instance.quantity);
   return val;
 }
@@ -949,6 +958,21 @@ Map<String, dynamic> _$InvoiceLineItemToJson(InvoiceLineItem instance) {
 const _$_InvoiceLineItemObjectEnumMap = {
   _InvoiceLineItemObject.lineItem: 'line_item',
 };
+
+InvoiceLineItemPeriod _$InvoiceLineItemPeriodFromJson(
+        Map<String, dynamic> json) =>
+    InvoiceLineItemPeriod(
+      start:
+          const TimestampConverter().fromJson((json['start'] as num).toInt()),
+      end: const TimestampConverter().fromJson((json['end'] as num).toInt()),
+    );
+
+Map<String, dynamic> _$InvoiceLineItemPeriodToJson(
+        InvoiceLineItemPeriod instance) =>
+    <String, dynamic>{
+      'start': const TimestampConverter().toJson(instance.start),
+      'end': const TimestampConverter().toJson(instance.end),
+    };
 
 PauseCollection _$PauseCollectionFromJson(Map<String, dynamic> json) =>
     PauseCollection(
