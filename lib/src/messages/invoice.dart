@@ -84,7 +84,7 @@ class Invoice extends Message {
   /// The aggregate amounts calculated per discount across all line items.
   final List<TotalDiscountAmount> totalDiscountAmounts;
 
-  final DataList<LineItem> lines;
+  final DataList<InvoiceLineItem> lines;
 
   /// The PaymentIntent associated with this invoice. The PaymentIntent is
   /// generated when the invoice is finalized, and can then be used to pay the

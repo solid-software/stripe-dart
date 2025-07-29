@@ -846,8 +846,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       totalDiscountAmounts: (json['total_discount_amounts'] as List<dynamic>)
           .map((e) => TotalDiscountAmount.fromJson(e as Map<String, dynamic>))
           .toList(),
-      lines: DataList<LineItem>.fromJson(json['lines'] as Map<String, dynamic>,
-          (value) => LineItem.fromJson(value as Map<String, dynamic>)),
+      lines: DataList<InvoiceLineItem>.fromJson(
+          json['lines'] as Map<String, dynamic>,
+          (value) => InvoiceLineItem.fromJson(value as Map<String, dynamic>)),
       description: json['description'] as String?,
       endingBalance: (json['ending_balance'] as num?)?.toInt(),
       hostedInvoiceUrl: json['hosted_invoice_url'] as String?,
