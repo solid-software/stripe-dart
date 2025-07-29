@@ -84,6 +84,8 @@ class Invoice extends Message {
   /// The aggregate amounts calculated per discount across all line items.
   final List<TotalDiscountAmount> totalDiscountAmounts;
 
+  final DataList<LineItem> lines;
+
   /// The PaymentIntent associated with this invoice. The PaymentIntent is
   /// generated when the invoice is finalized, and can then be used to pay the
   /// invoice. Note that voiding an invoice will cancel the PaymentIntent.
@@ -110,6 +112,7 @@ class Invoice extends Message {
     required this.total,
     required this.subtotal,
     required this.totalDiscountAmounts,
+    required this.lines,
     this.description,
     this.endingBalance,
     this.hostedInvoiceUrl,

@@ -846,6 +846,8 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       totalDiscountAmounts: (json['total_discount_amounts'] as List<dynamic>)
           .map((e) => TotalDiscountAmount.fromJson(e as Map<String, dynamic>))
           .toList(),
+      lines: DataList<LineItem>.fromJson(json['lines'] as Map<String, dynamic>,
+          (value) => LineItem.fromJson(value as Map<String, dynamic>)),
       description: json['description'] as String?,
       endingBalance: (json['ending_balance'] as num?)?.toInt(),
       hostedInvoiceUrl: json['hosted_invoice_url'] as String?,
@@ -888,6 +890,9 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   writeNotNull('subtotal_excluding_tax', instance.subtotalExcludingTax);
   val['total_discount_amounts'] =
       instance.totalDiscountAmounts.map((e) => e.toJson()).toList();
+  val['lines'] = instance.lines.toJson(
+    (value) => value.toJson(),
+  );
   writeNotNull('payment_intent', instance.paymentIntent);
   writeNotNull('account_country', instance.accountCountry);
   writeNotNull('account_name', instance.accountName);
@@ -906,6 +911,43 @@ Map<String, dynamic> _$TotalDiscountAmountToJson(
       'amount': instance.amount,
       'discount': instance.discount,
     };
+
+InvoiceLineItem _$InvoiceLineItemFromJson(Map<String, dynamic> json) =>
+    InvoiceLineItem(
+      object: $enumDecode(_$_InvoiceLineItemObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      amount: (json['amount'] as num).toInt(),
+      currency: json['currency'] as String,
+      description: json['description'] as String?,
+      invoice: json['invoice'] as String?,
+      metadata: json['metadata'] as Map<String, dynamic>?,
+      quantity: (json['quantity'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$InvoiceLineItemToJson(InvoiceLineItem instance) {
+  final val = <String, dynamic>{
+    'object': _$_InvoiceLineItemObjectEnumMap[instance.object]!,
+    'id': instance.id,
+    'amount': instance.amount,
+    'currency': instance.currency,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('invoice', instance.invoice);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('quantity', instance.quantity);
+  return val;
+}
+
+const _$_InvoiceLineItemObjectEnumMap = {
+  _InvoiceLineItemObject.lineItem: 'line_item',
+};
 
 PauseCollection _$PauseCollectionFromJson(Map<String, dynamic> json) =>
     PauseCollection(
