@@ -19,6 +19,7 @@ part 'src/messages/data_list.dart';
 part 'src/messages/discount.dart';
 part 'src/messages/event.dart';
 part 'src/messages/invoice.dart';
+part 'src/messages/invoice_line_item.dart';
 part 'src/messages/pause_collection.dart';
 part 'src/messages/payment_intent.dart';
 part 'src/messages/payment_method.dart';
