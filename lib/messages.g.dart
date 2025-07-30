@@ -1760,14 +1760,12 @@ CreatePreviewInvoiceSubscriptionDetailsRequest
               .toList(),
           prorationBehavior: $enumDecodeNullable(
               _$ProrationBehaviorEnumMap, json['proration_behavior']),
-          prorationDate: json['proration_date'] == null
-              ? null
-              : DateTime.parse(json['proration_date'] as String),
+          prorationDate: _$JsonConverterFromJson<int, DateTime>(
+              json['proration_date'], const TimestampConverter().fromJson),
           startDate: _$JsonConverterFromJson<int, DateTime>(
               json['start_date'], const TimestampConverter().fromJson),
-          trialEnd: json['trial_end'] == null
-              ? null
-              : DateTime.parse(json['trial_end'] as String),
+          trialEnd: _$JsonConverterFromJson<int, DateTime>(
+              json['trial_end'], const TimestampConverter().fromJson),
         );
 
 Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionDetailsRequestToJson(
@@ -1794,12 +1792,18 @@ Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionDetailsRequestToJson(
   writeNotNull('items', instance.items?.map((e) => e.toJson()).toList());
   writeNotNull('proration_behavior',
       _$ProrationBehaviorEnumMap[instance.prorationBehavior]);
-  writeNotNull('proration_date', instance.prorationDate?.toIso8601String());
+  writeNotNull(
+      'proration_date',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.prorationDate, const TimestampConverter().toJson));
   writeNotNull(
       'start_date',
       _$JsonConverterToJson<int, DateTime>(
           instance.startDate, const TimestampConverter().toJson));
-  writeNotNull('trial_end', instance.trialEnd?.toIso8601String());
+  writeNotNull(
+      'trial_end',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.trialEnd, const TimestampConverter().toJson));
   return val;
 }
 
