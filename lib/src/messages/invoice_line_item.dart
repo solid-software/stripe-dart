@@ -70,11 +70,15 @@ class InvoiceLineItem extends Message {
   Map<String, dynamic> toJson() => _$InvoiceLineItemToJson(this);
 }
 
+/// https://docs.stripe.com/api/invoice-line-item/object#invoice_line_item_object-period
 @JsonSerializable()
 class InvoiceLineItemPeriod extends Message {
+  /// The start of the period. This value is inclusive.
   @TimestampConverter()
   final DateTime start;
 
+  /// The end of the period, which must be greater than or equal to the start.
+  /// This value is inclusive.
   @TimestampConverter()
   final DateTime end;
 
