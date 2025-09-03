@@ -230,6 +230,7 @@ class DioClient extends Client {
                 'Idempotency-Key': idempotencyKey,
               },
               responseType: responseType,
+              validateStatus: (_) => true,
             );
 
   T _processDioResponse<T>(
