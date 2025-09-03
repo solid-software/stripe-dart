@@ -46,15 +46,26 @@ abstract class Client {
     required Object? data,
   }) {
     if (statusCode != 200) {
-      if (data == null ||
-          data is! Map<String, dynamic> ||
-          data['error'] == null) {
+      final Map<String, dynamic>? bodyJson;
+
+      if (data is Map<String, dynamic>) {
+        bodyJson = data;
+      } else if (data is String) {
+        bodyJson = jsonDecode(data);
+      } else if (data is List<int>) {
+        final body = utf8.decode(data);
+        bodyJson = jsonDecode(body);
+      } else {
+        bodyJson = null;
+      }
+
+      if (bodyJson == null || bodyJson['error'] == null) {
         throw InvalidRequestException(
           'The status code returned was $statusCode but no error was provided.',
           statusCode: statusCode,
         );
       }
-      final errorJson = data['error'] as Map<String, dynamic>;
+      final errorJson = bodyJson['error'] as Map<String, dynamic>;
       final error = StripeApiError.fromJson(errorJson);
 
       switch (error.type) {
