@@ -77,7 +77,7 @@ abstract class Client {
     if (data is T) return data;
 
     throw InvalidRequestException(
-      'The JSON returned was unparsable ($data).',
+      'The returned data was unparsable ($data).',
       statusCode: statusCode,
     );
   }
