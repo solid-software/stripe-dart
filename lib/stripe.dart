@@ -14,6 +14,8 @@ import 'src/resources/price.dart';
 import 'src/resources/product.dart';
 import 'src/resources/promotion_code.dart';
 import 'src/resources/refund.dart';
+import 'src/resources/sigma_query_run.dart';
+import 'src/resources/sigma_scheduled_query_run.dart';
 import 'src/resources/subscription.dart';
 import 'src/resources/subscription_item.dart';
 import 'src/resources/subscription_schedule.dart';
@@ -85,6 +87,10 @@ class Stripe {
 
   final CustomerBalanceTransactionResource customerBalanceTransaction;
 
+  final SigmaQueryRunResource sigmaQueryRun;
+
+  final SigmaScheduledQueryRunResource sigmaScheduledQueryRun;
+
   factory Stripe(String apiKey) {
     final client = DioClient(apiKey: apiKey);
     return Stripe.withClient(client);
@@ -106,5 +112,7 @@ class Stripe {
         promotionCode = PromotionCodeResource(client),
         coupon = CouponResource(client),
         invoice = InvoiceResource(client),
-        customerBalanceTransaction = CustomerBalanceTransactionResource(client);
+        customerBalanceTransaction = CustomerBalanceTransactionResource(client),
+        sigmaQueryRun = SigmaQueryRunResource(client),
+        sigmaScheduledQueryRun = SigmaScheduledQueryRunResource(client);
 }
