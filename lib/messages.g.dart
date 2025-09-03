@@ -3140,7 +3140,7 @@ Map<String, dynamic> _$SigmaScheduledQueryRunToJson(
 }
 
 const _$_SigmaScheduledQueryRunObjectEnumMap = {
-  _SigmaScheduledQueryRunObject.scheduledQueryRun: 'scheduledQueryRun',
+  _SigmaScheduledQueryRunObject.scheduledQueryRun: 'scheduled_query_run',
 };
 
 const _$SigmaScheduledQueryRunStatusEnumMap = {

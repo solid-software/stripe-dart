@@ -1,6 +1,7 @@
 part of '../../messages.dart';
 
 enum _SigmaScheduledQueryRunObject {
+  @JsonValue('scheduled_query_run')
   scheduledQueryRun,
 }
 
