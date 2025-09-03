@@ -3087,6 +3087,7 @@ const _$SigmaQueryRunStatusEnumMap = {
 SigmaScheduledQueryRun _$SigmaScheduledQueryRunFromJson(
         Map<String, dynamic> json) =>
     SigmaScheduledQueryRun(
+      id: json['id'] as String,
       object:
           $enumDecode(_$_SigmaScheduledQueryRunObjectEnumMap, json['object']),
       sql: json['sql'] as String,
@@ -3113,6 +3114,7 @@ Map<String, dynamic> _$SigmaScheduledQueryRunToJson(
     SigmaScheduledQueryRun instance) {
   final val = <String, dynamic>{
     'object': _$_SigmaScheduledQueryRunObjectEnumMap[instance.object]!,
+    'id': instance.id,
   };
 
   void writeNotNull(String key, dynamic value) {

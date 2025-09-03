@@ -17,6 +17,7 @@ enum SigmaScheduledQueryRunStatus {
 class SigmaScheduledQueryRun extends Message {
   final _SigmaScheduledQueryRunObject object;
 
+  final String id;
   @TimestampConverter()
   final DateTime? dataLoadTime;
   final File? file;
@@ -34,6 +35,7 @@ class SigmaScheduledQueryRun extends Message {
   final DateTime? resultAvailableUntil;
 
   const SigmaScheduledQueryRun({
+    required this.id,
     required this.object,
     required this.sql,
     required this.status,
