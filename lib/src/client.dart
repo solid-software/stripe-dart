@@ -199,7 +199,10 @@ class DioClient extends Client {
     final response = await dio.get<Uint8List>(
       path,
       queryParameters: queryParameters,
-      options: _createRequestOptions(idempotencyKey: idempotencyKey),
+      options: _createRequestOptions(
+        idempotencyKey: idempotencyKey,
+        responseType: ResponseType.bytes,
+      ),
     );
     return _processDioResponse(response);
   }
