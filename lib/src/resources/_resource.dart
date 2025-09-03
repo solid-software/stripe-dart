@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:meta/meta.dart';
 
 import '../../messages.dart';
@@ -19,6 +21,11 @@ abstract class Resource<T extends Message> {
   Future<Map<String, dynamic>> get(final String path,
           {Map<String, dynamic>? queryParameters}) =>
       _client.get(makeUrl(path), queryParameters: queryParameters);
+
+  @protected
+  Future<Uint8List> getBytes(final String path,
+          {Map<String, dynamic>? queryParameters}) =>
+      _client.getBytes(makeUrl(path), queryParameters: queryParameters);
 
   @protected
   Future<Map<String, dynamic>> post(

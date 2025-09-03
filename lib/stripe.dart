@@ -7,6 +7,7 @@ import 'src/resources/checkout_session.dart';
 import 'src/resources/coupon.dart';
 import 'src/resources/customer.dart';
 import 'src/resources/customer_balance_transaction.dart';
+import 'src/resources/file.dart';
 import 'src/resources/invoice.dart';
 import 'src/resources/payment_intent.dart';
 import 'src/resources/portal_session.dart';
@@ -91,6 +92,8 @@ class Stripe {
 
   final SigmaScheduledQueryRunResource sigmaScheduledQueryRun;
 
+  final FileResource fileResource;
+
   factory Stripe(String apiKey) {
     final client = DioClient(apiKey: apiKey);
     return Stripe.withClient(client);
@@ -114,5 +117,6 @@ class Stripe {
         invoice = InvoiceResource(client),
         customerBalanceTransaction = CustomerBalanceTransactionResource(client),
         sigmaQueryRun = SigmaQueryRunResource(client),
-        sigmaScheduledQueryRun = SigmaScheduledQueryRunResource(client);
+        sigmaScheduledQueryRun = SigmaScheduledQueryRunResource(client),
+        fileResource = FileResource(client);
 }

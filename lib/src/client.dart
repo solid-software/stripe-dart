@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
@@ -32,8 +33,15 @@ abstract class Client {
     Map<String, dynamic>? queryParameters,
   });
 
+  /// Makes a GET request to the Stripe API
+  Future<Uint8List> getBytes(
+    final String path, {
+    String? idempotencyKey,
+    Map<String, dynamic>? queryParameters,
+  });
+
   @protected
-  Map<String, dynamic> processResponse({
+  T processResponse<T>({
     required int? statusCode,
     required Object? data,
   }) {
@@ -65,14 +73,13 @@ abstract class Client {
           );
       }
     }
-    if (data == null || data is! Map<String, dynamic>) {
-      throw InvalidRequestException(
-        'The JSON returned was unparsable ($data).',
-        statusCode: statusCode,
-      );
-    }
 
-    return data;
+    if (data is T) return data;
+
+    throw InvalidRequestException(
+      'The JSON returned was unparsable ($data).',
+      statusCode: statusCode,
+    );
   }
 }
 
@@ -183,13 +190,36 @@ class DioClient extends Client {
     return _processDioResponse(response);
   }
 
-  Options? _createRequestOptions({String? idempotencyKey}) =>
-      idempotencyKey == null
-          ? null
-          : Options(headers: {'Idempotency-Key': idempotencyKey});
+  @override
+  Future<Uint8List> getBytes(
+    String path, {
+    String? idempotencyKey,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    final response = await dio.get<Uint8List>(
+      path,
+      queryParameters: queryParameters,
+      options: _createRequestOptions(idempotencyKey: idempotencyKey),
+    );
+    return _processDioResponse(response);
+  }
 
-  Map<String, dynamic> _processDioResponse(
-    Response<Map<String, dynamic>> response,
+  Options? _createRequestOptions({
+    String? idempotencyKey,
+    ResponseType? responseType,
+  }) =>
+      idempotencyKey == null &&
+              (responseType == null || responseType == ResponseType.json)
+          ? null
+          : Options(
+              headers: {
+                'Idempotency-Key': idempotencyKey,
+              },
+              responseType: responseType,
+            );
+
+  T _processDioResponse<T>(
+    Response<T> response,
   ) {
     return processResponse(
       statusCode: response.statusCode,
