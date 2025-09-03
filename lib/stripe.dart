@@ -92,7 +92,7 @@ class Stripe {
 
   final SigmaScheduledQueryRunResource sigmaScheduledQueryRun;
 
-  final FileResource fileResource;
+  final FileResource file;
 
   factory Stripe(String apiKey) {
     final client = DioClient(apiKey: apiKey);
@@ -118,5 +118,5 @@ class Stripe {
         customerBalanceTransaction = CustomerBalanceTransactionResource(client),
         sigmaQueryRun = SigmaQueryRunResource(client),
         sigmaScheduledQueryRun = SigmaScheduledQueryRunResource(client),
-        fileResource = FileResource(client);
+        file = FileResource(client);
 }
