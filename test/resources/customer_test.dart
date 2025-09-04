@@ -4,17 +4,22 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:stripe/messages.dart';
 import 'package:stripe/src/client.dart';
+import 'package:stripe/src/resources/_api_config.dart';
 import 'package:stripe/src/resources/customer.dart';
 import 'package:test/test.dart';
 
 void main() {
   late DioClient client;
   late CustomerResource customerResource;
+  final config = ApiConfig(
+    apiKey: 'sk_foobar',
+    baseApiUrl: 'http://void/',
+  );
   setUp(() {
     // We set the baseUrl to something unreachable, because we define
     // interceptors in the tests.
-    client = DioClient(apiKey: 'sk_foobar', baseUrl: 'http://void/');
-    customerResource = CustomerResource(client);
+    client = DioClient(apiKey: config.apiKey, version: config.version);
+    customerResource = CustomerResource(client, config);
   });
   group('CustomerResource', () {
     test('properly decodes all values', () async {

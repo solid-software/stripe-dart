@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:stripe/src/client.dart';
+import 'package:stripe/src/resources/_api_config.dart';
 
 import '../../messages.dart';
 import '_resource.dart';
@@ -8,10 +9,14 @@ import '_resource.dart';
 class FileResource extends Resource<File> {
   static const _resourceName = 'files';
 
-  FileResource(Client client) : super(client);
+  FileResource(Client client, ApiConfig config) : super(client, config);
 
   Future<String> downloadContentPlain(String fileId) async {
-    final content = await getPlain(_buildContentsPath(fileId));
+    final content = await client.getPlain(
+      _makeFilesUrl(
+        _buildContentsPath(fileId),
+      ),
+    );
 
     return content;
   }
@@ -25,8 +30,14 @@ class FileResource extends Resource<File> {
   }
 
   Future<Uint8List> downloadContentBytes(String fileId) async {
-    final bytes = await getBytes(_buildContentsPath(fileId));
+    final bytes = await client.getBytes(
+      _makeFilesUrl(_buildContentsPath(fileId)),
+    );
 
     return bytes;
+  }
+
+  Uri _makeFilesUrl(String path) {
+    return Uri.parse(config.baseFilesUrl).resolve(path);
   }
 }

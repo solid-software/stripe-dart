@@ -1,5 +1,7 @@
 library stripe;
 
+import 'package:stripe/src/resources/_api_config.dart';
+
 import 'src/client.dart';
 import 'src/resources/balance_transaction.dart';
 import 'src/resources/charge.dart';
@@ -95,28 +97,30 @@ class Stripe {
   final FileResource file;
 
   factory Stripe(String apiKey) {
-    final client = DioClient(apiKey: apiKey);
-    return Stripe.withClient(client);
+    final config = ApiConfig(apiKey: apiKey);
+    final client = DioClient(apiKey: config.apiKey, version: config.version);
+    return Stripe.withClient(client, config);
   }
 
-  Stripe.withClient(this.client)
-      : checkoutSession = CheckoutSessionResource(client),
-        portalSession = PortalSessionResource(client),
-        customer = CustomerResource(client),
-        refund = RefundResource(client),
-        paymentIntent = PaymentIntentResource(client),
-        price = PriceResource(client),
-        product = ProductResource(client),
-        subscription = SubscriptionResource(client),
-        subscriptionItem = SubscriptionItemResource(client),
-        subscriptionSchedule = SubscriptionScheduleResource(client),
-        charge = ChargeResource(client),
-        balanceTransaction = BalanceTransactionResource(client),
-        promotionCode = PromotionCodeResource(client),
-        coupon = CouponResource(client),
-        invoice = InvoiceResource(client),
-        customerBalanceTransaction = CustomerBalanceTransactionResource(client),
-        sigmaQueryRun = SigmaQueryRunResource(client),
-        sigmaScheduledQueryRun = SigmaScheduledQueryRunResource(client),
-        file = FileResource(client);
+  Stripe.withClient(this.client, ApiConfig config)
+      : checkoutSession = CheckoutSessionResource(client, config),
+        portalSession = PortalSessionResource(client, config),
+        customer = CustomerResource(client, config),
+        refund = RefundResource(client, config),
+        paymentIntent = PaymentIntentResource(client, config),
+        price = PriceResource(client, config),
+        product = ProductResource(client, config),
+        subscription = SubscriptionResource(client, config),
+        subscriptionItem = SubscriptionItemResource(client, config),
+        subscriptionSchedule = SubscriptionScheduleResource(client, config),
+        charge = ChargeResource(client, config),
+        balanceTransaction = BalanceTransactionResource(client, config),
+        promotionCode = PromotionCodeResource(client, config),
+        coupon = CouponResource(client, config),
+        invoice = InvoiceResource(client, config),
+        customerBalanceTransaction =
+            CustomerBalanceTransactionResource(client, config),
+        sigmaQueryRun = SigmaQueryRunResource(client, config),
+        sigmaScheduledQueryRun = SigmaScheduledQueryRunResource(client, config),
+        file = FileResource(client, config);
 }

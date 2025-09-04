@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/resources/_api_config.dart';
 
 import '../client.dart';
 import '_resource.dart';
@@ -8,7 +9,8 @@ import '_resource.dart';
 /// https://docs.stripe.com/api/customer_balance_transactions
 class CustomerBalanceTransactionResource
     extends Resource<CustomerBalanceTransaction> {
-  CustomerBalanceTransactionResource(Client client) : super(client);
+  CustomerBalanceTransactionResource(Client client, ApiConfig config)
+      : super(client, config);
 
   /// Creates an immutable transaction that updates the customer’s credit
   /// balance.
@@ -17,8 +19,8 @@ class CustomerBalanceTransactionResource
     CreateCustomerBalanceTransactionRequest request, {
     String? idempotencyKey,
   }) async {
-    final map = await post(
-      _buildPath(customerId),
+    final map = await client.post(
+      makeUrl(_buildPath(customerId)),
       data: request.toJson(),
       idempotencyKey: idempotencyKey,
     );
@@ -42,8 +44,8 @@ class CustomerBalanceTransactionResource
     String customerBalanceTransactionId,
     UpdateCustomerBalanceTransactionRequest request,
   ) async {
-    final map = await post(
-      _buildPath(customerId, customerBalanceTransactionId),
+    final map = await client.post(
+      makeUrl(_buildPath(customerId, customerBalanceTransactionId)),
       data: request.toJson(),
     );
 
@@ -54,8 +56,8 @@ class CustomerBalanceTransactionResource
   /// customer’s balances.
   Future<CustomerBalanceTransaction> retrieve(
       String customerId, String customerBalanceTransactionId) async {
-    final map = await get(
-      _buildPath(customerId, customerBalanceTransactionId),
+    final map = await client.get(
+      makeUrl(_buildPath(customerId, customerBalanceTransactionId)),
     );
 
     return CustomerBalanceTransaction.fromJson(map);
@@ -66,8 +68,8 @@ class CustomerBalanceTransactionResource
     String customerId, [
     ListCouponsRequest? request,
   ]) async {
-    final map = await get(
-      _buildPath(customerId),
+    final map = await client.get(
+      makeUrl(_buildPath(customerId)),
       queryParameters: request?.toJson(),
     );
 

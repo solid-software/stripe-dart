@@ -1,13 +1,18 @@
+import 'package:stripe/src/resources/_api_config.dart';
+
 import '../../messages.dart';
 import '../client.dart';
 import '_resource.dart';
 
 class SubscriptionScheduleResource extends Resource {
-  SubscriptionScheduleResource(Client client) : super(client);
+  SubscriptionScheduleResource(Client client, ApiConfig config)
+      : super(client, config);
 
   /// https://stripe.com/docs/api/subscription_schedules/retrieve
   Future<SubscriptionSchedule> retrieve(String id) async {
-    final response = await get('subscription_schedules/$id');
+    final response = await client.get(
+      makeUrl('subscription_schedules/$id'),
+    );
 
     return SubscriptionSchedule.fromJson(response);
   }
@@ -16,8 +21,8 @@ class SubscriptionScheduleResource extends Resource {
   Future<DataList<SubscriptionSchedule>> list([
     ListSubscriptionSchedulesRequest? request,
   ]) async {
-    final map = await get(
-      'subscription_schedules',
+    final map = await client.get(
+      makeUrl('subscription_schedules'),
       queryParameters: request?.toJson(),
     );
 
@@ -31,8 +36,8 @@ class SubscriptionScheduleResource extends Resource {
   Future<SubscriptionSchedule> create(
     CreateSubscriptionScheduleRequest request,
   ) async {
-    final response = await post(
-      'subscription_schedules',
+    final response = await client.post(
+      makeUrl('subscription_schedules'),
       data: request.toJson(),
     );
 
@@ -44,8 +49,8 @@ class SubscriptionScheduleResource extends Resource {
     String id,
     UpdateSubscriptionScheduleRequest request,
   ) async {
-    final response = await post(
-      'subscription_schedules/$id',
+    final response = await client.post(
+      makeUrl('subscription_schedules/$id'),
       data: request.toJson(),
     );
 

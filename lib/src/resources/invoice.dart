@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:stripe/messages.dart';
 import 'package:stripe/src/expanded.dart';
+import 'package:stripe/src/resources/_api_config.dart';
 import 'package:stripe/src/utils/expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/discounts_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/payment_intent_expandable_field.dart';
@@ -12,11 +13,13 @@ import '_resource.dart';
 class InvoiceResource extends Resource<Invoice> {
   static const _resourceName = 'invoices';
 
-  InvoiceResource(Client client) : super(client);
+  InvoiceResource(Client client, ApiConfig config) : super(client, config);
 
   Future<Invoice> createPreview(CreatePreviewInvoiceRequest request) async {
-    final response =
-        await post('$_resourceName/create_preview', data: request.toJson());
+    final response = await client.post(
+      makeUrl('$_resourceName/create_preview'),
+      data: request.toJson(),
+    );
 
     return Invoice.fromJson(response);
   }
@@ -26,8 +29,8 @@ class InvoiceResource extends Resource<Invoice> {
     required Set<InvoiceExpandableField> expand,
   }) async {
     final expandableFields = _expandableFields(expand);
-    final response = await post(
-      '$_resourceName/create_preview',
+    final response = await client.post(
+      makeUrl('$_resourceName/create_preview'),
       data: {
         ...request.toJson(),
         'expand': expandableFields.map((e) => e.field).toList(),

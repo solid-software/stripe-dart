@@ -7,42 +7,39 @@ import 'package:meta/meta.dart';
 import 'package:stripe/messages.dart';
 import 'package:stripe/src/exceptions.dart';
 
-const _defaultUrl = 'https://api.stripe.com/v1/';
-const _defaultVersion = '2020-08-27';
-
 /// The http client that will make requests to the stripe API.
 abstract class Client {
   /// Makes a POST request to the Stripe API
   Future<Map<String, dynamic>> post(
-    final String path, {
+    final Uri url, {
     final Map<String, dynamic>? data,
     final String? idempotencyKey,
   });
 
   /// Makes a DELETE request to the Stripe API
   Future<Map<String, dynamic>> delete(
-    final String path, {
+    final Uri url, {
     final Map<String, dynamic>? data,
     final String? idempotencyKey,
   });
 
   /// Makes a GET request to the Stripe API
   Future<Map<String, dynamic>> get(
-    final String path, {
+    final Uri url, {
     String? idempotencyKey,
     Map<String, dynamic>? queryParameters,
   });
 
   /// Makes a GET request to the Stripe API, returns plain body
   Future<String> getPlain(
-    final String path, {
+    final Uri url, {
     String? idempotencyKey,
     Map<String, dynamic>? queryParameters,
   });
 
   /// Makes a GET request to the Stripe API, returns body bytes
   Future<Uint8List> getBytes(
-    final String path, {
+    final Uri url, {
     String? idempotencyKey,
     Map<String, dynamic>? queryParameters,
   });
@@ -111,12 +108,10 @@ class DioClient extends Client {
   /// Creates a [Dio] client that will make requests to [baseUrl].
   factory DioClient({
     required String apiKey,
-    String baseUrl = _defaultUrl,
-    String version = _defaultVersion,
+    required String version,
   }) =>
       DioClient.withDio(
         Dio(),
-        baseUrl: baseUrl,
         version: version,
         apiKey: apiKey,
       );
@@ -125,12 +120,10 @@ class DioClient extends Client {
   DioClient.withDio(
     this.dio, {
     required this.apiKey,
-    String baseUrl = _defaultUrl,
-    this.version = _defaultVersion,
+    required this.version,
   }) {
     dio.transformer = FormDataTransformer();
     dio.options
-      ..baseUrl = baseUrl
       ..responseType = ResponseType.json
       ..contentType = 'application/x-www-form-urlencoded'
       ..headers = {
@@ -148,12 +141,12 @@ class DioClient extends Client {
   /// Makes a post request to the Stripe API
   @override
   Future<Map<String, dynamic>> post(
-    final String path, {
+    final Uri url, {
     final Map<String, dynamic>? data,
     final String? idempotencyKey,
   }) async {
     try {
-      final response = await dio.post<Map<String, dynamic>>(path,
+      final response = await dio.post<Map<String, dynamic>>(url.toString(),
           data: data,
           options: _createRequestOptions(idempotencyKey: idempotencyKey));
       return _processDioResponse(response);
@@ -172,12 +165,12 @@ class DioClient extends Client {
   /// Makes a DELETE request to the Stripe API
   @override
   Future<Map<String, dynamic>> delete(
-    final String path, {
+    final Uri url, {
     final Map<String, dynamic>? data,
     final String? idempotencyKey,
   }) async {
     try {
-      final response = await dio.delete<Map<String, dynamic>>(path,
+      final response = await dio.delete<Map<String, dynamic>>(url.toString(),
           data: data,
           options: _createRequestOptions(idempotencyKey: idempotencyKey));
       return _processDioResponse(response);
@@ -196,12 +189,12 @@ class DioClient extends Client {
   /// Makes a get request to the Stripe API
   @override
   Future<Map<String, dynamic>> get(
-    final String path, {
+    final Uri url, {
     String? idempotencyKey,
     Map<String, dynamic>? queryParameters,
   }) async {
     final response = await dio.get<Map<String, dynamic>>(
-      path,
+      url.toString(),
       queryParameters: queryParameters,
       options: _createRequestOptions(idempotencyKey: idempotencyKey),
     );
@@ -211,12 +204,12 @@ class DioClient extends Client {
   /// Makes a GET request to the Stripe API, returns plain body
   @override
   Future<String> getPlain(
-    String path, {
+    final Uri url, {
     String? idempotencyKey,
     Map<String, dynamic>? queryParameters,
   }) async {
     final response = await dio.get<String>(
-      path,
+      url.toString(),
       queryParameters: queryParameters,
       options: _createRequestOptions(
         idempotencyKey: idempotencyKey,
@@ -229,12 +222,12 @@ class DioClient extends Client {
   /// Makes a get request to the Stripe API, returns body bytes.
   @override
   Future<Uint8List> getBytes(
-    String path, {
+    final Uri url, {
     String? idempotencyKey,
     Map<String, dynamic>? queryParameters,
   }) async {
     final response = await dio.get<Uint8List>(
-      path,
+      url.toString(),
       queryParameters: queryParameters,
       options: _createRequestOptions(
         idempotencyKey: idempotencyKey,
