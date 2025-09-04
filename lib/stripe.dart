@@ -24,6 +24,7 @@ import 'src/resources/subscription_item.dart';
 import 'src/resources/subscription_schedule.dart';
 
 export 'messages.dart';
+export 'src/api_config.dart';
 export 'src/client.dart';
 export 'src/exceptions.dart';
 export 'src/expanded.dart';
