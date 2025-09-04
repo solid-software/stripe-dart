@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:stripe/src/api_config.dart';
 import 'package:stripe/src/client.dart';
-import 'package:stripe/src/resources/_api_config.dart';
 
 import '../../messages.dart';
 import '_resource.dart';

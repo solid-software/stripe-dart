@@ -1,6 +1,6 @@
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/api_config.dart';
 import 'package:stripe/src/client.dart';
-import 'package:stripe/src/resources/_api_config.dart';
 import 'package:stripe/src/resources/_resource.dart';
 
 class SigmaQueryRunResource extends Resource<SigmaQueryRun> {

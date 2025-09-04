@@ -1,4 +1,4 @@
-import 'package:stripe/src/resources/_api_config.dart';
+import 'package:stripe/src/api_config.dart';
 
 import '../../messages.dart';
 import '../client.dart';

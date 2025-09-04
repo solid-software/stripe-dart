@@ -1,6 +1,6 @@
 library stripe;
 
-import 'package:stripe/src/resources/_api_config.dart';
+import 'package:stripe/src/api_config.dart';
 
 import 'src/client.dart';
 import 'src/resources/balance_transaction.dart';

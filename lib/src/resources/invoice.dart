@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/api_config.dart';
 import 'package:stripe/src/expanded.dart';
-import 'package:stripe/src/resources/_api_config.dart';
 import 'package:stripe/src/utils/expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/discounts_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/payment_intent_expandable_field.dart';
