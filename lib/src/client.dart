@@ -33,7 +33,7 @@ abstract class Client {
     Map<String, dynamic>? queryParameters,
   });
 
-  /// Makes a GET request to the Stripe API
+  /// Makes a GET request to the Stripe API, returns body bytes
   Future<Uint8List> getBytes(
     final String path, {
     String? idempotencyKey,
@@ -202,6 +202,8 @@ class DioClient extends Client {
   }
 
   @override
+
+  /// Makes a get request to the Stripe API, returns body bytes.
   Future<Uint8List> getBytes(
     String path, {
     String? idempotencyKey,
