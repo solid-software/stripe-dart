@@ -11,14 +11,11 @@ import 'package:test/test.dart';
 void main() {
   late DioClient client;
   late CustomerResource customerResource;
-  final config = ApiConfig(
-    apiKey: 'sk_foobar',
-    baseApiUrl: 'http://void/',
-  );
+  final config = ApiConfig(baseApiUrl: 'http://void/');
   setUp(() {
     // We set the baseUrl to something unreachable, because we define
     // interceptors in the tests.
-    client = DioClient(apiKey: config.apiKey, version: config.version);
+    client = DioClient(apiKey: 'sk_foobar', version: config.version);
     customerResource = CustomerResource(client, config);
   });
   group('CustomerResource', () {

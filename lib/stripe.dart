@@ -98,8 +98,8 @@ class Stripe {
   final FileResource file;
 
   factory Stripe(String apiKey) {
-    final config = ApiConfig(apiKey: apiKey);
-    final client = DioClient(apiKey: config.apiKey, version: config.version);
+    final config = ApiConfig();
+    final client = DioClient(apiKey: apiKey, version: config.version);
     return Stripe.withClient(client, config);
   }
 
