@@ -14,7 +14,7 @@ abstract class Resource<T extends Message> {
 
   @protected
   @visibleForOverriding
-  Uri makeUrl(String path) {
-    return Uri.parse(config.baseApiUrl).resolve(path);
+  String makeUrl(String path) {
+    return Uri.parse(config.baseApiUrl).resolve(path).toString();
   }
 }

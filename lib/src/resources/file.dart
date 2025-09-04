@@ -37,7 +37,7 @@ class FileResource extends Resource<File> {
     return bytes;
   }
 
-  Uri _makeFilesUrl(String path) {
-    return Uri.parse(config.baseFilesUrl).resolve(path);
+  String _makeFilesUrl(String path) {
+    return Uri.parse(config.baseFilesUrl).resolve(path).toString();
   }
 }
