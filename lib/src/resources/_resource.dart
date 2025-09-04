@@ -23,6 +23,11 @@ abstract class Resource<T extends Message> {
       _client.get(makeUrl(path), queryParameters: queryParameters);
 
   @protected
+  Future<String> getPlain(final String path,
+          {Map<String, dynamic>? queryParameters}) =>
+      _client.getPlain(makeUrl(path), queryParameters: queryParameters);
+
+  @protected
   Future<Uint8List> getBytes(final String path,
           {Map<String, dynamic>? queryParameters}) =>
       _client.getBytes(makeUrl(path), queryParameters: queryParameters);

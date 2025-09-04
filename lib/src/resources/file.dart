@@ -10,6 +10,12 @@ class FileResource extends Resource<File> {
 
   FileResource(Client client) : super(client);
 
+  Future<String> downloadContentPlain(String fileId) async {
+    final content = await getPlain('$_resourceName/$fileId');
+
+    return content;
+  }
+
   Future<Uint8List> downloadContentBytes(String fileId) async {
     final bytes = await getBytes('$_resourceName/$fileId');
 

@@ -33,6 +33,13 @@ abstract class Client {
     Map<String, dynamic>? queryParameters,
   });
 
+  /// Makes a GET request to the Stripe API, returns plain body
+  Future<String> getPlain(
+    final String path, {
+    String? idempotencyKey,
+    Map<String, dynamic>? queryParameters,
+  });
+
   /// Makes a GET request to the Stripe API, returns body bytes
   Future<Uint8List> getBytes(
     final String path, {
@@ -201,9 +208,26 @@ class DioClient extends Client {
     return _processDioResponse(response);
   }
 
+  /// Makes a GET request to the Stripe API, returns plain body
   @override
+  Future<String> getPlain(
+    String path, {
+    String? idempotencyKey,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    final response = await dio.get<String>(
+      path,
+      queryParameters: queryParameters,
+      options: _createRequestOptions(
+        idempotencyKey: idempotencyKey,
+        responseType: ResponseType.plain,
+      ),
+    );
+    return _processDioResponse(response);
+  }
 
   /// Makes a get request to the Stripe API, returns body bytes.
+  @override
   Future<Uint8List> getBytes(
     String path, {
     String? idempotencyKey,
