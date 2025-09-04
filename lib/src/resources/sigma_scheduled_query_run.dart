@@ -9,20 +9,6 @@ class SigmaScheduledQueryRunResource extends Resource<SigmaScheduledQueryRun> {
   SigmaScheduledQueryRunResource(Client client, ApiConfig config)
       : super(client, config);
 
-  // Added as an experiment since POST /v1/sigma/query_runs doesn't work
-  Future<SigmaQueryRun> create(
-    CreateSigmaQueryRunRequest request, {
-    String? idempotencyKey,
-  }) async {
-    final map = await client.post(
-      makeUrl(_resourceName),
-      data: request.toJson(),
-      idempotencyKey: idempotencyKey,
-    );
-
-    return SigmaQueryRun.fromJson(map);
-  }
-
   Future<SigmaScheduledQueryRun> retrieve(String sigmaQueryRunId) async {
     final map = await client.get(
       makeUrl('$_resourceName/$sigmaQueryRunId'),
