@@ -831,6 +831,33 @@ Map<String, dynamic> _$CouponEventToJson(CouponEvent instance) =>
       'livemode': instance.livemode,
     };
 
+SigmaScheduledQueryRunEvent _$SigmaScheduledQueryRunEventFromJson(
+        Map<String, dynamic> json) =>
+    SigmaScheduledQueryRunEvent(
+      object: $enumDecode(_$EventObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      created: (json['created'] as num).toInt(),
+      type: json['type'] as String,
+      data: EventData<SigmaScheduledQueryRun>.fromJson(
+          json['data'] as Map<String, dynamic>,
+          (value) =>
+              SigmaScheduledQueryRun.fromJson(value as Map<String, dynamic>)),
+      livemode: json['livemode'] as bool,
+    );
+
+Map<String, dynamic> _$SigmaScheduledQueryRunEventToJson(
+        SigmaScheduledQueryRunEvent instance) =>
+    <String, dynamic>{
+      'object': _$EventObjectEnumMap[instance.object]!,
+      'id': instance.id,
+      'created': instance.created,
+      'data': instance.data.toJson(
+        (value) => value.toJson(),
+      ),
+      'type': instance.type,
+      'livemode': instance.livemode,
+    };
+
 File _$FileFromJson(Map<String, dynamic> json) => File(
       object: $enumDecode(_$_FileObjectEnumMap, json['object']),
       id: json['id'] as String,
