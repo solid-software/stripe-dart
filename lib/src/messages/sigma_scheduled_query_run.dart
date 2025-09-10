@@ -23,7 +23,7 @@ class SigmaScheduledQueryRun extends Message {
   final File? file;
   final String sql;
   final SigmaScheduledQueryRunStatus status;
-  final String? name;
+  final String? title;
 
   @TimestampConverter()
   final DateTime created;
@@ -43,7 +43,7 @@ class SigmaScheduledQueryRun extends Message {
     required this.livemode,
     this.dataLoadTime,
     this.file,
-    this.name,
+    this.title,
     this.error,
     this.resultAvailableUntil,
   });

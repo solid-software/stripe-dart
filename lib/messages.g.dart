@@ -3128,7 +3128,7 @@ SigmaScheduledQueryRun _$SigmaScheduledQueryRunFromJson(
       file: json['file'] == null
           ? null
           : File.fromJson(json['file'] as Map<String, dynamic>),
-      name: json['name'] as String?,
+      title: json['title'] as String?,
       error: json['error'] == null
           ? null
           : SigmaScheduledQueryRunError.fromJson(
@@ -3157,7 +3157,7 @@ Map<String, dynamic> _$SigmaScheduledQueryRunToJson(
   writeNotNull('file', instance.file?.toJson());
   val['sql'] = instance.sql;
   val['status'] = _$SigmaScheduledQueryRunStatusEnumMap[instance.status]!;
-  writeNotNull('name', instance.name);
+  writeNotNull('title', instance.title);
   val['created'] = const TimestampConverter().toJson(instance.created);
   writeNotNull('error', instance.error?.toJson());
   val['livemode'] = instance.livemode;
