@@ -1,39 +1,20 @@
 import 'package:meta/meta.dart';
+import 'package:stripe/src/api_config.dart';
 
 import '../../messages.dart';
 import '../client.dart';
 
 abstract class Resource<T extends Message> {
   @protected
-  final Client _client;
+  final Client client;
+  @protected
+  final ApiConfig config;
 
-  Resource(this._client);
+  Resource(this.client, this.config);
 
   @protected
   @visibleForOverriding
   String makeUrl(String path) {
-    return path;
+    return Uri.parse(config.baseApiUrl).resolve(path).toString();
   }
-
-  @protected
-  Future<Map<String, dynamic>> get(final String path,
-          {Map<String, dynamic>? queryParameters}) =>
-      _client.get(makeUrl(path), queryParameters: queryParameters);
-
-  @protected
-  Future<Map<String, dynamic>> post(
-    final String path, {
-    final Map<String, dynamic>? data,
-    String? idempotencyKey,
-  }) =>
-      _client.post(
-        makeUrl(path),
-        data: data,
-        idempotencyKey: idempotencyKey,
-      );
-
-  @protected
-  Future<Map<String, dynamic>> delete(final String path,
-          {final Map<String, dynamic>? data}) =>
-      _client.delete(makeUrl(path), data: data);
 }

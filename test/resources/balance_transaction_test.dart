@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:stripe/messages.dart' show FeeDetails;
+import 'package:stripe/src/api_config.dart';
 import 'package:stripe/src/client.dart';
 import 'package:stripe/src/resources/balance_transaction.dart';
 import 'package:test/test.dart';
@@ -10,11 +11,15 @@ import 'package:test/test.dart';
 void main() {
   late DioClient client;
   late BalanceTransactionResource balanceTransactionResource;
+  final config = ApiConfig(baseApiUrl: 'http://void/');
   setUp(() {
     // We set the baseUrl to something unreachable, because we define
     // interceptors in the tests.
-    client = DioClient(apiKey: 'sk_foobar', baseUrl: 'http://void/');
-    balanceTransactionResource = BalanceTransactionResource(client);
+    client = DioClient(
+      apiKey: 'sk_foobar',
+      version: config.version,
+    );
+    balanceTransactionResource = BalanceTransactionResource(client, config);
   });
   group('BalanceTransactionResource', () {
     test('properly decodes all values', () async {

@@ -1,26 +1,35 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/api_config.dart';
 
 import '../client.dart';
 import '_resource.dart';
 
 class ProductResource extends Resource<Product> {
-  ProductResource(Client client) : super(client);
+  ProductResource(Client client, ApiConfig config) : super(client, config);
 
   Future<Product> retrieve(String id) async {
-    final map = await get('products/$id');
+    final map = await client.get(
+      makeUrl('products/$id'),
+    );
     return Product.fromJson(map);
   }
 
   Future<DataList<Product>> list([ListProductsRequest? request]) async {
-    final map = await get('products', queryParameters: request?.toJson());
+    final map = await client.get(
+      makeUrl('products'),
+      queryParameters: request?.toJson(),
+    );
     return DataList<Product>.fromJson(
         map, (value) => Product.fromJson(value as Map<String, dynamic>));
   }
 
   Future<Product> create(CreateProductRequest request) async {
-    final map = await post('products', data: request.toJson());
+    final map = await client.post(
+      makeUrl('products'),
+      data: request.toJson(),
+    );
     return Product.fromJson(map);
   }
 
@@ -28,8 +37,8 @@ class ProductResource extends Resource<Product> {
     /// https://docs.stripe.com/search#query-fields-for-products
     required String queryString,
   }) async {
-    final Map<String, dynamic> map = await get(
-      'products/search',
+    final Map<String, dynamic> map = await client.get(
+      makeUrl('products/search'),
       queryParameters: {'query': queryString},
     );
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/api_config.dart';
 
 import '../client.dart';
 import '_resource.dart';
@@ -18,10 +19,16 @@ class SourceResource extends Resource<Subscription> {
 
   String get _resourcePath => 'customers/$customerId/sources';
 
-  SourceResource(Client client, this.customerId) : super(client);
+  SourceResource(
+    Client client,
+    ApiConfig config,
+    this.customerId,
+  ) : super(client, config);
 
   Future<DataList<Source>> list() async {
-    final map = await get(_resourcePath);
+    final map = await client.get(
+      makeUrl(_resourcePath),
+    );
     return DataList<Source>.fromJson(
         map, (value) => Source.fromJson(value as Map<String, dynamic>));
   }

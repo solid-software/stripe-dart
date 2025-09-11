@@ -1,31 +1,35 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/api_config.dart';
 import 'package:stripe/src/resources/source.dart';
 
 import '../client.dart';
 import '_resource.dart';
 
 class CustomerResource extends Resource<Customer> {
-  final Client _client;
-
-  CustomerResource(Client client)
-      : _client = client,
-        super(client);
+  CustomerResource(Client client, ApiConfig config) : super(client, config);
 
   Future<Customer> create(CreateCustomerRequest request) async {
-    final response = await post('customers', data: request.toJson());
+    final response = await client.post(
+      makeUrl('customers'),
+      data: request.toJson(),
+    );
     return Customer.fromJson(response);
   }
 
   Future<Customer> retrieve(String customerId) async {
-    final map = await get('customers/$customerId');
+    final map = await client.get(
+      makeUrl('customers/$customerId'),
+    );
     return Customer.fromJson(map);
   }
 
   Future<Customer> update(UpdateCustomerRequest request) async {
-    final response =
-        await post('customers/${request.id}', data: request.toJson());
+    final response = await client.post(
+      makeUrl('customers/${request.id}'),
+      data: request.toJson(),
+    );
     return Customer.fromJson(response);
   }
 
@@ -33,8 +37,8 @@ class CustomerResource extends Resource<Customer> {
     /// https://docs.stripe.com/search#query-fields-for-customers
     required String queryString,
   }) async {
-    final Map<String, dynamic> map = await get(
-      'customers/search',
+    final Map<String, dynamic> map = await client.get(
+      makeUrl('customers/search'),
       queryParameters: {'query': queryString},
     );
 
@@ -51,6 +55,10 @@ We recommend that you adopt the PaymentMethods API.
 This newer API provides access to our latest features and payment method types.
 ''')
   SourceResource sources(String customerId) {
-    return SourceResource(_client, customerId);
+    return SourceResource(
+      client,
+      config,
+      customerId,
+    );
   }
 }

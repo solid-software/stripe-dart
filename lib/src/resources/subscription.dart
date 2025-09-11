@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/api_config.dart';
 import 'package:stripe/src/expanded.dart';
 
 import '../client.dart';
@@ -9,11 +10,14 @@ import '_resource.dart';
 class SubscriptionResource extends Resource<Subscription> {
   static const _resourceName = 'subscriptions';
 
-  SubscriptionResource(Client client) : super(client);
+  SubscriptionResource(Client client, ApiConfig config) : super(client, config);
 
   /// https://docs.stripe.com/api/subscriptions/create
   Future<SubscriptionExpanded> create(CreateSubscriptionRequest request) async {
-    final response = await post(_resourceName, data: request.toJson());
+    final response = await client.post(
+      makeUrl(_resourceName),
+      data: request.toJson(),
+    );
 
     return SubscriptionExpanded.fromJson(response, {
       SubscriptionExpandableField.discounts,
@@ -22,7 +26,9 @@ class SubscriptionResource extends Resource<Subscription> {
   }
 
   Future<Subscription> retrieve(String id) async {
-    final response = await get('$_resourceName/$id');
+    final response = await client.get(
+      makeUrl('$_resourceName/$id'),
+    );
     return Subscription.fromJson(response);
   }
 
@@ -30,8 +36,8 @@ class SubscriptionResource extends Resource<Subscription> {
     String id, {
     required Set<SubscriptionExpandableField> expand,
   }) async {
-    final response = await get(
-      '$_resourceName/$id',
+    final response = await client.get(
+      makeUrl('$_resourceName/$id'),
       queryParameters: {
         'expand': _expandParamComponents(expand),
       },
@@ -59,7 +65,10 @@ class SubscriptionResource extends Resource<Subscription> {
 
   Future<DataList<Subscription>> list(
       [ListSubscriptionsRequest? request]) async {
-    final map = await get(_resourceName, queryParameters: request?.toJson());
+    final map = await client.get(
+      makeUrl(_resourceName),
+      queryParameters: request?.toJson(),
+    );
     return DataList<Subscription>.fromJson(
         map, (value) => Subscription.fromJson(value as Map<String, dynamic>));
   }
@@ -68,8 +77,8 @@ class SubscriptionResource extends Resource<Subscription> {
     required Set<SubscriptionExpandableField> expand,
     ListSubscriptionsRequest? request,
   }) async {
-    final response = await get(
-      _resourceName,
+    final response = await client.get(
+      makeUrl(_resourceName),
       queryParameters: {
         ...?request?.toJson(),
         'expand': _expandParamComponents(expand).map((e) => 'data.$e').toList(),
@@ -89,8 +98,8 @@ class SubscriptionResource extends Resource<Subscription> {
     /// https://docs.stripe.com/search#query-fields-for-subscriptions
     required String queryString,
   }) async {
-    final Map<String, dynamic> map = await get(
-      '$_resourceName/search',
+    final Map<String, dynamic> map = await client.get(
+      makeUrl('$_resourceName/search'),
       queryParameters: {'query': queryString},
     );
 
@@ -108,8 +117,8 @@ class SubscriptionResource extends Resource<Subscription> {
     String id, {
     required SubscriptionUpdate update,
   }) async {
-    final response = await post(
-      '$_resourceName/$id',
+    final response = await client.post(
+      makeUrl('$_resourceName/$id'),
       data: update.toJson(),
     );
 
@@ -122,8 +131,8 @@ class SubscriptionResource extends Resource<Subscription> {
     bool? invoiceNow,
     bool? prorate,
   }) async {
-    final response = await delete(
-      '$_resourceName/$id',
+    final response = await client.delete(
+      makeUrl('$_resourceName/$id'),
       data: {
         if (invoiceNow != null) 'invoice_now': invoiceNow,
         if (prorate != null) 'prorate': prorate,

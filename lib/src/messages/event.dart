@@ -60,6 +60,8 @@ abstract class Event<T extends Message> extends Message {
         return InvoiceEvent.fromJson(json) as T;
       case 'coupon':
         return CouponEvent.fromJson(json) as T;
+      case 'scheduled_query_run':
+        return SigmaScheduledQueryRunEvent.fromJson(json) as T;
       default:
         throw FormatException(
             'Unrecognized/unsupported Stripe object `${json['object']}` in event webhook');
@@ -366,4 +368,29 @@ class CouponEvent extends Event<Coupon> {
 
   @override
   Map<String, dynamic> toJson() => _$CouponEventToJson(this);
+}
+
+@JsonSerializable()
+class SigmaScheduledQueryRunEvent extends Event<SigmaScheduledQueryRun> {
+  SigmaScheduledQueryRunEvent({
+    required EventObject object,
+    required String id,
+    required int created,
+    required String type,
+    required EventData<SigmaScheduledQueryRun> data,
+    required bool livemode,
+  }) : super(
+          object: object,
+          id: id,
+          created: created,
+          data: data,
+          type: type,
+          livemode: livemode,
+        );
+
+  factory SigmaScheduledQueryRunEvent.fromJson(Map<String, dynamic> json) =>
+      _$SigmaScheduledQueryRunEventFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$SigmaScheduledQueryRunEventToJson(this);
 }

@@ -831,6 +831,144 @@ Map<String, dynamic> _$CouponEventToJson(CouponEvent instance) =>
       'livemode': instance.livemode,
     };
 
+SigmaScheduledQueryRunEvent _$SigmaScheduledQueryRunEventFromJson(
+        Map<String, dynamic> json) =>
+    SigmaScheduledQueryRunEvent(
+      object: $enumDecode(_$EventObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      created: (json['created'] as num).toInt(),
+      type: json['type'] as String,
+      data: EventData<SigmaScheduledQueryRun>.fromJson(
+          json['data'] as Map<String, dynamic>,
+          (value) =>
+              SigmaScheduledQueryRun.fromJson(value as Map<String, dynamic>)),
+      livemode: json['livemode'] as bool,
+    );
+
+Map<String, dynamic> _$SigmaScheduledQueryRunEventToJson(
+        SigmaScheduledQueryRunEvent instance) =>
+    <String, dynamic>{
+      'object': _$EventObjectEnumMap[instance.object]!,
+      'id': instance.id,
+      'created': instance.created,
+      'data': instance.data.toJson(
+        (value) => value.toJson(),
+      ),
+      'type': instance.type,
+      'livemode': instance.livemode,
+    };
+
+File _$FileFromJson(Map<String, dynamic> json) => File(
+      object: $enumDecode(_$_FileObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      purpose: json['purpose'] as String,
+      created:
+          const TimestampConverter().fromJson((json['created'] as num).toInt()),
+      size: (json['size'] as num).toInt(),
+      type: json['type'] as String?,
+      expiresAt: _$JsonConverterFromJson<int, DateTime>(
+          json['expires_at'], const TimestampConverter().fromJson),
+      filename: json['filename'] as String?,
+      links: json['links'] == null
+          ? null
+          : DataList<FileLink>.fromJson(json['links'] as Map<String, dynamic>,
+              (value) => FileLink.fromJson(value as Map<String, dynamic>)),
+      title: json['title'] as String?,
+      url: json['url'] as String?,
+    );
+
+Map<String, dynamic> _$FileToJson(File instance) {
+  final val = <String, dynamic>{
+    'object': _$_FileObjectEnumMap[instance.object]!,
+    'id': instance.id,
+    'purpose': instance.purpose,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('type', instance.type);
+  val['created'] = const TimestampConverter().toJson(instance.created);
+  writeNotNull(
+      'expires_at',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.expiresAt, const TimestampConverter().toJson));
+  writeNotNull('filename', instance.filename);
+  writeNotNull('title', instance.title);
+  writeNotNull(
+      'links',
+      instance.links?.toJson(
+        (value) => value.toJson(),
+      ));
+  val['size'] = instance.size;
+  writeNotNull('url', instance.url);
+  return val;
+}
+
+const _$_FileObjectEnumMap = {
+  _FileObject.file: 'file',
+};
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
+
+FileLink _$FileLinkFromJson(Map<String, dynamic> json) => FileLink(
+      object: $enumDecode(_$_FileLinkObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      file: json['file'] as String,
+      created:
+          const TimestampConverter().fromJson((json['created'] as num).toInt()),
+      expired: json['expired'] as bool,
+      livemode: json['livemode'] as bool,
+      expiresAt: _$JsonConverterFromJson<int, DateTime>(
+          json['expires_at'], const TimestampConverter().fromJson),
+      metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      url: json['url'] as String?,
+    );
+
+Map<String, dynamic> _$FileLinkToJson(FileLink instance) {
+  final val = <String, dynamic>{
+    'object': _$_FileLinkObjectEnumMap[instance.object]!,
+    'id': instance.id,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'expires_at',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.expiresAt, const TimestampConverter().toJson));
+  val['file'] = instance.file;
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('url', instance.url);
+  val['created'] = const TimestampConverter().toJson(instance.created);
+  val['expired'] = instance.expired;
+  val['livemode'] = instance.livemode;
+  return val;
+}
+
+const _$_FileLinkObjectEnumMap = {
+  _FileLinkObject.fileLink: 'file_link',
+};
+
 Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       id: json['id'] as String,
       amountDue: (json['amount_due'] as num).toInt(),
@@ -1004,18 +1142,6 @@ const _$PauseCollectionBehaviorEnumMap = {
   PauseCollectionBehavior.markUncollectible: 'mark_uncollectible',
   PauseCollectionBehavior.void_: 'void',
 };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);
 
 PaymentIntent _$PaymentIntentFromJson(Map<String, dynamic> json) =>
     PaymentIntent(
@@ -2208,6 +2334,28 @@ Map<String, dynamic> _$CreateRefundRequestToJson(CreateRefundRequest instance) {
   return val;
 }
 
+CreateSigmaQueryRunRequest _$CreateSigmaQueryRunRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateSigmaQueryRunRequest(
+      fromSavedQuery: json['from_saved_query'] as String?,
+      sql: json['sql'] as String?,
+    );
+
+Map<String, dynamic> _$CreateSigmaQueryRunRequestToJson(
+    CreateSigmaQueryRunRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('from_saved_query', instance.fromSavedQuery);
+  writeNotNull('sql', instance.sql);
+  return val;
+}
+
 CreateSubscriptionRequest _$CreateSubscriptionRequestFromJson(
         Map<String, dynamic> json) =>
     CreateSubscriptionRequest(
@@ -2915,6 +3063,133 @@ Map<String, dynamic> _$ShippingSpecificationToJson(
   writeNotNull('tracking_number', instance.trackingNumber);
   return val;
 }
+
+SigmaQueryRun _$SigmaQueryRunFromJson(Map<String, dynamic> json) =>
+    SigmaQueryRun(
+      object: $enumDecode(_$_SigmaQueryRunObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      created:
+          const TimestampConverter().fromJson((json['created'] as num).toInt()),
+      livemode: json['livemode'] as bool,
+      sql: json['sql'] as String,
+      status: $enumDecode(_$SigmaQueryRunStatusEnumMap, json['status']),
+      finalizedAt: _$JsonConverterFromJson<int, DateTime>(
+          json['finalized_at'], const TimestampConverter().fromJson),
+    );
+
+Map<String, dynamic> _$SigmaQueryRunToJson(SigmaQueryRun instance) {
+  final val = <String, dynamic>{
+    'object': _$_SigmaQueryRunObjectEnumMap[instance.object]!,
+    'id': instance.id,
+    'created': const TimestampConverter().toJson(instance.created),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'finalized_at',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.finalizedAt, const TimestampConverter().toJson));
+  val['livemode'] = instance.livemode;
+  val['sql'] = instance.sql;
+  val['status'] = _$SigmaQueryRunStatusEnumMap[instance.status]!;
+  return val;
+}
+
+const _$_SigmaQueryRunObjectEnumMap = {
+  _SigmaQueryRunObject.sigmaSigmaQueryRun: 'sigma.sigma_query_run',
+};
+
+const _$SigmaQueryRunStatusEnumMap = {
+  SigmaQueryRunStatus.succeeded: 'succeeded',
+  SigmaQueryRunStatus.pending: 'pending',
+  SigmaQueryRunStatus.running: 'running',
+  SigmaQueryRunStatus.failed: 'failed',
+};
+
+SigmaScheduledQueryRun _$SigmaScheduledQueryRunFromJson(
+        Map<String, dynamic> json) =>
+    SigmaScheduledQueryRun(
+      id: json['id'] as String,
+      object:
+          $enumDecode(_$_SigmaScheduledQueryRunObjectEnumMap, json['object']),
+      sql: json['sql'] as String,
+      status:
+          $enumDecode(_$SigmaScheduledQueryRunStatusEnumMap, json['status']),
+      created:
+          const TimestampConverter().fromJson((json['created'] as num).toInt()),
+      livemode: json['livemode'] as bool,
+      dataLoadTime: _$JsonConverterFromJson<int, DateTime>(
+          json['data_load_time'], const TimestampConverter().fromJson),
+      file: json['file'] == null
+          ? null
+          : File.fromJson(json['file'] as Map<String, dynamic>),
+      title: json['title'] as String?,
+      error: json['error'] == null
+          ? null
+          : SigmaScheduledQueryRunError.fromJson(
+              json['error'] as Map<String, dynamic>),
+      resultAvailableUntil: _$JsonConverterFromJson<int, DateTime>(
+          json['result_available_until'], const TimestampConverter().fromJson),
+    );
+
+Map<String, dynamic> _$SigmaScheduledQueryRunToJson(
+    SigmaScheduledQueryRun instance) {
+  final val = <String, dynamic>{
+    'object': _$_SigmaScheduledQueryRunObjectEnumMap[instance.object]!,
+    'id': instance.id,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'data_load_time',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.dataLoadTime, const TimestampConverter().toJson));
+  writeNotNull('file', instance.file?.toJson());
+  val['sql'] = instance.sql;
+  val['status'] = _$SigmaScheduledQueryRunStatusEnumMap[instance.status]!;
+  writeNotNull('title', instance.title);
+  val['created'] = const TimestampConverter().toJson(instance.created);
+  writeNotNull('error', instance.error?.toJson());
+  val['livemode'] = instance.livemode;
+  writeNotNull(
+      'result_available_until',
+      _$JsonConverterToJson<int, DateTime>(
+          instance.resultAvailableUntil, const TimestampConverter().toJson));
+  return val;
+}
+
+const _$_SigmaScheduledQueryRunObjectEnumMap = {
+  _SigmaScheduledQueryRunObject.scheduledQueryRun: 'scheduled_query_run',
+};
+
+const _$SigmaScheduledQueryRunStatusEnumMap = {
+  SigmaScheduledQueryRunStatus.completed: 'completed',
+  SigmaScheduledQueryRunStatus.canceled: 'canceled',
+  SigmaScheduledQueryRunStatus.failed: 'failed',
+  SigmaScheduledQueryRunStatus.timedOut: 'timed_out',
+};
+
+SigmaScheduledQueryRunError _$SigmaScheduledQueryRunErrorFromJson(
+        Map<String, dynamic> json) =>
+    SigmaScheduledQueryRunError(
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$SigmaScheduledQueryRunErrorToJson(
+        SigmaScheduledQueryRunError instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+    };
 
 Source _$SourceFromJson(Map<String, dynamic> json) => Source(
       id: json['id'] as String,

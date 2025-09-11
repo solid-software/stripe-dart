@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:logging/logging.dart';
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/api_config.dart';
 
 import '../client.dart';
 import '_resource.dart';
@@ -11,22 +12,30 @@ final log = Logger('Stripe PaymentIntentResource');
 class PaymentIntentResource extends Resource<PaymentIntent> {
   static const _resourceName = 'payment_intents';
 
-  PaymentIntentResource(Client client) : super(client);
+  PaymentIntentResource(Client client, ApiConfig config)
+      : super(client, config);
 
   Future<PaymentIntent> create(CreatePaymentIntentRequest request) async {
-    final response = await post('payment_intents', data: request.toJson());
+    final response = await client.post(
+      makeUrl('payment_intents'),
+      data: request.toJson(),
+    );
     return PaymentIntent.fromJson(response);
   }
 
   Future<PaymentIntent> retrieve(String paymentIntentId) async {
-    final map = await get('payment_intents/$paymentIntentId');
+    final map = await client.get(
+      makeUrl('payment_intents/$paymentIntentId'),
+    );
     return PaymentIntent.fromJson(map);
   }
 
   /// Returns true if successful.
   Future<bool> cancel(String paymentIntentId) async {
     try {
-      await post('payment_intents/$paymentIntentId/cancel');
+      await client.post(
+        makeUrl('payment_intents/$paymentIntentId/cancel'),
+      );
     } catch (e) {
       log.warning(e);
       return false;
@@ -38,8 +47,8 @@ class PaymentIntentResource extends Resource<PaymentIntent> {
     /// https://docs.stripe.com/search#query-fields-for-payment-intents
     required String queryString,
   }) async {
-    final Map<String, dynamic> map = await get(
-      'payment_intents/search',
+    final Map<String, dynamic> map = await client.get(
+      makeUrl('payment_intents/search'),
       queryParameters: {'query': queryString},
     );
 
@@ -57,8 +66,8 @@ class PaymentIntentResource extends Resource<PaymentIntent> {
     String id, {
     required UpdatePaymentIntentRequest request,
   }) async {
-    final response = await post(
-      '$_resourceName/$id',
+    final response = await client.post(
+      makeUrl('$_resourceName/$id'),
       data: request.toJson(),
     );
 
@@ -70,8 +79,8 @@ class PaymentIntentResource extends Resource<PaymentIntent> {
     String id, {
     required ConfirmPaymentIntentRequest request,
   }) async {
-    final response = await post(
-      '$_resourceName/$id/confirm',
+    final response = await client.post(
+      makeUrl('$_resourceName/$id/confirm'),
       data: request.toJson(),
     );
 

@@ -1,5 +1,7 @@
 library stripe;
 
+import 'package:stripe/src/api_config.dart';
+
 import 'src/client.dart';
 import 'src/resources/balance_transaction.dart';
 import 'src/resources/charge.dart';
@@ -7,6 +9,7 @@ import 'src/resources/checkout_session.dart';
 import 'src/resources/coupon.dart';
 import 'src/resources/customer.dart';
 import 'src/resources/customer_balance_transaction.dart';
+import 'src/resources/file.dart';
 import 'src/resources/invoice.dart';
 import 'src/resources/payment_intent.dart';
 import 'src/resources/portal_session.dart';
@@ -14,11 +17,14 @@ import 'src/resources/price.dart';
 import 'src/resources/product.dart';
 import 'src/resources/promotion_code.dart';
 import 'src/resources/refund.dart';
+import 'src/resources/sigma_query_run.dart';
+import 'src/resources/sigma_scheduled_query_run.dart';
 import 'src/resources/subscription.dart';
 import 'src/resources/subscription_item.dart';
 import 'src/resources/subscription_schedule.dart';
 
 export 'messages.dart';
+export 'src/api_config.dart';
 export 'src/client.dart';
 export 'src/exceptions.dart';
 export 'src/expanded.dart';
@@ -85,26 +91,37 @@ class Stripe {
 
   final CustomerBalanceTransactionResource customerBalanceTransaction;
 
+  final SigmaQueryRunResource sigmaQueryRun;
+
+  final SigmaScheduledQueryRunResource sigmaScheduledQueryRun;
+
+  final FileResource file;
+
   factory Stripe(String apiKey) {
-    final client = DioClient(apiKey: apiKey);
-    return Stripe.withClient(client);
+    final config = ApiConfig();
+    final client = DioClient(apiKey: apiKey, version: config.version);
+    return Stripe.withClient(client, config);
   }
 
-  Stripe.withClient(this.client)
-      : checkoutSession = CheckoutSessionResource(client),
-        portalSession = PortalSessionResource(client),
-        customer = CustomerResource(client),
-        refund = RefundResource(client),
-        paymentIntent = PaymentIntentResource(client),
-        price = PriceResource(client),
-        product = ProductResource(client),
-        subscription = SubscriptionResource(client),
-        subscriptionItem = SubscriptionItemResource(client),
-        subscriptionSchedule = SubscriptionScheduleResource(client),
-        charge = ChargeResource(client),
-        balanceTransaction = BalanceTransactionResource(client),
-        promotionCode = PromotionCodeResource(client),
-        coupon = CouponResource(client),
-        invoice = InvoiceResource(client),
-        customerBalanceTransaction = CustomerBalanceTransactionResource(client);
+  Stripe.withClient(this.client, ApiConfig config)
+      : checkoutSession = CheckoutSessionResource(client, config),
+        portalSession = PortalSessionResource(client, config),
+        customer = CustomerResource(client, config),
+        refund = RefundResource(client, config),
+        paymentIntent = PaymentIntentResource(client, config),
+        price = PriceResource(client, config),
+        product = ProductResource(client, config),
+        subscription = SubscriptionResource(client, config),
+        subscriptionItem = SubscriptionItemResource(client, config),
+        subscriptionSchedule = SubscriptionScheduleResource(client, config),
+        charge = ChargeResource(client, config),
+        balanceTransaction = BalanceTransactionResource(client, config),
+        promotionCode = PromotionCodeResource(client, config),
+        coupon = CouponResource(client, config),
+        invoice = InvoiceResource(client, config),
+        customerBalanceTransaction =
+            CustomerBalanceTransactionResource(client, config),
+        sigmaQueryRun = SigmaQueryRunResource(client, config),
+        sigmaScheduledQueryRun = SigmaScheduledQueryRunResource(client, config),
+        file = FileResource(client, config);
 }
