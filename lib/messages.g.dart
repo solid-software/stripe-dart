@@ -2392,6 +2392,51 @@ Map<String, dynamic> _$CreatedRequestToJson(CreatedRequest instance) {
   return val;
 }
 
+ListCheckoutSessionsRequest _$ListCheckoutSessionsRequestFromJson(
+        Map<String, dynamic> json) =>
+    ListCheckoutSessionsRequest(
+      paymentIntent: json['payment_intent'] as String?,
+      subscription: json['subscription'] as String?,
+      created: json['created'] == null
+          ? null
+          : CreatedRequest.fromJson(json['created'] as Map<String, dynamic>),
+      customer: json['customer'] as String?,
+      endingBefore: json['ending_before'] as String?,
+      limit: (json['limit'] as num?)?.toInt(),
+      paymentLink: json['payment_link'] as String?,
+      startingAfter: json['starting_after'] as String?,
+      status:
+          $enumDecodeNullable(_$CheckoutSessionStatusEnumMap, json['status']),
+    );
+
+Map<String, dynamic> _$ListCheckoutSessionsRequestToJson(
+    ListCheckoutSessionsRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('payment_intent', instance.paymentIntent);
+  writeNotNull('subscription', instance.subscription);
+  writeNotNull('created', instance.created?.toJson());
+  writeNotNull('customer', instance.customer);
+  writeNotNull('ending_before', instance.endingBefore);
+  writeNotNull('limit', instance.limit);
+  writeNotNull('payment_link', instance.paymentLink);
+  writeNotNull('starting_after', instance.startingAfter);
+  writeNotNull('status', _$CheckoutSessionStatusEnumMap[instance.status]);
+  return val;
+}
+
+const _$CheckoutSessionStatusEnumMap = {
+  CheckoutSessionStatus.complete: 'complete',
+  CheckoutSessionStatus.expired: 'expired',
+  CheckoutSessionStatus.open: 'open',
+};
+
 ListCouponsRequest _$ListCouponsRequestFromJson(Map<String, dynamic> json) =>
     ListCouponsRequest(
       created: json['created'] == null

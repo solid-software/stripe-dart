@@ -20,9 +20,12 @@ class CheckoutSessionResource extends Resource<CheckoutSession> {
     return CheckoutSession.fromJson(response);
   }
 
-  Future<DataList<CheckoutSession>> list() async {
+  Future<DataList<CheckoutSession>> list([
+    ListCheckoutSessionsRequest? request,
+  ]) async {
     final map = await get(
       _resourceName,
+      queryParameters: request?.toJson(),
     );
 
     return DataList<CheckoutSession>.fromJson(

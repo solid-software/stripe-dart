@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stripe/src/messages/converters.dart';
 import 'package:stripe/src/messages/enums.dart';
+import 'package:stripe/src/messages/enums/checkout_session_status.dart';
 
 export 'package:stripe/src/messages/enums.dart';
 
@@ -42,6 +43,7 @@ part 'src/messages/requests/create_refund.dart';
 part 'src/messages/requests/create_subscription.dart';
 part 'src/messages/requests/create_subscription_schedule.dart';
 part 'src/messages/requests/created.dart';
+part 'src/messages/requests/list_checkout_sessions.dart';
 part 'src/messages/requests/list_coupons.dart';
 part 'src/messages/requests/list_customer_balance_transactions_request.dart';
 part 'src/messages/requests/list_prices.dart';
