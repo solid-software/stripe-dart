@@ -7,15 +7,27 @@ import '_resource.dart';
 
 class CheckoutSessionResource extends Resource<CheckoutSession> {
   CheckoutSessionResource(Client client) : super(client);
+  static const _resourceName = 'checkout/sessions';
 
   /// Creates a Stripe Checkout Session.
   Future<CheckoutSession> create(CreateCheckoutSessionRequest request) async {
-    final response = await post('checkout/sessions', data: request.toJson());
+    final response = await post(_resourceName, data: request.toJson());
     return CheckoutSession.fromJson(response);
   }
 
   Future<CheckoutSession> retrieve(String id) async {
-    final response = await get('checkout/sessions/$id');
+    final response = await get('$_resourceName/$id');
     return CheckoutSession.fromJson(response);
+  }
+
+  Future<DataList<CheckoutSession>> list() async {
+    final map = await get(
+      _resourceName,
+    );
+
+    return DataList<CheckoutSession>.fromJson(
+      map,
+      (value) => CheckoutSession.fromJson(value as Map<String, dynamic>),
+    );
   }
 }
