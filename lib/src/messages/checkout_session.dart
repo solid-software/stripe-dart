@@ -80,6 +80,7 @@ class CheckoutSession extends Message {
   final String? clientReferenceId;
   final String? customer;
   final String? customerEmail;
+  final DataList<CheckoutSessionLineItem>? lineItems;
   final Map<String, dynamic>? metadata;
   final CheckoutSessionMode mode;
   final String? paymentIntent;
@@ -115,6 +116,7 @@ class CheckoutSession extends Message {
     this.clientReferenceId,
     this.customer,
     this.customerEmail,
+    this.lineItems,
     this.metadata,
     this.returnUrl,
     this.successfulUrl,

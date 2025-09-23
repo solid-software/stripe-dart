@@ -216,6 +216,12 @@ CheckoutSession _$CheckoutSessionFromJson(Map<String, dynamic> json) =>
       clientReferenceId: json['client_reference_id'] as String?,
       customer: json['customer'] as String?,
       customerEmail: json['customer_email'] as String?,
+      lineItems: json['line_items'] == null
+          ? null
+          : DataList<CheckoutSessionLineItem>.fromJson(
+              json['line_items'] as Map<String, dynamic>,
+              (value) => CheckoutSessionLineItem.fromJson(
+                  value as Map<String, dynamic>)),
       metadata: json['metadata'] as Map<String, dynamic>?,
       returnUrl: json['return_url'] as String?,
       successfulUrl: json['successful_url'] as String?,
@@ -248,6 +254,11 @@ Map<String, dynamic> _$CheckoutSessionToJson(CheckoutSession instance) {
   writeNotNull('client_reference_id', instance.clientReferenceId);
   writeNotNull('customer', instance.customer);
   writeNotNull('customer_email', instance.customerEmail);
+  writeNotNull(
+      'line_items',
+      instance.lineItems?.toJson(
+        (value) => value.toJson(),
+      ));
   writeNotNull('metadata', instance.metadata);
   val['mode'] = _$CheckoutSessionModeEnumMap[instance.mode]!;
   writeNotNull('payment_intent', instance.paymentIntent);
