@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
+import 'package:stripe/src/messages/enums/expandable_fields/checkout_session_expandable_field.dart';
 
 import '../client.dart';
 import '_resource.dart';
@@ -32,5 +33,33 @@ class CheckoutSessionResource extends Resource<CheckoutSession> {
       map,
       (value) => CheckoutSession.fromJson(value as Map<String, dynamic>),
     );
+  }
+
+  Future<DataList<CheckoutSession>> listExpanded({
+    required Set<CheckoutSessionExpandableField> expand,
+    ListCheckoutSessionsRequest? request,
+  }) async {
+    final map = await get(
+      _resourceName,
+      queryParameters: {
+        ...?request?.toJson(),
+        'expand': _expandParamComponents(expand).map((e) => 'data.$e').toList(),
+      },
+    );
+
+    return DataList<CheckoutSession>.fromJson(
+      map,
+      (value) => CheckoutSession.fromJson(value as Map<String, dynamic>),
+    );
+  }
+
+  List<String> _expandParamComponents(
+      Set<CheckoutSessionExpandableField> fields) {
+    return fields.map((field) {
+      switch (field) {
+        case CheckoutSessionExpandableField.lineItems:
+          return 'line_items';
+      }
+    }).toList();
   }
 }

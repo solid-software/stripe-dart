@@ -1,7 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stripe/src/messages/converters.dart';
 import 'package:stripe/src/messages/enums.dart';
-import 'package:stripe/src/messages/enums/checkout_session_status.dart';
 
 export 'package:stripe/src/messages/enums.dart';
 
