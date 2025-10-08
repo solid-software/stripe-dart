@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:stripe/messages.dart';
-import 'package:stripe/src/messages/enums/expandable_fields/checkout_session_expandable_field.dart';
 
 import '../client.dart';
 import '_resource.dart';

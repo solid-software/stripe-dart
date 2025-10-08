@@ -141,8 +141,8 @@ class CheckoutSession extends Message {
 }
 
 enum _CheckoutSessionLineItemObject {
-  @JsonValue('line_item')
-  lineItem,
+  @JsonValue('item')
+  item,
 }
 
 @JsonSerializable()

@@ -390,7 +390,7 @@ Map<String, dynamic> _$CheckoutSessionLineItemToJson(
 }
 
 const _$_CheckoutSessionLineItemObjectEnumMap = {
-  _CheckoutSessionLineItemObject.lineItem: 'line_item',
+  _CheckoutSessionLineItemObject.item: 'item',
 };
 
 CouponAppliesTo _$CouponAppliesToFromJson(Map<String, dynamic> json) =>
