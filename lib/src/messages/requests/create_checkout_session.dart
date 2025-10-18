@@ -25,7 +25,7 @@ class CreateCheckoutSessionRequest {
   /// The URL to which Stripe should send customers when payment or setup is
   /// complete. If you’d like access to the Checkout Session for the successful
   /// payment, read more about it in the guide on fulfilling orders.
-  final String successUrl;
+  final String? successUrl;
 
   /// The URL the customer will be directed to if they decide to cancel payment
   /// and return to your website.
@@ -94,9 +94,9 @@ class CreateCheckoutSessionRequest {
   final SubscriptionData? subscriptionData;
 
   CreateCheckoutSessionRequest({
-    required this.successUrl,
     required this.cancelUrl,
     required this.paymentMethodTypes,
+    this.successUrl,
     this.mode,
     this.clientReferenceId,
     this.customerEmail,
@@ -111,6 +111,7 @@ class CreateCheckoutSessionRequest {
 
   factory CreateCheckoutSessionRequest.fromJson(Map<String, dynamic> json) =>
       _$CreateCheckoutSessionRequestFromJson(json);
+
   Map<String, dynamic> toJson() => _$CreateCheckoutSessionRequestToJson(this);
 }
 
@@ -142,6 +143,7 @@ class LineItem {
 
   factory LineItem.fromJson(Map<String, dynamic> json) =>
       _$LineItemFromJson(json);
+
   Map<String, dynamic> toJson() => _$LineItemToJson(this);
 }
 
@@ -172,6 +174,7 @@ class PriceData {
 
   factory PriceData.fromJson(Map<String, dynamic> json) =>
       _$PriceDataFromJson(json);
+
   Map<String, dynamic> toJson() => _$PriceDataToJson(this);
 }
 
@@ -199,6 +202,7 @@ class ProductData {
 
   factory ProductData.fromJson(Map<String, dynamic> json) =>
       _$ProductDataFromJson(json);
+
   Map<String, dynamic> toJson() => _$ProductDataToJson(this);
 }
 
@@ -212,6 +216,7 @@ class AutomaticTax {
 
   factory AutomaticTax.fromJson(Map<String, dynamic> json) =>
       _$AutomaticTaxFromJson(json);
+
   Map<String, dynamic> toJson() => _$AutomaticTaxToJson(this);
 }
 
@@ -225,6 +230,7 @@ class TaxIdCollection {
 
   factory TaxIdCollection.fromJson(Map<String, dynamic> json) =>
       _$TaxIdCollectionFromJson(json);
+
   Map<String, dynamic> toJson() => _$TaxIdCollectionToJson(this);
 }
 
@@ -252,6 +258,7 @@ class PaymentIntentData {
 
   factory PaymentIntentData.fromJson(Map<String, dynamic> json) =>
       _$PaymentIntentDataFromJson(json);
+
   Map<String, dynamic> toJson() => _$PaymentIntentDataToJson(this);
 }
 
@@ -280,5 +287,6 @@ class SubscriptionData {
 
   factory SubscriptionData.fromJson(Map<String, dynamic> json) =>
       _$SubscriptionDataFromJson(json);
+
   Map<String, dynamic> toJson() => _$SubscriptionDataToJson(this);
 }

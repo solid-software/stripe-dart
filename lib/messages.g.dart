@@ -1593,11 +1593,11 @@ Map<String, dynamic> _$ConfirmPaymentIntentRequestToJson(
 CreateCheckoutSessionRequest _$CreateCheckoutSessionRequestFromJson(
         Map<String, dynamic> json) =>
     CreateCheckoutSessionRequest(
-      successUrl: json['success_url'] as String,
       cancelUrl: json['cancel_url'] as String,
       paymentMethodTypes: (json['payment_method_types'] as List<dynamic>)
           .map((e) => $enumDecode(_$PaymentMethodTypeEnumMap, e))
           .toList(),
+      successUrl: json['success_url'] as String?,
       mode: $enumDecodeNullable(_$SessionModeEnumMap, json['mode']),
       clientReferenceId: json['client_reference_id'] as String?,
       customerEmail: json['customer_email'] as String?,
@@ -1628,10 +1628,7 @@ CreateCheckoutSessionRequest _$CreateCheckoutSessionRequestFromJson(
 
 Map<String, dynamic> _$CreateCheckoutSessionRequestToJson(
     CreateCheckoutSessionRequest instance) {
-  final val = <String, dynamic>{
-    'success_url': instance.successUrl,
-    'cancel_url': instance.cancelUrl,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -1639,6 +1636,8 @@ Map<String, dynamic> _$CreateCheckoutSessionRequestToJson(
     }
   }
 
+  writeNotNull('success_url', instance.successUrl);
+  val['cancel_url'] = instance.cancelUrl;
   writeNotNull('mode', _$SessionModeEnumMap[instance.mode]);
   val['payment_method_types'] = instance.paymentMethodTypes
       .map((e) => _$PaymentMethodTypeEnumMap[e]!)
