@@ -1599,6 +1599,8 @@ CreateCheckoutSessionRequest _$CreateCheckoutSessionRequestFromJson(
           .toList(),
       successUrl: json['success_url'] as String?,
       mode: $enumDecodeNullable(_$SessionModeEnumMap, json['mode']),
+      uiMode:
+          $enumDecodeNullable(_$CheckoutSessionUIModeEnumMap, json['ui_mode']),
       clientReferenceId: json['client_reference_id'] as String?,
       customerEmail: json['customer_email'] as String?,
       customer: json['customer'] as String?,
@@ -1639,6 +1641,7 @@ Map<String, dynamic> _$CreateCheckoutSessionRequestToJson(
   writeNotNull('success_url', instance.successUrl);
   writeNotNull('cancel_url', instance.cancelUrl);
   writeNotNull('mode', _$SessionModeEnumMap[instance.mode]);
+  writeNotNull('ui_mode', _$CheckoutSessionUIModeEnumMap[instance.uiMode]);
   writeNotNull(
       'payment_method_types',
       instance.paymentMethodTypes

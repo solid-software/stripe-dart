@@ -36,6 +36,8 @@ class CreateCheckoutSessionRequest {
   /// recurring item.
   final SessionMode? mode;
 
+  final CheckoutSessionUIMode? uiMode;
+
   /// A list of the types of payment methods (e.g., card) this Checkout Session
   /// can accept.
   ///
@@ -98,6 +100,7 @@ class CreateCheckoutSessionRequest {
     this.paymentMethodTypes,
     this.successUrl,
     this.mode,
+    this.uiMode,
     this.clientReferenceId,
     this.customerEmail,
     this.customer,
