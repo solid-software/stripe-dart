@@ -29,7 +29,7 @@ class CreateCheckoutSessionRequest {
 
   /// The URL the customer will be directed to if they decide to cancel payment
   /// and return to your website.
-  final String cancelUrl;
+  final String? cancelUrl;
 
   /// The mode of the Checkout Session. Required when using prices or setup
   /// mode. Pass subscription if the Checkout Session includes at least one
@@ -45,7 +45,7 @@ class CreateCheckoutSessionRequest {
   /// If multiple payment methods are passed, Checkout will dynamically reorder
   /// them to prioritize the most relevant payment methods based on the
   /// customer’s location and other characteristics.
-  final List<PaymentMethodType> paymentMethodTypes;
+  final List<PaymentMethodType>? paymentMethodTypes;
 
   /// A unique string to reference the Checkout Session. This can be a customer
   /// ID, a cart ID, or similar, and can be used to reconcile the Session with
@@ -94,8 +94,8 @@ class CreateCheckoutSessionRequest {
   final SubscriptionData? subscriptionData;
 
   CreateCheckoutSessionRequest({
-    required this.cancelUrl,
-    required this.paymentMethodTypes,
+    this.cancelUrl,
+    this.paymentMethodTypes,
     this.successUrl,
     this.mode,
     this.clientReferenceId,
