@@ -6,9 +6,12 @@ class CreateInvoiceItemRequest extends Message {
 
   final String? description;
 
+  final String? invoice;
+
   const CreateInvoiceItemRequest({
     required this.customer,
     this.description,
+    this.invoice,
   });
 
   factory CreateInvoiceItemRequest.fromJson(Map<String, dynamic> json) =>
@@ -22,11 +25,8 @@ class CreateInvoiceItemRequest extends Message {
 class CreateInvoiceItemPricingRequest extends Message {
   final String? price;
 
-  final String? invoice;
-
   const CreateInvoiceItemPricingRequest({
     this.price,
-    this.invoice,
   });
 
   factory CreateInvoiceItemPricingRequest.fromJson(Map<String, dynamic> json) =>
