@@ -2,7 +2,7 @@ import 'package:stripe/messages.dart';
 import 'package:stripe/src/utils/expandable_object_field.dart';
 
 class DefaultPaymentMethodExpandableField
-    extends ExpandableObjectField<PaymentMethod> {
+    extends ExpandableObjectField<PaymentMethod, String> {
   @override
   String get field => 'default_payment_method';
 

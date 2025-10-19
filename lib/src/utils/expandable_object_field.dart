@@ -1,11 +1,11 @@
 import 'package:stripe/src/utils/expandable_field.dart';
 
-abstract class ExpandableObjectField<T> extends ExpandableField<T?> {
+abstract class ExpandableObjectField<T, K> extends ExpandableField<T?> {
   const ExpandableObjectField();
 
   T parse(Map<String, dynamic> object);
 
-  String replacement(T parsedValue);
+  K replacement(T parsedValue);
 
   @override
   T? extract(Map<String, dynamic> json) {

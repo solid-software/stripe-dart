@@ -1,7 +1,8 @@
 import 'package:stripe/messages.dart';
 import 'package:stripe/src/utils/expandable_object_field.dart';
 
-class DefaultSourceExpandableField extends ExpandableObjectField<Source> {
+class DefaultSourceExpandableField
+    extends ExpandableObjectField<Source, String> {
   @override
   String get field => 'default_source';
 

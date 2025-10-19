@@ -1057,6 +1057,26 @@ Map<String, dynamic> _$TotalDiscountAmountToJson(
       'discount': instance.discount,
     };
 
+InvoiceConfirmationSecret _$InvoiceConfirmationSecretFromJson(
+        Map<String, dynamic> json) =>
+    InvoiceConfirmationSecret(
+      clientSecret: json['client_secret'] as String?,
+    );
+
+Map<String, dynamic> _$InvoiceConfirmationSecretToJson(
+    InvoiceConfirmationSecret instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('client_secret', instance.clientSecret);
+  return val;
+}
+
 InvoiceItem _$InvoiceItemFromJson(Map<String, dynamic> json) => InvoiceItem(
       object: $enumDecode(_$_InvoiceItemObjectEnumMap, json['object']),
       id: json['id'] as String,

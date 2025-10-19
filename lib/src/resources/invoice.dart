@@ -4,6 +4,7 @@ import 'package:stripe/messages.dart';
 import 'package:stripe/src/expanded.dart';
 import 'package:stripe/src/utils/expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/discounts_expandable_field.dart';
+import 'package:stripe/src/utils/expandable_fields/invoice_confirmation_secret_expandable_field.dart';
 import 'package:stripe/src/utils/expandable_fields/payment_intent_expandable_field.dart';
 
 import '../client.dart';
@@ -84,6 +85,8 @@ class InvoiceResource extends Resource<Invoice> {
         return PaymentIntentExpandableField();
       case InvoiceExpandableField.discounts:
         return DiscountsExpandableField();
+      case InvoiceExpandableField.confirmationSecret:
+        return InvoiceConfirmationSecretExpandableField();
     }
   }
 }
