@@ -2231,8 +2231,6 @@ CreateInvoiceRequest _$CreateInvoiceRequestFromJson(
           ? null
           : CreateInvoiceAutomaticTaxRequest.fromJson(
               json['automatic_tax'] as Map<String, dynamic>),
-      billingReason: $enumDecodeNullable(
-          _$InvoiceBillingReasonEnumMap, json['billing_reason']),
       collectionMethod: $enumDecodeNullable(
           _$InvoiceCollectionMethodEnumMap, json['collection_method']),
       customer: json['customer'] as String?,
@@ -2261,8 +2259,6 @@ Map<String, dynamic> _$CreateInvoiceRequestToJson(
 
   writeNotNull('auto_advance', instance.autoAdvance);
   writeNotNull('automatic_tax', instance.automaticTax?.toJson());
-  writeNotNull(
-      'billing_reason', _$InvoiceBillingReasonEnumMap[instance.billingReason]);
   writeNotNull('collection_method',
       _$InvoiceCollectionMethodEnumMap[instance.collectionMethod]);
   writeNotNull('customer', instance.customer);

@@ -6,8 +6,6 @@ class CreateInvoiceRequest {
 
   final CreateInvoiceAutomaticTaxRequest? automaticTax;
 
-  final InvoiceBillingReason? billingReason;
-
   final InvoiceCollectionMethod? collectionMethod;
 
   final String? customer;
@@ -27,7 +25,6 @@ class CreateInvoiceRequest {
   CreateInvoiceRequest({
     this.autoAdvance,
     this.automaticTax,
-    this.billingReason,
     this.collectionMethod,
     this.customer,
     this.description,
