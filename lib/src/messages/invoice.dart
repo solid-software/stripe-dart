@@ -95,6 +95,8 @@ class Invoice extends Message {
   /// order.
   final DataList<InvoiceLineItem> lines;
 
+  final Map<String, String>? metadata;
+
   /// The PaymentIntent associated with this invoice. The PaymentIntent is
   /// generated when the invoice is finalized, and can then be used to pay the
   /// invoice. Note that voiding an invoice will cancel the PaymentIntent.
@@ -134,6 +136,7 @@ class Invoice extends Message {
     this.paymentIntent,
     this.accountCountry,
     this.accountName,
+    this.metadata,
   });
 
   factory Invoice.fromJson(Map<String, dynamic> json) =>

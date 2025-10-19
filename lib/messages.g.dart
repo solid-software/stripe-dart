@@ -990,6 +990,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       paymentIntent: json['payment_intent'] as String?,
       accountCountry: json['account_country'] as String?,
       accountName: json['account_name'] as String?,
+      metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
     );
 
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
@@ -1028,6 +1031,7 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   val['lines'] = instance.lines.toJson(
     (value) => value.toJson(),
   );
+  writeNotNull('metadata', instance.metadata);
   writeNotNull('payment_intent', instance.paymentIntent);
   writeNotNull('account_country', instance.accountCountry);
   writeNotNull('account_name', instance.accountName);
@@ -1957,6 +1961,7 @@ CreateInvoiceItemRequest _$CreateInvoiceItemRequestFromJson(
           : CreateInvoiceItemPricingRequest.fromJson(
               json['pricing'] as Map<String, dynamic>),
       invoice: json['invoice'] as String?,
+      metadata: json['metadata'] as Map<String, dynamic>?,
     );
 
 Map<String, dynamic> _$CreateInvoiceItemRequestToJson(
@@ -1974,6 +1979,7 @@ Map<String, dynamic> _$CreateInvoiceItemRequestToJson(
   writeNotNull('description', instance.description);
   writeNotNull('pricing', instance.pricing?.toJson());
   writeNotNull('invoice', instance.invoice);
+  writeNotNull('metadata', instance.metadata);
   return val;
 }
 

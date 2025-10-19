@@ -10,11 +10,14 @@ class CreateInvoiceItemRequest extends Message {
 
   final String? invoice;
 
+  final Map<String, dynamic>? metadata;
+
   const CreateInvoiceItemRequest({
     required this.customer,
     this.description,
     this.pricing,
     this.invoice,
+    this.metadata,
   });
 
   factory CreateInvoiceItemRequest.fromJson(Map<String, dynamic> json) =>
