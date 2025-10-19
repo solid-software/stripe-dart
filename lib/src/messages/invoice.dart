@@ -29,6 +29,10 @@ class Invoice extends Message {
   /// This is the sum of all the shipping amounts.
   final int amountShipping;
 
+  final InvoiceBillingReason? billingReason;
+
+  final int created;
+
   /// Three-letter ISO currency code, in lowercase. Must be a supported
   /// currency.
   final String currency;
@@ -111,6 +115,7 @@ class Invoice extends Message {
     required this.amountPaid,
     required this.amountRemaining,
     required this.amountShipping,
+    required this.created,
     required this.currency,
     required this.customer,
     required this.startingBalance,
@@ -118,6 +123,7 @@ class Invoice extends Message {
     required this.subtotal,
     required this.totalDiscountAmounts,
     required this.lines,
+    this.billingReason,
     this.description,
     this.endingBalance,
     this.hostedInvoiceUrl,

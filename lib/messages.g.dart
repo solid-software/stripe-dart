@@ -966,6 +966,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       amountPaid: (json['amount_paid'] as num).toInt(),
       amountRemaining: (json['amount_remaining'] as num).toInt(),
       amountShipping: (json['amount_shipping'] as num).toInt(),
+      created: (json['created'] as num).toInt(),
       currency: json['currency'] as String,
       customer: json['customer'] as String,
       startingBalance: (json['starting_balance'] as num).toInt(),
@@ -977,6 +978,8 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       lines: DataList<InvoiceLineItem>.fromJson(
           json['lines'] as Map<String, dynamic>,
           (value) => InvoiceLineItem.fromJson(value as Map<String, dynamic>)),
+      billingReason: $enumDecodeNullable(
+          _$InvoiceBillingReasonEnumMap, json['billing_reason']),
       description: json['description'] as String?,
       endingBalance: (json['ending_balance'] as num?)?.toInt(),
       hostedInvoiceUrl: json['hosted_invoice_url'] as String?,
@@ -997,10 +1000,6 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     'amount_paid': instance.amountPaid,
     'amount_remaining': instance.amountRemaining,
     'amount_shipping': instance.amountShipping,
-    'currency': instance.currency,
-    'customer': instance.customer,
-    'starting_balance': instance.startingBalance,
-    'total': instance.total,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1009,6 +1008,13 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     }
   }
 
+  writeNotNull(
+      'billing_reason', _$InvoiceBillingReasonEnumMap[instance.billingReason]);
+  val['created'] = instance.created;
+  val['currency'] = instance.currency;
+  val['customer'] = instance.customer;
+  val['starting_balance'] = instance.startingBalance;
+  val['total'] = instance.total;
   writeNotNull('total_excluding_tax', instance.totalExcludingTax);
   writeNotNull('description', instance.description);
   writeNotNull('ending_balance', instance.endingBalance);
@@ -1027,6 +1033,16 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   writeNotNull('account_name', instance.accountName);
   return val;
 }
+
+const _$InvoiceBillingReasonEnumMap = {
+  InvoiceBillingReason.manual: 'manual',
+  InvoiceBillingReason.subscription: 'subscription',
+  InvoiceBillingReason.subscriptionCreate: 'subscription_create',
+  InvoiceBillingReason.subscriptionCycle: 'subscription_cycle',
+  InvoiceBillingReason.subscriptionThreshold: 'subscription_threshold',
+  InvoiceBillingReason.subscriptionUpdate: 'subscription_update',
+  InvoiceBillingReason.upcoming: 'upcoming',
+};
 
 TotalDiscountAmount _$TotalDiscountAmountFromJson(Map<String, dynamic> json) =>
     TotalDiscountAmount(
@@ -2054,6 +2070,72 @@ Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionItemDetailsRequestToJson(
   writeNotNull('tax_rates', instance.taxRates);
   return val;
 }
+
+CreateInvoiceRequest _$CreateInvoiceRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateInvoiceRequest(
+      autoAdvance: json['auto_advance'] as bool?,
+      automaticTax: json['automatic_tax'] == null
+          ? null
+          : CreateInvoiceAutomaticTaxRequest.fromJson(
+              json['automatic_tax'] as Map<String, dynamic>),
+      collectionMethod: $enumDecodeNullable(
+          _$InvoiceCollectionMethodEnumMap, json['collection_method']),
+      customer: json['customer'] as String?,
+      description: json['description'] as String?,
+      metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      currency: json['currency'] as String?,
+      defaultPaymentMethod: json['default_payment_method'] as String?,
+      defaultSource: json['default_source'] as String?,
+      discounts: (json['discounts'] as List<dynamic>?)
+          ?.map(
+              (e) => CreateDiscountRequest.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$CreateInvoiceRequestToJson(
+    CreateInvoiceRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('auto_advance', instance.autoAdvance);
+  writeNotNull('automatic_tax', instance.automaticTax?.toJson());
+  writeNotNull('collection_method',
+      _$InvoiceCollectionMethodEnumMap[instance.collectionMethod]);
+  writeNotNull('customer', instance.customer);
+  writeNotNull('description', instance.description);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('currency', instance.currency);
+  writeNotNull('default_payment_method', instance.defaultPaymentMethod);
+  writeNotNull('default_source', instance.defaultSource);
+  writeNotNull(
+      'discounts', instance.discounts?.map((e) => e.toJson()).toList());
+  return val;
+}
+
+const _$InvoiceCollectionMethodEnumMap = {
+  InvoiceCollectionMethod.chargeAutomatically: 'charge_automatically',
+  InvoiceCollectionMethod.sendInvoice: 'send_invoice',
+};
+
+CreateInvoiceAutomaticTaxRequest _$CreateInvoiceAutomaticTaxRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateInvoiceAutomaticTaxRequest(
+      enabled: json['enabled'] as bool,
+    );
+
+Map<String, dynamic> _$CreateInvoiceAutomaticTaxRequestToJson(
+        CreateInvoiceAutomaticTaxRequest instance) =>
+    <String, dynamic>{
+      'enabled': instance.enabled,
+    };
 
 CreatePaymentIntentRequest _$CreatePaymentIntentRequestFromJson(
         Map<String, dynamic> json) =>

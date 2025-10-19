@@ -14,6 +14,31 @@ class InvoiceResource extends Resource<Invoice> {
 
   InvoiceResource(Client client) : super(client);
 
+  Future<Invoice> create(CreateInvoiceRequest request) async {
+    final response = await post(
+      _resourceName,
+      data: request.toJson(),
+    );
+
+    return Invoice.fromJson(response);
+  }
+
+  Future<InvoiceExpanded> createExpanded(
+    CreateInvoiceRequest request, {
+    required Set<InvoiceExpandableField> expand,
+  }) async {
+    final expandableFields = _expandableFields(expand);
+    final response = await post(
+      _resourceName,
+      data: {
+        ...request.toJson(),
+        'expand': expandableFields.map((e) => e.field).toList(),
+      },
+    );
+
+    return InvoiceExpanded.fromJson(response, expand);
+  }
+
   Future<Invoice> createPreview(CreatePreviewInvoiceRequest request) async {
     final response =
         await post('$_resourceName/create_preview', data: request.toJson());
