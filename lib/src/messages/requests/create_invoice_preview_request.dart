@@ -3,6 +3,8 @@ part of '../../../messages.dart';
 /// https://docs.stripe.com/api/invoices/create_preview
 @JsonSerializable()
 class CreatePreviewInvoiceRequest {
+  final CreateInvoiceAutomaticTaxRequest? automaticTax;
+
   /// The identifier of the customer whose upcoming invoice you’d like to
   /// retrieve. If automatic_tax is enabled then one of customer,
   /// customer_details, subscription, or schedule must be set.
@@ -22,6 +24,8 @@ class CreatePreviewInvoiceRequest {
   /// to a subscription. Pass an empty string to avoid inheriting any discounts.
   final List<CreateDiscountRequest>? discounts;
 
+  final List<CreatePreviewInvoiceItemRequest>? invoiceItems;
+
   /// Customizes the types of values to include when calculating the invoice.
   /// Defaults to next if unspecified.
   final PreviewInvoiceMode? previewMode;
@@ -31,9 +35,11 @@ class CreatePreviewInvoiceRequest {
   final CreatePreviewInvoiceSubscriptionDetailsRequest? subscriptionDetails;
 
   CreatePreviewInvoiceRequest({
+    this.automaticTax,
     this.customer,
     this.subscription,
     this.discounts,
+    this.invoiceItems,
     this.previewMode,
     this.subscriptionDetails,
   });
@@ -194,4 +200,22 @@ enum PreviewInvoiceMode {
   /// subscription or subscription_details.items. Prorations, subscription
   /// cancellations, and trials are not supported with recurring estimates.
   recurring,
+}
+
+@JsonSerializable()
+class CreatePreviewInvoiceItemRequest extends Message {
+  final String? price;
+  final int? quantity;
+
+  const CreatePreviewInvoiceItemRequest({
+    this.price,
+    this.quantity,
+  });
+
+  factory CreatePreviewInvoiceItemRequest.fromJson(Map<String, dynamic> json) =>
+      _$CreatePreviewInvoiceItemRequestFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreatePreviewInvoiceItemRequestToJson(this);
 }

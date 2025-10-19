@@ -1915,11 +1915,19 @@ Map<String, dynamic> _$CreateDiscountRequestToJson(
 CreatePreviewInvoiceRequest _$CreatePreviewInvoiceRequestFromJson(
         Map<String, dynamic> json) =>
     CreatePreviewInvoiceRequest(
+      automaticTax: json['automatic_tax'] == null
+          ? null
+          : CreateInvoiceAutomaticTaxRequest.fromJson(
+              json['automatic_tax'] as Map<String, dynamic>),
       customer: json['customer'] as String?,
       subscription: json['subscription'] as String?,
       discounts: (json['discounts'] as List<dynamic>?)
           ?.map(
               (e) => CreateDiscountRequest.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      invoiceItems: (json['invoice_items'] as List<dynamic>?)
+          ?.map((e) => CreatePreviewInvoiceItemRequest.fromJson(
+              e as Map<String, dynamic>))
           .toList(),
       previewMode: $enumDecodeNullable(
           _$PreviewInvoiceModeEnumMap, json['preview_mode']),
@@ -1939,10 +1947,13 @@ Map<String, dynamic> _$CreatePreviewInvoiceRequestToJson(
     }
   }
 
+  writeNotNull('automatic_tax', instance.automaticTax?.toJson());
   writeNotNull('customer', instance.customer);
   writeNotNull('subscription', instance.subscription);
   writeNotNull(
       'discounts', instance.discounts?.map((e) => e.toJson()).toList());
+  writeNotNull(
+      'invoice_items', instance.invoiceItems?.map((e) => e.toJson()).toList());
   writeNotNull(
       'preview_mode', _$PreviewInvoiceModeEnumMap[instance.previewMode]);
   writeNotNull('subscription_details', instance.subscriptionDetails?.toJson());
@@ -2068,6 +2079,28 @@ Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionItemDetailsRequestToJson(
   writeNotNull('price', instance.price);
   writeNotNull('quantity', instance.quantity);
   writeNotNull('tax_rates', instance.taxRates);
+  return val;
+}
+
+CreatePreviewInvoiceItemRequest _$CreatePreviewInvoiceItemRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreatePreviewInvoiceItemRequest(
+      price: json['price'] as String?,
+      quantity: (json['quantity'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$CreatePreviewInvoiceItemRequestToJson(
+    CreatePreviewInvoiceItemRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('price', instance.price);
+  writeNotNull('quantity', instance.quantity);
   return val;
 }
 
