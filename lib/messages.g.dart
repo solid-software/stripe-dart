@@ -1920,6 +1920,10 @@ CreatePreviewInvoiceRequest _$CreatePreviewInvoiceRequestFromJson(
           : CreateInvoiceAutomaticTaxRequest.fromJson(
               json['automatic_tax'] as Map<String, dynamic>),
       customer: json['customer'] as String?,
+      customerDetails: json['customer_details'] == null
+          ? null
+          : CreatePreviewInvoiceCustomerDetailsRequest.fromJson(
+              json['customer_details'] as Map<String, dynamic>),
       subscription: json['subscription'] as String?,
       discounts: (json['discounts'] as List<dynamic>?)
           ?.map(
@@ -1949,6 +1953,7 @@ Map<String, dynamic> _$CreatePreviewInvoiceRequestToJson(
 
   writeNotNull('automatic_tax', instance.automaticTax?.toJson());
   writeNotNull('customer', instance.customer);
+  writeNotNull('customer_details', instance.customerDetails?.toJson());
   writeNotNull('subscription', instance.subscription);
   writeNotNull(
       'discounts', instance.discounts?.map((e) => e.toJson()).toList());
@@ -1964,6 +1969,29 @@ const _$PreviewInvoiceModeEnumMap = {
   PreviewInvoiceMode.next: 'next',
   PreviewInvoiceMode.recurring: 'recurring',
 };
+
+CreatePreviewInvoiceCustomerDetailsRequest
+    _$CreatePreviewInvoiceCustomerDetailsRequestFromJson(
+            Map<String, dynamic> json) =>
+        CreatePreviewInvoiceCustomerDetailsRequest(
+          address: json['address'] == null
+              ? null
+              : Address.fromJson(json['address'] as Map<String, dynamic>),
+        );
+
+Map<String, dynamic> _$CreatePreviewInvoiceCustomerDetailsRequestToJson(
+    CreatePreviewInvoiceCustomerDetailsRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('address', instance.address?.toJson());
+  return val;
+}
 
 CreatePreviewInvoiceSubscriptionDetailsRequest
     _$CreatePreviewInvoiceSubscriptionDetailsRequestFromJson(

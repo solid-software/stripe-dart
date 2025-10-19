@@ -10,6 +10,8 @@ class CreatePreviewInvoiceRequest {
   /// customer_details, subscription, or schedule must be set.
   final String? customer;
 
+  final CreatePreviewInvoiceCustomerDetailsRequest? customerDetails;
+
   /// The identifier of the subscription for which you’d like to retrieve the
   /// upcoming invoice. If not provided, but a subscription_details.items is
   /// provided, you will preview creating a subscription with those items. If
@@ -37,6 +39,7 @@ class CreatePreviewInvoiceRequest {
   CreatePreviewInvoiceRequest({
     this.automaticTax,
     this.customer,
+    this.customerDetails,
     this.subscription,
     this.discounts,
     this.invoiceItems,
@@ -48,6 +51,23 @@ class CreatePreviewInvoiceRequest {
       _$CreatePreviewInvoiceRequestFromJson(json);
 
   Map<String, dynamic> toJson() => _$CreatePreviewInvoiceRequestToJson(this);
+}
+
+@JsonSerializable()
+class CreatePreviewInvoiceCustomerDetailsRequest extends Message {
+  final Address? address;
+
+  const CreatePreviewInvoiceCustomerDetailsRequest({
+    this.address,
+  });
+
+  factory CreatePreviewInvoiceCustomerDetailsRequest.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreatePreviewInvoiceCustomerDetailsRequestFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreatePreviewInvoiceCustomerDetailsRequestToJson(this);
 }
 
 /// https://docs.stripe.com/api/invoices/create_preview#create_create_preview-subscription_details
