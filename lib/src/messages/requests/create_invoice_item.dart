@@ -6,11 +6,14 @@ class CreateInvoiceItemRequest extends Message {
 
   final String? description;
 
+  final CreateInvoiceItemPricingRequest? pricing;
+
   final String? invoice;
 
   const CreateInvoiceItemRequest({
     required this.customer,
     this.description,
+    this.pricing,
     this.invoice,
   });
 

@@ -1932,6 +1932,10 @@ CreateInvoiceItemRequest _$CreateInvoiceItemRequestFromJson(
     CreateInvoiceItemRequest(
       customer: json['customer'] as String,
       description: json['description'] as String?,
+      pricing: json['pricing'] == null
+          ? null
+          : CreateInvoiceItemPricingRequest.fromJson(
+              json['pricing'] as Map<String, dynamic>),
       invoice: json['invoice'] as String?,
     );
 
@@ -1948,6 +1952,7 @@ Map<String, dynamic> _$CreateInvoiceItemRequestToJson(
   }
 
   writeNotNull('description', instance.description);
+  writeNotNull('pricing', instance.pricing?.toJson());
   writeNotNull('invoice', instance.invoice);
   return val;
 }
