@@ -40,6 +40,8 @@ class Invoice extends Message {
   /// The ID of the customer who will be billed.
   final String customer;
 
+  final InvoiceConfirmationSecret? confirmationSecret;
+
   /// Starting customer balance before the invoice is finalized. If the invoice
   /// has not been finalized yet, this will be the current customer balance.
   /// For revision invoices, this also includes any customer balance that was
@@ -124,6 +126,7 @@ class Invoice extends Message {
     required this.totalDiscountAmounts,
     required this.lines,
     this.billingReason,
+    this.confirmationSecret,
     this.description,
     this.endingBalance,
     this.hostedInvoiceUrl,
@@ -162,4 +165,19 @@ class TotalDiscountAmount extends Message {
 
   @override
   Map<String, dynamic> toJson() => _$TotalDiscountAmountToJson(this);
+}
+
+@JsonSerializable()
+class InvoiceConfirmationSecret extends Message {
+  final String? clientSecret;
+
+  const InvoiceConfirmationSecret({
+    this.clientSecret,
+  });
+
+  factory InvoiceConfirmationSecret.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceConfirmationSecretFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$InvoiceConfirmationSecretToJson(this);
 }

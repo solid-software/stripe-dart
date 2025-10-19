@@ -5,4 +5,6 @@ enum InvoiceExpandableField {
   paymentIntent,
   @JsonValue('discounts')
   discounts,
+  @JsonValue('confirmation_secret')
+  confirmationSecret,
 }
