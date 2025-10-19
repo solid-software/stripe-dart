@@ -1057,6 +1057,21 @@ Map<String, dynamic> _$TotalDiscountAmountToJson(
       'discount': instance.discount,
     };
 
+InvoiceItem _$InvoiceItemFromJson(Map<String, dynamic> json) => InvoiceItem(
+      object: $enumDecode(_$_InvoiceItemObjectEnumMap, json['object']),
+      id: json['id'] as String,
+    );
+
+Map<String, dynamic> _$InvoiceItemToJson(InvoiceItem instance) =>
+    <String, dynamic>{
+      'object': _$_InvoiceItemObjectEnumMap[instance.object]!,
+      'id': instance.id,
+    };
+
+const _$_InvoiceItemObjectEnumMap = {
+  _InvoiceItemObject.invoiceItem: 'invoiceitem',
+};
+
 InvoiceLineItem _$InvoiceLineItemFromJson(Map<String, dynamic> json) =>
     InvoiceLineItem(
       object: $enumDecode(_$_InvoiceLineItemObjectEnumMap, json['object']),
@@ -1909,6 +1924,51 @@ Map<String, dynamic> _$CreateDiscountRequestToJson(
   writeNotNull('coupon', instance.coupon);
   writeNotNull('discount', instance.discount);
   writeNotNull('promotion_code', instance.promotionCode);
+  return val;
+}
+
+CreateInvoiceItemRequest _$CreateInvoiceItemRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateInvoiceItemRequest(
+      customer: json['customer'] as String,
+      description: json['description'] as String?,
+    );
+
+Map<String, dynamic> _$CreateInvoiceItemRequestToJson(
+    CreateInvoiceItemRequest instance) {
+  final val = <String, dynamic>{
+    'customer': instance.customer,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('description', instance.description);
+  return val;
+}
+
+CreateInvoiceItemPricingRequest _$CreateInvoiceItemPricingRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateInvoiceItemPricingRequest(
+      price: json['price'] as String?,
+      invoice: json['invoice'] as String?,
+    );
+
+Map<String, dynamic> _$CreateInvoiceItemPricingRequestToJson(
+    CreateInvoiceItemPricingRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('price', instance.price);
+  writeNotNull('invoice', instance.invoice);
   return val;
 }
 
