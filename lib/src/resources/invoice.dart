@@ -84,6 +84,27 @@ class InvoiceResource extends Resource<Invoice> {
     return Invoice.fromJson(response);
   }
 
+  Future<Invoice> finalizeInvoice(String invoiceId) async {
+    final response = await post('$_resourceName/$invoiceId/finalize');
+
+    return Invoice.fromJson(response);
+  }
+
+  Future<InvoiceExpanded> finalizeInvoiceExpanded(
+    String invoiceId, {
+    required Set<InvoiceExpandableField> expand,
+  }) async {
+    final expandableFields = _expandableFields(expand);
+    final response = await post(
+      '$_resourceName/$invoiceId/finalize',
+      data: {
+        'expand': expandableFields.map((e) => e.field).toList(),
+      },
+    );
+
+    return InvoiceExpanded.fromJson(response, expand);
+  }
+
   Iterable<ExpandableField> _expandableFields(
     Set<InvoiceExpandableField> fields,
   ) {
