@@ -29,6 +29,13 @@ class Invoice extends Message {
   /// This is the sum of all the shipping amounts.
   final int amountShipping;
 
+  /// Indicates the reason why the invoice was created.
+  final InvoiceBillingReason? billingReason;
+
+  /// Time at which the object was created. Measured in seconds since the Unix
+  /// epoch.
+  final int created;
+
   /// Three-letter ISO currency code, in lowercase. Must be a supported
   /// currency.
   final String currency;
@@ -91,6 +98,11 @@ class Invoice extends Message {
   /// order.
   final DataList<InvoiceLineItem> lines;
 
+  /// Set of key-value pairs that you can attach to an object. This can be
+  /// useful for storing additional information about the object in a structured
+  /// format.
+  final Map<String, String>? metadata;
+
   /// The PaymentIntent associated with this invoice. The PaymentIntent is
   /// generated when the invoice is finalized, and can then be used to pay the
   /// invoice. Note that voiding an invoice will cancel the PaymentIntent.
@@ -111,6 +123,7 @@ class Invoice extends Message {
     required this.amountPaid,
     required this.amountRemaining,
     required this.amountShipping,
+    required this.created,
     required this.currency,
     required this.customer,
     required this.startingBalance,
@@ -118,6 +131,7 @@ class Invoice extends Message {
     required this.subtotal,
     required this.totalDiscountAmounts,
     required this.lines,
+    this.billingReason,
     this.description,
     this.endingBalance,
     this.hostedInvoiceUrl,
@@ -128,6 +142,7 @@ class Invoice extends Message {
     this.paymentIntent,
     this.accountCountry,
     this.accountName,
+    this.metadata,
   });
 
   factory Invoice.fromJson(Map<String, dynamic> json) =>
@@ -156,4 +171,22 @@ class TotalDiscountAmount extends Message {
 
   @override
   Map<String, dynamic> toJson() => _$TotalDiscountAmountToJson(this);
+}
+
+/// https://docs.stripe.com/api/invoices/object#invoice_object-confirmation_secret
+@JsonSerializable()
+class InvoiceConfirmationSecret extends Message {
+  /// The client_secret of the payment that Stripe creates for the invoice after
+  /// finalization.
+  final String? clientSecret;
+
+  const InvoiceConfirmationSecret({
+    this.clientSecret,
+  });
+
+  factory InvoiceConfirmationSecret.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceConfirmationSecretFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$InvoiceConfirmationSecretToJson(this);
 }

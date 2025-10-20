@@ -8,6 +8,7 @@ import 'src/resources/coupon.dart';
 import 'src/resources/customer.dart';
 import 'src/resources/customer_balance_transaction.dart';
 import 'src/resources/invoice.dart';
+import 'src/resources/invoice_item.dart';
 import 'src/resources/payment_intent.dart';
 import 'src/resources/portal_session.dart';
 import 'src/resources/price.dart';
@@ -85,6 +86,8 @@ class Stripe {
 
   final CustomerBalanceTransactionResource customerBalanceTransaction;
 
+  final InvoiceItemResource invoiceItem;
+
   factory Stripe(String apiKey) {
     final client = DioClient(apiKey: apiKey);
     return Stripe.withClient(client);
@@ -106,5 +109,6 @@ class Stripe {
         promotionCode = PromotionCodeResource(client),
         coupon = CouponResource(client),
         invoice = InvoiceResource(client),
-        customerBalanceTransaction = CustomerBalanceTransactionResource(client);
+        customerBalanceTransaction = CustomerBalanceTransactionResource(client),
+        invoiceItem = InvoiceItemResource(client);
 }

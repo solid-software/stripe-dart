@@ -3,7 +3,7 @@ import 'package:stripe/src/messages/enums/expandable_fields/invoice_expandable_f
 import 'package:stripe/src/utils/expandable_object_field.dart';
 
 class LatestInvoiceExpandedExpandableField
-    extends ExpandableObjectField<InvoiceExpanded> {
+    extends ExpandableObjectField<InvoiceExpanded, String> {
   final Set<InvoiceExpandableField> expand;
 
   @override

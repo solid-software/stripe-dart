@@ -201,19 +201,47 @@ Map<String, dynamic> _$PaymentMethodDetailsCardToJson(
 
 CheckoutSession _$CheckoutSessionFromJson(Map<String, dynamic> json) =>
     CheckoutSession(
-      object: json['object'] as String,
+      object: $enumDecode(_$_CheckoutSessionObjectEnumMap, json['object']),
       id: json['id'] as String,
       paymentMethodTypes: (json['payment_method_types'] as List<dynamic>)
           .map((e) => $enumDecode(_$PaymentMethodTypeEnumMap, e))
           .toList(),
+      mode: $enumDecode(_$CheckoutSessionModeEnumMap, json['mode']),
+      paymentStatus: $enumDecode(
+          _$CheckoutSessionPaymentStatusEnumMap, json['payment_status']),
+      status: $enumDecode(_$CheckoutSessionStatusEnumMap, json['status']),
+      created: (json['created'] as num).toInt(),
+      expiresAt: (json['expires_at'] as num).toInt(),
+      livemode: json['livemode'] as bool,
       clientReferenceId: json['client_reference_id'] as String?,
       customer: json['customer'] as String?,
+      customerEmail: json['customer_email'] as String?,
+      lineItems: json['line_items'] == null
+          ? null
+          : DataList<CheckoutSessionLineItem>.fromJson(
+              json['line_items'] as Map<String, dynamic>,
+              (value) => CheckoutSessionLineItem.fromJson(
+                  value as Map<String, dynamic>)),
+      metadata: json['metadata'] as Map<String, dynamic>?,
+      returnUrl: json['return_url'] as String?,
+      successfulUrl: json['successful_url'] as String?,
+      url: json['url'] as String?,
+      uiMode:
+          $enumDecodeNullable(_$CheckoutSessionUIModeEnumMap, json['ui_mode']),
+      amountSubtotal: (json['amount_subtotal'] as num?)?.toInt(),
+      amountTotal: (json['amount_total'] as num?)?.toInt(),
+      cancelUrl: json['cancel_url'] as String?,
+      clientSecret: json['client_secret'] as String?,
+      invoice: json['invoice'] as String?,
+      paymentLink: json['payment_link'] as String?,
+      setupIntent: json['setup_intent'] as String?,
+      subscription: json['subscription'] as String?,
       paymentIntent: json['payment_intent'] as String?,
     );
 
 Map<String, dynamic> _$CheckoutSessionToJson(CheckoutSession instance) {
   final val = <String, dynamic>{
-    'object': instance.object,
+    'object': _$_CheckoutSessionObjectEnumMap[instance.object]!,
     'id': instance.id,
   };
 
@@ -225,12 +253,42 @@ Map<String, dynamic> _$CheckoutSessionToJson(CheckoutSession instance) {
 
   writeNotNull('client_reference_id', instance.clientReferenceId);
   writeNotNull('customer', instance.customer);
+  writeNotNull('customer_email', instance.customerEmail);
+  writeNotNull(
+      'line_items',
+      instance.lineItems?.toJson(
+        (value) => value.toJson(),
+      ));
+  writeNotNull('metadata', instance.metadata);
+  val['mode'] = _$CheckoutSessionModeEnumMap[instance.mode]!;
   writeNotNull('payment_intent', instance.paymentIntent);
+  val['payment_status'] =
+      _$CheckoutSessionPaymentStatusEnumMap[instance.paymentStatus]!;
+  writeNotNull('return_url', instance.returnUrl);
+  val['status'] = _$CheckoutSessionStatusEnumMap[instance.status]!;
+  writeNotNull('successful_url', instance.successfulUrl);
+  writeNotNull('ui_mode', _$CheckoutSessionUIModeEnumMap[instance.uiMode]);
+  writeNotNull('url', instance.url);
+  writeNotNull('amount_subtotal', instance.amountSubtotal);
+  writeNotNull('amount_total', instance.amountTotal);
+  writeNotNull('cancel_url', instance.cancelUrl);
+  writeNotNull('client_secret', instance.clientSecret);
+  val['created'] = instance.created;
+  val['expires_at'] = instance.expiresAt;
+  writeNotNull('invoice', instance.invoice);
+  val['livemode'] = instance.livemode;
+  writeNotNull('payment_link', instance.paymentLink);
+  writeNotNull('setup_intent', instance.setupIntent);
+  writeNotNull('subscription', instance.subscription);
   val['payment_method_types'] = instance.paymentMethodTypes
       .map((e) => _$PaymentMethodTypeEnumMap[e]!)
       .toList();
   return val;
 }
+
+const _$_CheckoutSessionObjectEnumMap = {
+  _CheckoutSessionObject.checkoutSession: 'checkout.session',
+};
 
 const _$PaymentMethodTypeEnumMap = {
   PaymentMethodType.acss_debit: 'acss_debit',
@@ -263,6 +321,76 @@ const _$PaymentMethodTypeEnumMap = {
   PaymentMethodType.sofort: 'sofort',
   PaymentMethodType.us_bank_account: 'us_bank_account',
   PaymentMethodType.wechat_pay: 'wechat_pay',
+};
+
+const _$CheckoutSessionModeEnumMap = {
+  CheckoutSessionMode.payment: 'payment',
+  CheckoutSessionMode.setup: 'setup',
+  CheckoutSessionMode.subscription: 'subscription',
+};
+
+const _$CheckoutSessionPaymentStatusEnumMap = {
+  CheckoutSessionPaymentStatus.noPaymentRequired: 'no_payment_required',
+  CheckoutSessionPaymentStatus.paid: 'paid',
+  CheckoutSessionPaymentStatus.unpaid: 'unpaid',
+};
+
+const _$CheckoutSessionStatusEnumMap = {
+  CheckoutSessionStatus.complete: 'complete',
+  CheckoutSessionStatus.expired: 'expired',
+  CheckoutSessionStatus.open: 'open',
+};
+
+const _$CheckoutSessionUIModeEnumMap = {
+  CheckoutSessionUIMode.custom: 'custom',
+  CheckoutSessionUIMode.embedded: 'embedded',
+  CheckoutSessionUIMode.hosted: 'hosted',
+};
+
+CheckoutSessionLineItem _$CheckoutSessionLineItemFromJson(
+        Map<String, dynamic> json) =>
+    CheckoutSessionLineItem(
+      object:
+          $enumDecode(_$_CheckoutSessionLineItemObjectEnumMap, json['object']),
+      id: json['id'] as String,
+      amountDiscount: (json['amount_discount'] as num).toInt(),
+      amountSubtotal: (json['amount_subtotal'] as num).toInt(),
+      amountTax: (json['amount_tax'] as num).toInt(),
+      amountTotal: (json['amount_total'] as num).toInt(),
+      currency: json['currency'] as String,
+      description: json['description'] as String?,
+      price: json['price'] == null
+          ? null
+          : Price.fromJson(json['price'] as Map<String, dynamic>),
+      quantity: (json['quantity'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$CheckoutSessionLineItemToJson(
+    CheckoutSessionLineItem instance) {
+  final val = <String, dynamic>{
+    'object': _$_CheckoutSessionLineItemObjectEnumMap[instance.object]!,
+    'id': instance.id,
+    'amount_discount': instance.amountDiscount,
+    'amount_subtotal': instance.amountSubtotal,
+    'amount_tax': instance.amountTax,
+    'amount_total': instance.amountTotal,
+    'currency': instance.currency,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('price', instance.price?.toJson());
+  writeNotNull('quantity', instance.quantity);
+  return val;
+}
+
+const _$_CheckoutSessionLineItemObjectEnumMap = {
+  _CheckoutSessionLineItemObject.item: 'item',
 };
 
 CouponAppliesTo _$CouponAppliesToFromJson(Map<String, dynamic> json) =>
@@ -838,6 +966,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       amountPaid: (json['amount_paid'] as num).toInt(),
       amountRemaining: (json['amount_remaining'] as num).toInt(),
       amountShipping: (json['amount_shipping'] as num).toInt(),
+      created: (json['created'] as num).toInt(),
       currency: json['currency'] as String,
       customer: json['customer'] as String,
       startingBalance: (json['starting_balance'] as num).toInt(),
@@ -849,6 +978,8 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       lines: DataList<InvoiceLineItem>.fromJson(
           json['lines'] as Map<String, dynamic>,
           (value) => InvoiceLineItem.fromJson(value as Map<String, dynamic>)),
+      billingReason: $enumDecodeNullable(
+          _$InvoiceBillingReasonEnumMap, json['billing_reason']),
       description: json['description'] as String?,
       endingBalance: (json['ending_balance'] as num?)?.toInt(),
       hostedInvoiceUrl: json['hosted_invoice_url'] as String?,
@@ -859,6 +990,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       paymentIntent: json['payment_intent'] as String?,
       accountCountry: json['account_country'] as String?,
       accountName: json['account_name'] as String?,
+      metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
     );
 
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
@@ -869,10 +1003,6 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     'amount_paid': instance.amountPaid,
     'amount_remaining': instance.amountRemaining,
     'amount_shipping': instance.amountShipping,
-    'currency': instance.currency,
-    'customer': instance.customer,
-    'starting_balance': instance.startingBalance,
-    'total': instance.total,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -881,6 +1011,13 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     }
   }
 
+  writeNotNull(
+      'billing_reason', _$InvoiceBillingReasonEnumMap[instance.billingReason]);
+  val['created'] = instance.created;
+  val['currency'] = instance.currency;
+  val['customer'] = instance.customer;
+  val['starting_balance'] = instance.startingBalance;
+  val['total'] = instance.total;
   writeNotNull('total_excluding_tax', instance.totalExcludingTax);
   writeNotNull('description', instance.description);
   writeNotNull('ending_balance', instance.endingBalance);
@@ -894,11 +1031,22 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   val['lines'] = instance.lines.toJson(
     (value) => value.toJson(),
   );
+  writeNotNull('metadata', instance.metadata);
   writeNotNull('payment_intent', instance.paymentIntent);
   writeNotNull('account_country', instance.accountCountry);
   writeNotNull('account_name', instance.accountName);
   return val;
 }
+
+const _$InvoiceBillingReasonEnumMap = {
+  InvoiceBillingReason.manual: 'manual',
+  InvoiceBillingReason.subscription: 'subscription',
+  InvoiceBillingReason.subscriptionCreate: 'subscription_create',
+  InvoiceBillingReason.subscriptionCycle: 'subscription_cycle',
+  InvoiceBillingReason.subscriptionThreshold: 'subscription_threshold',
+  InvoiceBillingReason.subscriptionUpdate: 'subscription_update',
+  InvoiceBillingReason.upcoming: 'upcoming',
+};
 
 TotalDiscountAmount _$TotalDiscountAmountFromJson(Map<String, dynamic> json) =>
     TotalDiscountAmount(
@@ -912,6 +1060,41 @@ Map<String, dynamic> _$TotalDiscountAmountToJson(
       'amount': instance.amount,
       'discount': instance.discount,
     };
+
+InvoiceConfirmationSecret _$InvoiceConfirmationSecretFromJson(
+        Map<String, dynamic> json) =>
+    InvoiceConfirmationSecret(
+      clientSecret: json['client_secret'] as String?,
+    );
+
+Map<String, dynamic> _$InvoiceConfirmationSecretToJson(
+    InvoiceConfirmationSecret instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('client_secret', instance.clientSecret);
+  return val;
+}
+
+InvoiceItem _$InvoiceItemFromJson(Map<String, dynamic> json) => InvoiceItem(
+      object: $enumDecode(_$_InvoiceItemObjectEnumMap, json['object']),
+      id: json['id'] as String,
+    );
+
+Map<String, dynamic> _$InvoiceItemToJson(InvoiceItem instance) =>
+    <String, dynamic>{
+      'object': _$_InvoiceItemObjectEnumMap[instance.object]!,
+      'id': instance.id,
+    };
+
+const _$_InvoiceItemObjectEnumMap = {
+  _InvoiceItemObject.invoiceItem: 'invoiceitem',
+};
 
 InvoiceLineItem _$InvoiceLineItemFromJson(Map<String, dynamic> json) =>
     InvoiceLineItem(
@@ -1465,12 +1648,14 @@ Map<String, dynamic> _$ConfirmPaymentIntentRequestToJson(
 CreateCheckoutSessionRequest _$CreateCheckoutSessionRequestFromJson(
         Map<String, dynamic> json) =>
     CreateCheckoutSessionRequest(
-      successUrl: json['success_url'] as String,
-      cancelUrl: json['cancel_url'] as String,
-      paymentMethodTypes: (json['payment_method_types'] as List<dynamic>)
-          .map((e) => $enumDecode(_$PaymentMethodTypeEnumMap, e))
+      cancelUrl: json['cancel_url'] as String?,
+      paymentMethodTypes: (json['payment_method_types'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$PaymentMethodTypeEnumMap, e))
           .toList(),
+      successUrl: json['success_url'] as String?,
       mode: $enumDecodeNullable(_$SessionModeEnumMap, json['mode']),
+      uiMode:
+          $enumDecodeNullable(_$CheckoutSessionUIModeEnumMap, json['ui_mode']),
       clientReferenceId: json['client_reference_id'] as String?,
       customerEmail: json['customer_email'] as String?,
       customer: json['customer'] as String?,
@@ -1500,10 +1685,7 @@ CreateCheckoutSessionRequest _$CreateCheckoutSessionRequestFromJson(
 
 Map<String, dynamic> _$CreateCheckoutSessionRequestToJson(
     CreateCheckoutSessionRequest instance) {
-  final val = <String, dynamic>{
-    'success_url': instance.successUrl,
-    'cancel_url': instance.cancelUrl,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -1511,10 +1693,15 @@ Map<String, dynamic> _$CreateCheckoutSessionRequestToJson(
     }
   }
 
+  writeNotNull('success_url', instance.successUrl);
+  writeNotNull('cancel_url', instance.cancelUrl);
   writeNotNull('mode', _$SessionModeEnumMap[instance.mode]);
-  val['payment_method_types'] = instance.paymentMethodTypes
-      .map((e) => _$PaymentMethodTypeEnumMap[e]!)
-      .toList();
+  writeNotNull('ui_mode', _$CheckoutSessionUIModeEnumMap[instance.uiMode]);
+  writeNotNull(
+      'payment_method_types',
+      instance.paymentMethodTypes
+          ?.map((e) => _$PaymentMethodTypeEnumMap[e]!)
+          .toList());
   writeNotNull('client_reference_id', instance.clientReferenceId);
   writeNotNull('customer_email', instance.customerEmail);
   writeNotNull('customer', instance.customer);
@@ -1764,14 +1951,144 @@ Map<String, dynamic> _$CreateDiscountRequestToJson(
   return val;
 }
 
+CreateInvoiceRequest _$CreateInvoiceRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateInvoiceRequest(
+      autoAdvance: json['auto_advance'] as bool?,
+      automaticTax: json['automatic_tax'] == null
+          ? null
+          : CreateInvoiceAutomaticTaxRequest.fromJson(
+              json['automatic_tax'] as Map<String, dynamic>),
+      collectionMethod: $enumDecodeNullable(
+          _$InvoiceCollectionMethodEnumMap, json['collection_method']),
+      customer: json['customer'] as String?,
+      description: json['description'] as String?,
+      metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      currency: json['currency'] as String?,
+      defaultPaymentMethod: json['default_payment_method'] as String?,
+      defaultSource: json['default_source'] as String?,
+      discounts: (json['discounts'] as List<dynamic>?)
+          ?.map(
+              (e) => CreateDiscountRequest.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$CreateInvoiceRequestToJson(
+    CreateInvoiceRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('auto_advance', instance.autoAdvance);
+  writeNotNull('automatic_tax', instance.automaticTax?.toJson());
+  writeNotNull('collection_method',
+      _$InvoiceCollectionMethodEnumMap[instance.collectionMethod]);
+  writeNotNull('customer', instance.customer);
+  writeNotNull('description', instance.description);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('currency', instance.currency);
+  writeNotNull('default_payment_method', instance.defaultPaymentMethod);
+  writeNotNull('default_source', instance.defaultSource);
+  writeNotNull(
+      'discounts', instance.discounts?.map((e) => e.toJson()).toList());
+  return val;
+}
+
+const _$InvoiceCollectionMethodEnumMap = {
+  InvoiceCollectionMethod.chargeAutomatically: 'charge_automatically',
+  InvoiceCollectionMethod.sendInvoice: 'send_invoice',
+};
+
+CreateInvoiceAutomaticTaxRequest _$CreateInvoiceAutomaticTaxRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateInvoiceAutomaticTaxRequest(
+      enabled: json['enabled'] as bool,
+    );
+
+Map<String, dynamic> _$CreateInvoiceAutomaticTaxRequestToJson(
+        CreateInvoiceAutomaticTaxRequest instance) =>
+    <String, dynamic>{
+      'enabled': instance.enabled,
+    };
+
+CreateInvoiceItemRequest _$CreateInvoiceItemRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateInvoiceItemRequest(
+      customer: json['customer'] as String,
+      description: json['description'] as String?,
+      pricing: json['pricing'] == null
+          ? null
+          : CreateInvoiceItemPricingRequest.fromJson(
+              json['pricing'] as Map<String, dynamic>),
+      invoice: json['invoice'] as String?,
+      metadata: json['metadata'] as Map<String, dynamic>?,
+    );
+
+Map<String, dynamic> _$CreateInvoiceItemRequestToJson(
+    CreateInvoiceItemRequest instance) {
+  final val = <String, dynamic>{
+    'customer': instance.customer,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('pricing', instance.pricing?.toJson());
+  writeNotNull('invoice', instance.invoice);
+  writeNotNull('metadata', instance.metadata);
+  return val;
+}
+
+CreateInvoiceItemPricingRequest _$CreateInvoiceItemPricingRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateInvoiceItemPricingRequest(
+      price: json['price'] as String?,
+    );
+
+Map<String, dynamic> _$CreateInvoiceItemPricingRequestToJson(
+    CreateInvoiceItemPricingRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('price', instance.price);
+  return val;
+}
+
 CreatePreviewInvoiceRequest _$CreatePreviewInvoiceRequestFromJson(
         Map<String, dynamic> json) =>
     CreatePreviewInvoiceRequest(
+      automaticTax: json['automatic_tax'] == null
+          ? null
+          : CreateInvoiceAutomaticTaxRequest.fromJson(
+              json['automatic_tax'] as Map<String, dynamic>),
       customer: json['customer'] as String?,
+      customerDetails: json['customer_details'] == null
+          ? null
+          : CreatePreviewInvoiceCustomerDetailsRequest.fromJson(
+              json['customer_details'] as Map<String, dynamic>),
       subscription: json['subscription'] as String?,
       discounts: (json['discounts'] as List<dynamic>?)
           ?.map(
               (e) => CreateDiscountRequest.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      invoiceItems: (json['invoice_items'] as List<dynamic>?)
+          ?.map((e) => CreatePreviewInvoiceItemRequest.fromJson(
+              e as Map<String, dynamic>))
           .toList(),
       previewMode: $enumDecodeNullable(
           _$PreviewInvoiceModeEnumMap, json['preview_mode']),
@@ -1791,10 +2108,14 @@ Map<String, dynamic> _$CreatePreviewInvoiceRequestToJson(
     }
   }
 
+  writeNotNull('automatic_tax', instance.automaticTax?.toJson());
   writeNotNull('customer', instance.customer);
+  writeNotNull('customer_details', instance.customerDetails?.toJson());
   writeNotNull('subscription', instance.subscription);
   writeNotNull(
       'discounts', instance.discounts?.map((e) => e.toJson()).toList());
+  writeNotNull(
+      'invoice_items', instance.invoiceItems?.map((e) => e.toJson()).toList());
   writeNotNull(
       'preview_mode', _$PreviewInvoiceModeEnumMap[instance.previewMode]);
   writeNotNull('subscription_details', instance.subscriptionDetails?.toJson());
@@ -1805,6 +2126,29 @@ const _$PreviewInvoiceModeEnumMap = {
   PreviewInvoiceMode.next: 'next',
   PreviewInvoiceMode.recurring: 'recurring',
 };
+
+CreatePreviewInvoiceCustomerDetailsRequest
+    _$CreatePreviewInvoiceCustomerDetailsRequestFromJson(
+            Map<String, dynamic> json) =>
+        CreatePreviewInvoiceCustomerDetailsRequest(
+          address: json['address'] == null
+              ? null
+              : Address.fromJson(json['address'] as Map<String, dynamic>),
+        );
+
+Map<String, dynamic> _$CreatePreviewInvoiceCustomerDetailsRequestToJson(
+    CreatePreviewInvoiceCustomerDetailsRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('address', instance.address?.toJson());
+  return val;
+}
 
 CreatePreviewInvoiceSubscriptionDetailsRequest
     _$CreatePreviewInvoiceSubscriptionDetailsRequestFromJson(
@@ -1920,6 +2264,28 @@ Map<String, dynamic> _$CreatePreviewInvoiceSubscriptionItemDetailsRequestToJson(
   writeNotNull('price', instance.price);
   writeNotNull('quantity', instance.quantity);
   writeNotNull('tax_rates', instance.taxRates);
+  return val;
+}
+
+CreatePreviewInvoiceItemRequest _$CreatePreviewInvoiceItemRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreatePreviewInvoiceItemRequest(
+      price: json['price'] as String?,
+      quantity: (json['quantity'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$CreatePreviewInvoiceItemRequestToJson(
+    CreatePreviewInvoiceItemRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('price', instance.price);
+  writeNotNull('quantity', instance.quantity);
   return val;
 }
 
@@ -2389,6 +2755,45 @@ Map<String, dynamic> _$CreatedRequestToJson(CreatedRequest instance) {
   writeNotNull('gte', instance.gte);
   writeNotNull('lt', instance.lt);
   writeNotNull('lte', instance.lte);
+  return val;
+}
+
+ListCheckoutSessionsRequest _$ListCheckoutSessionsRequestFromJson(
+        Map<String, dynamic> json) =>
+    ListCheckoutSessionsRequest(
+      paymentIntent: json['payment_intent'] as String?,
+      subscription: json['subscription'] as String?,
+      created: json['created'] == null
+          ? null
+          : CreatedRequest.fromJson(json['created'] as Map<String, dynamic>),
+      customer: json['customer'] as String?,
+      endingBefore: json['ending_before'] as String?,
+      limit: (json['limit'] as num?)?.toInt(),
+      paymentLink: json['payment_link'] as String?,
+      startingAfter: json['starting_after'] as String?,
+      status:
+          $enumDecodeNullable(_$CheckoutSessionStatusEnumMap, json['status']),
+    );
+
+Map<String, dynamic> _$ListCheckoutSessionsRequestToJson(
+    ListCheckoutSessionsRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('payment_intent', instance.paymentIntent);
+  writeNotNull('subscription', instance.subscription);
+  writeNotNull('created', instance.created?.toJson());
+  writeNotNull('customer', instance.customer);
+  writeNotNull('ending_before', instance.endingBefore);
+  writeNotNull('limit', instance.limit);
+  writeNotNull('payment_link', instance.paymentLink);
+  writeNotNull('starting_after', instance.startingAfter);
+  writeNotNull('status', _$CheckoutSessionStatusEnumMap[instance.status]);
   return val;
 }
 

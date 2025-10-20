@@ -1,7 +1,7 @@
 import 'package:stripe/messages.dart';
 import 'package:stripe/src/utils/expandable_object_field.dart';
 
-class CustomerExpandableField extends ExpandableObjectField<Customer> {
+class CustomerExpandableField extends ExpandableObjectField<Customer, String> {
   @override
   String get field => 'customer';
 
