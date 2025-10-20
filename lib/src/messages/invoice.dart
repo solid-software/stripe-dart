@@ -29,8 +29,11 @@ class Invoice extends Message {
   /// This is the sum of all the shipping amounts.
   final int amountShipping;
 
+  /// Indicates the reason why the invoice was created.
   final InvoiceBillingReason? billingReason;
 
+  /// Time at which the object was created. Measured in seconds since the Unix
+  /// epoch.
   final int created;
 
   /// Three-letter ISO currency code, in lowercase. Must be a supported
@@ -95,6 +98,9 @@ class Invoice extends Message {
   /// order.
   final DataList<InvoiceLineItem> lines;
 
+  /// Set of key-value pairs that you can attach to an object. This can be
+  /// useful for storing additional information about the object in a structured
+  /// format.
   final Map<String, String>? metadata;
 
   /// The PaymentIntent associated with this invoice. The PaymentIntent is
@@ -167,8 +173,11 @@ class TotalDiscountAmount extends Message {
   Map<String, dynamic> toJson() => _$TotalDiscountAmountToJson(this);
 }
 
+/// https://docs.stripe.com/api/invoices/object#invoice_object-confirmation_secret
 @JsonSerializable()
 class InvoiceConfirmationSecret extends Message {
+  /// The client_secret of the payment that Stripe creates for the invoice after
+  /// finalization.
   final String? clientSecret;
 
   const InvoiceConfirmationSecret({

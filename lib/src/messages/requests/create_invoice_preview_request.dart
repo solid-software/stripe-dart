@@ -3,6 +3,7 @@ part of '../../../messages.dart';
 /// https://docs.stripe.com/api/invoices/create_preview
 @JsonSerializable()
 class CreatePreviewInvoiceRequest {
+  /// Settings for automatic tax lookup for this invoice preview.
   final CreateInvoiceAutomaticTaxRequest? automaticTax;
 
   /// The identifier of the customer whose upcoming invoice you’d like to
@@ -10,6 +11,9 @@ class CreatePreviewInvoiceRequest {
   /// customer_details, subscription, or schedule must be set.
   final String? customer;
 
+  /// Details about the customer you want to invoice or overrides for an
+  /// existing customer. If automatic_tax is enabled then one of customer,
+  /// customer_details, subscription, or schedule must be set.
   final CreatePreviewInvoiceCustomerDetailsRequest? customerDetails;
 
   /// The identifier of the subscription for which you’d like to retrieve the
@@ -26,6 +30,8 @@ class CreatePreviewInvoiceRequest {
   /// to a subscription. Pass an empty string to avoid inheriting any discounts.
   final List<CreateDiscountRequest>? discounts;
 
+  /// List of invoice items to add or update in the upcoming invoice preview
+  /// (up to 250).
   final List<CreatePreviewInvoiceItemRequest>? invoiceItems;
 
   /// Customizes the types of values to include when calculating the invoice.
@@ -53,8 +59,10 @@ class CreatePreviewInvoiceRequest {
   Map<String, dynamic> toJson() => _$CreatePreviewInvoiceRequestToJson(this);
 }
 
+/// https://docs.stripe.com/api/invoices/create_preview#create_create_preview-customer_details
 @JsonSerializable()
 class CreatePreviewInvoiceCustomerDetailsRequest extends Message {
+  /// The customer’s address.
   final Address? address;
 
   const CreatePreviewInvoiceCustomerDetailsRequest({
@@ -222,9 +230,13 @@ enum PreviewInvoiceMode {
   recurring,
 }
 
+/// https://docs.stripe.com/api/invoices/create_preview#create_create_preview-invoice_items
 @JsonSerializable()
 class CreatePreviewInvoiceItemRequest extends Message {
+  /// The ID of the price object. One of price or price_data is required.
   final String? price;
+
+  /// Non-negative integer. The quantity of units for the invoice item.
   final int? quantity;
 
   const CreatePreviewInvoiceItemRequest({

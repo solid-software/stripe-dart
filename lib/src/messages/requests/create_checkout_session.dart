@@ -36,6 +36,7 @@ class CreateCheckoutSessionRequest {
   /// recurring item.
   final SessionMode? mode;
 
+  /// The UI mode of the Session. Defaults to hosted.
   final CheckoutSessionUIMode? uiMode;
 
   /// A list of the types of payment methods (e.g., card) this Checkout Session

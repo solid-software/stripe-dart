@@ -15,11 +15,13 @@ class CheckoutSessionResource extends Resource<CheckoutSession> {
     return CheckoutSession.fromJson(response);
   }
 
+  /// Retrieves a Checkout Session object.
   Future<CheckoutSession> retrieve(String id) async {
     final response = await get('$_resourceName/$id');
     return CheckoutSession.fromJson(response);
   }
 
+  /// Retrieves a Checkout Session object.
   Future<CheckoutSession> retrieveExpanded(
     String id, {
     required Set<CheckoutSessionExpandableField> expand,
@@ -33,6 +35,7 @@ class CheckoutSessionResource extends Resource<CheckoutSession> {
     return CheckoutSession.fromJson(response);
   }
 
+  /// Returns a list of Checkout Sessions.
   Future<DataList<CheckoutSession>> list([
     ListCheckoutSessionsRequest? request,
   ]) async {
@@ -47,6 +50,7 @@ class CheckoutSessionResource extends Resource<CheckoutSession> {
     );
   }
 
+  /// Returns a list of Checkout Sessions.
   Future<DataList<CheckoutSession>> listExpanded({
     required Set<CheckoutSessionExpandableField> expand,
     ListCheckoutSessionsRequest? request,

@@ -5,9 +5,12 @@ enum _InvoiceItemObject {
   invoiceItem,
 }
 
+/// https://docs.stripe.com/api/invoiceitems/object
 @JsonSerializable()
 class InvoiceItem extends Message {
   final _InvoiceItemObject object;
+
+  /// Unique identifier for the object.
   final String id;
 
   const InvoiceItem({

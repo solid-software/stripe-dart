@@ -1951,6 +1951,72 @@ Map<String, dynamic> _$CreateDiscountRequestToJson(
   return val;
 }
 
+CreateInvoiceRequest _$CreateInvoiceRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateInvoiceRequest(
+      autoAdvance: json['auto_advance'] as bool?,
+      automaticTax: json['automatic_tax'] == null
+          ? null
+          : CreateInvoiceAutomaticTaxRequest.fromJson(
+              json['automatic_tax'] as Map<String, dynamic>),
+      collectionMethod: $enumDecodeNullable(
+          _$InvoiceCollectionMethodEnumMap, json['collection_method']),
+      customer: json['customer'] as String?,
+      description: json['description'] as String?,
+      metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      currency: json['currency'] as String?,
+      defaultPaymentMethod: json['default_payment_method'] as String?,
+      defaultSource: json['default_source'] as String?,
+      discounts: (json['discounts'] as List<dynamic>?)
+          ?.map(
+              (e) => CreateDiscountRequest.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$CreateInvoiceRequestToJson(
+    CreateInvoiceRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('auto_advance', instance.autoAdvance);
+  writeNotNull('automatic_tax', instance.automaticTax?.toJson());
+  writeNotNull('collection_method',
+      _$InvoiceCollectionMethodEnumMap[instance.collectionMethod]);
+  writeNotNull('customer', instance.customer);
+  writeNotNull('description', instance.description);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('currency', instance.currency);
+  writeNotNull('default_payment_method', instance.defaultPaymentMethod);
+  writeNotNull('default_source', instance.defaultSource);
+  writeNotNull(
+      'discounts', instance.discounts?.map((e) => e.toJson()).toList());
+  return val;
+}
+
+const _$InvoiceCollectionMethodEnumMap = {
+  InvoiceCollectionMethod.chargeAutomatically: 'charge_automatically',
+  InvoiceCollectionMethod.sendInvoice: 'send_invoice',
+};
+
+CreateInvoiceAutomaticTaxRequest _$CreateInvoiceAutomaticTaxRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateInvoiceAutomaticTaxRequest(
+      enabled: json['enabled'] as bool,
+    );
+
+Map<String, dynamic> _$CreateInvoiceAutomaticTaxRequestToJson(
+        CreateInvoiceAutomaticTaxRequest instance) =>
+    <String, dynamic>{
+      'enabled': instance.enabled,
+    };
+
 CreateInvoiceItemRequest _$CreateInvoiceItemRequestFromJson(
         Map<String, dynamic> json) =>
     CreateInvoiceItemRequest(
@@ -2222,72 +2288,6 @@ Map<String, dynamic> _$CreatePreviewInvoiceItemRequestToJson(
   writeNotNull('quantity', instance.quantity);
   return val;
 }
-
-CreateInvoiceRequest _$CreateInvoiceRequestFromJson(
-        Map<String, dynamic> json) =>
-    CreateInvoiceRequest(
-      autoAdvance: json['auto_advance'] as bool?,
-      automaticTax: json['automatic_tax'] == null
-          ? null
-          : CreateInvoiceAutomaticTaxRequest.fromJson(
-              json['automatic_tax'] as Map<String, dynamic>),
-      collectionMethod: $enumDecodeNullable(
-          _$InvoiceCollectionMethodEnumMap, json['collection_method']),
-      customer: json['customer'] as String?,
-      description: json['description'] as String?,
-      metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ),
-      currency: json['currency'] as String?,
-      defaultPaymentMethod: json['default_payment_method'] as String?,
-      defaultSource: json['default_source'] as String?,
-      discounts: (json['discounts'] as List<dynamic>?)
-          ?.map(
-              (e) => CreateDiscountRequest.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$CreateInvoiceRequestToJson(
-    CreateInvoiceRequest instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('auto_advance', instance.autoAdvance);
-  writeNotNull('automatic_tax', instance.automaticTax?.toJson());
-  writeNotNull('collection_method',
-      _$InvoiceCollectionMethodEnumMap[instance.collectionMethod]);
-  writeNotNull('customer', instance.customer);
-  writeNotNull('description', instance.description);
-  writeNotNull('metadata', instance.metadata);
-  writeNotNull('currency', instance.currency);
-  writeNotNull('default_payment_method', instance.defaultPaymentMethod);
-  writeNotNull('default_source', instance.defaultSource);
-  writeNotNull(
-      'discounts', instance.discounts?.map((e) => e.toJson()).toList());
-  return val;
-}
-
-const _$InvoiceCollectionMethodEnumMap = {
-  InvoiceCollectionMethod.chargeAutomatically: 'charge_automatically',
-  InvoiceCollectionMethod.sendInvoice: 'send_invoice',
-};
-
-CreateInvoiceAutomaticTaxRequest _$CreateInvoiceAutomaticTaxRequestFromJson(
-        Map<String, dynamic> json) =>
-    CreateInvoiceAutomaticTaxRequest(
-      enabled: json['enabled'] as bool,
-    );
-
-Map<String, dynamic> _$CreateInvoiceAutomaticTaxRequestToJson(
-        CreateInvoiceAutomaticTaxRequest instance) =>
-    <String, dynamic>{
-      'enabled': instance.enabled,
-    };
 
 CreatePaymentIntentRequest _$CreatePaymentIntentRequestFromJson(
         Map<String, dynamic> json) =>
