@@ -69,8 +69,13 @@ class CreateInvoiceRequest {
   Map<String, dynamic> toJson() => _$CreateInvoiceRequestToJson(this);
 }
 
+/// https://docs.stripe.com/api/invoices/create#create_invoice-automatic_tax
 @JsonSerializable()
 class CreateInvoiceAutomaticTaxRequest {
+  /// Whether Stripe automatically computes tax on this invoice. Note that
+  /// incompatible invoice items (invoice items with manually specified tax
+  /// rates, negative amounts, or tax_behavior=unspecified) cannot be added to
+  /// automatic tax invoices.
   final bool enabled;
 
   CreateInvoiceAutomaticTaxRequest({
