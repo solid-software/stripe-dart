@@ -3,7 +3,7 @@ import 'package:stripe/src/resources/_resource.dart';
 import '../../stripe.dart';
 
 class InvoiceItemResource extends Resource<InvoiceItem> {
-  static const _resourceName = 'invoice_items';
+  static const _resourceName = 'invoiceitems';
 
   InvoiceItemResource(Client client) : super(client);
 
