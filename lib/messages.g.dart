@@ -483,6 +483,9 @@ Customer _$CustomerFromJson(Map<String, dynamic> json) => Customer(
           ? null
           : InvoiceSettings.fromJson(
               json['invoice_settings'] as Map<String, dynamic>),
+      address: json['address'] == null
+          ? null
+          : Address.fromJson(json['address'] as Map<String, dynamic>),
       description: json['description'] as String?,
       email: json['email'] as String?,
       metadata: json['metadata'] as Map<String, dynamic>?,
@@ -502,6 +505,7 @@ Map<String, dynamic> _$CustomerToJson(Customer instance) {
     }
   }
 
+  writeNotNull('address', instance.address?.toJson());
   writeNotNull('invoice_settings', instance.invoiceSettings?.toJson());
   writeNotNull('description', instance.description);
   writeNotNull('email', instance.email);

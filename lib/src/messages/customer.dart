@@ -10,6 +10,9 @@ class Customer extends Message {
   /// Unique identifier for the object.
   final String id;
 
+  /// The customer’s address.
+  final Address? address;
+
   /// The customer’s default invoice settings.
   final InvoiceSettings? invoiceSettings;
 
@@ -39,6 +42,7 @@ class Customer extends Message {
     required this.object,
     required this.id,
     required this.invoiceSettings,
+    this.address,
     this.description,
     this.email,
     this.metadata,
