@@ -1870,6 +1870,9 @@ Map<String, dynamic> _$SubscriptionDataToJson(SubscriptionData instance) {
 CreateCustomerRequest _$CreateCustomerRequestFromJson(
         Map<String, dynamic> json) =>
     CreateCustomerRequest(
+      address: json['address'] == null
+          ? null
+          : Address.fromJson(json['address'] as Map<String, dynamic>),
       description: json['description'] as String?,
       email: json['email'] as String?,
       metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
@@ -1890,6 +1893,7 @@ Map<String, dynamic> _$CreateCustomerRequestToJson(
     }
   }
 
+  writeNotNull('address', instance.address?.toJson());
   writeNotNull('description', instance.description);
   writeNotNull('email', instance.email);
   writeNotNull('metadata', instance.metadata);
@@ -3046,6 +3050,9 @@ UpdateCustomerRequest _$UpdateCustomerRequestFromJson(
         Map<String, dynamic> json) =>
     UpdateCustomerRequest(
       id: json['id'] as String,
+      address: json['address'] == null
+          ? null
+          : Address.fromJson(json['address'] as Map<String, dynamic>),
       description: json['description'] as String?,
       email: json['email'] as String?,
       metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
@@ -3054,6 +3061,10 @@ UpdateCustomerRequest _$UpdateCustomerRequestFromJson(
       name: json['name'] as String?,
       paymentMethod: json['payment_method'] as String?,
       phoneNumber: json['phone_number'] as String?,
+      invoiceSettings: json['invoice_settings'] == null
+          ? null
+          : InvoiceSettings.fromJson(
+              json['invoice_settings'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UpdateCustomerRequestToJson(
@@ -3066,12 +3077,14 @@ Map<String, dynamic> _$UpdateCustomerRequestToJson(
     }
   }
 
+  writeNotNull('address', instance.address?.toJson());
   writeNotNull('description', instance.description);
   writeNotNull('email', instance.email);
   writeNotNull('metadata', instance.metadata);
   writeNotNull('name', instance.name);
   writeNotNull('payment_method', instance.paymentMethod);
   writeNotNull('phone_number', instance.phoneNumber);
+  writeNotNull('invoice_settings', instance.invoiceSettings?.toJson());
   val['id'] = instance.id;
   return val;
 }
