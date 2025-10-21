@@ -9,19 +9,23 @@ class UpdateCustomerRequest extends _CustomerRequest {
 
   UpdateCustomerRequest({
     required this.id,
+    Address? address,
     String? description,
     String? email,
     Map<String, String>? metadata,
     String? name,
     String? paymentMethod,
     String? phoneNumber,
+    InvoiceSettings? invoiceSettings,
   }) : super(
+          address: address,
           description: description,
           email: email,
           metadata: metadata,
           name: name,
           paymentMethod: paymentMethod,
           phoneNumber: phoneNumber,
+          invoiceSettings: invoiceSettings,
         );
 
   factory UpdateCustomerRequest.fromJson(Map<String, dynamic> json) =>
