@@ -483,6 +483,7 @@ Customer _$CustomerFromJson(Map<String, dynamic> json) => Customer(
           ? null
           : InvoiceSettings.fromJson(
               json['invoice_settings'] as Map<String, dynamic>),
+      balance: (json['balance'] as num).toInt(),
       address: json['address'] == null
           ? null
           : Address.fromJson(json['address'] as Map<String, dynamic>),
@@ -512,6 +513,7 @@ Map<String, dynamic> _$CustomerToJson(Customer instance) {
   writeNotNull('metadata', instance.metadata);
   writeNotNull('name', instance.name);
   writeNotNull('default_source', instance.defaultSource);
+  val['balance'] = instance.balance;
   return val;
 }
 

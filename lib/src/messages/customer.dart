@@ -38,10 +38,19 @@ class Customer extends Message {
   @Deprecated('Use PaymentMethods API instead.')
   final String? defaultSource;
 
+  /// The current balance, if any, that’s stored on the customer in their
+  /// default currency. If negative, the customer has credit to apply to their
+  /// next invoice. If positive, the customer has an amount owed that’s added
+  /// to their next invoice. The balance only considers amounts that Stripe
+  /// hasn’t successfully applied to any invoice. It doesn’t reflect unpaid
+  /// invoices. This balance is only taken into account after invoices finalize.
+  final int balance;
+
   Customer({
     required this.object,
     required this.id,
     required this.invoiceSettings,
+    required this.balance,
     this.address,
     this.description,
     this.email,
