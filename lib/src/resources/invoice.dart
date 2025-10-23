@@ -78,6 +78,45 @@ class InvoiceResource extends Resource<Invoice> {
     return InvoiceExpanded.fromJson(response, expand);
   }
 
+  /// You can list all invoices, or list the invoices for a specific customer.
+  /// The invoices are returned sorted by creation date, with the most recently
+  /// created invoices appearing first.
+  Future<DataList<Invoice>> list([
+    ListInvoicesRequest? request,
+  ]) async {
+    final map = await get(
+      _resourceName,
+      queryParameters: request?.toJson(),
+    );
+
+    return DataList<Invoice>.fromJson(
+      map,
+      (value) => Invoice.fromJson(value as Map<String, dynamic>),
+    );
+  }
+
+  /// You can list all invoices, or list the invoices for a specific customer.
+  /// The invoices are returned sorted by creation date, with the most recently
+  /// created invoices appearing first.
+  Future<DataList<InvoiceExpanded>> listExpanded({
+    required Set<InvoiceExpandableField> expand,
+    ListInvoicesRequest? request,
+  }) async {
+    final map = await get(
+      _resourceName,
+      queryParameters: {
+        ...?request?.toJson(),
+        'expand': _expandableFields(expand).map((e) => 'data.$e').toList(),
+      },
+    );
+
+    return DataList<InvoiceExpanded>.fromJson(
+      map,
+      (value) =>
+          InvoiceExpanded.fromJson(value as Map<String, dynamic>, expand),
+    );
+  }
+
   Future<Invoice> voidInvoice(String invoiceId) async {
     final response = await post('$_resourceName/$invoiceId/void');
 

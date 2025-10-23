@@ -3,6 +3,7 @@ export 'enums/expandable_fields/invoice_expandable_field.dart';
 export 'enums/expandable_fields/subscription_expandable_field.dart';
 export 'enums/invoice_billing_reason.dart';
 export 'enums/invoice_collection_method.dart';
+export 'enums/invoice_status.dart';
 export 'enums/pause_collection_behavior.dart';
 export 'enums/payment_behavior.dart';
 export 'enums/proration_behavior.dart';

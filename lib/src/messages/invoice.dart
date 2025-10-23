@@ -73,7 +73,7 @@ class Invoice extends Message {
 
   /// The status of the invoice, one of draft, open, paid, uncollectible, or
   /// void.
-  final String? status;
+  final InvoiceStatus? status;
 
   /// The subscription that this invoice was prepared for, if any.
   final String? subscription;

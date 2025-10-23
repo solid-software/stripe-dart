@@ -989,7 +989,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) => Invoice(
       description: json['description'] as String?,
       endingBalance: (json['ending_balance'] as num?)?.toInt(),
       hostedInvoiceUrl: json['hosted_invoice_url'] as String?,
-      status: json['status'] as String?,
+      status: $enumDecodeNullable(_$InvoiceStatusEnumMap, json['status']),
       subscription: json['subscription'] as String?,
       subtotalExcludingTax: (json['subtotal_excluding_tax'] as num?)?.toInt(),
       totalExcludingTax: (json['total_excluding_tax'] as num?)?.toInt(),
@@ -1028,7 +1028,7 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
   writeNotNull('description', instance.description);
   writeNotNull('ending_balance', instance.endingBalance);
   writeNotNull('hosted_invoice_url', instance.hostedInvoiceUrl);
-  writeNotNull('status', instance.status);
+  writeNotNull('status', _$InvoiceStatusEnumMap[instance.status]);
   writeNotNull('subscription', instance.subscription);
   val['subtotal'] = instance.subtotal;
   writeNotNull('subtotal_excluding_tax', instance.subtotalExcludingTax);
@@ -1052,6 +1052,14 @@ const _$InvoiceBillingReasonEnumMap = {
   InvoiceBillingReason.subscriptionThreshold: 'subscription_threshold',
   InvoiceBillingReason.subscriptionUpdate: 'subscription_update',
   InvoiceBillingReason.upcoming: 'upcoming',
+};
+
+const _$InvoiceStatusEnumMap = {
+  InvoiceStatus.draft: 'draft',
+  InvoiceStatus.open: 'open',
+  InvoiceStatus.paid: 'paid',
+  InvoiceStatus.uncollectible: 'uncollectible',
+  InvoiceStatus.voidStatus: 'void',
 };
 
 TotalDiscountAmount _$TotalDiscountAmountFromJson(Map<String, dynamic> json) =>
@@ -2852,6 +2860,42 @@ Map<String, dynamic> _$ListCustomerBalanceTransactionsRequestToJson(
     }
   }
 
+  writeNotNull('ending_before', instance.endingBefore);
+  writeNotNull('limit', instance.limit);
+  writeNotNull('starting_after', instance.startingAfter);
+  return val;
+}
+
+ListInvoicesRequest _$ListInvoicesRequestFromJson(Map<String, dynamic> json) =>
+    ListInvoicesRequest(
+      customer: json['customer'] as String?,
+      status: $enumDecodeNullable(_$InvoiceStatusEnumMap, json['status']),
+      subscription: json['subscription'] as String?,
+      collectionMethod: $enumDecodeNullable(
+          _$InvoiceCollectionMethodEnumMap, json['collection_method']),
+      created: json['created'] == null
+          ? null
+          : CreatedRequest.fromJson(json['created'] as Map<String, dynamic>),
+      endingBefore: json['ending_before'] as String?,
+      limit: (json['limit'] as num?)?.toInt(),
+      startingAfter: json['starting_after'] as String?,
+    );
+
+Map<String, dynamic> _$ListInvoicesRequestToJson(ListInvoicesRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('customer', instance.customer);
+  writeNotNull('status', _$InvoiceStatusEnumMap[instance.status]);
+  writeNotNull('subscription', instance.subscription);
+  writeNotNull('collection_method',
+      _$InvoiceCollectionMethodEnumMap[instance.collectionMethod]);
+  writeNotNull('created', instance.created?.toJson());
   writeNotNull('ending_before', instance.endingBefore);
   writeNotNull('limit', instance.limit);
   writeNotNull('starting_after', instance.startingAfter);

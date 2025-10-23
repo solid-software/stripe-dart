@@ -48,6 +48,7 @@ part 'src/messages/requests/created.dart';
 part 'src/messages/requests/list_checkout_sessions.dart';
 part 'src/messages/requests/list_coupons.dart';
 part 'src/messages/requests/list_customer_balance_transactions_request.dart';
+part 'src/messages/requests/list_invoices.dart';
 part 'src/messages/requests/list_prices.dart';
 part 'src/messages/requests/list_products.dart';
 part 'src/messages/requests/list_promotion_codes.dart';
