@@ -64,7 +64,7 @@ class CustomerBalanceTransactionResource
   /// Returns a list of transactions that updated the customer’s balances.
   Future<DataList<CustomerBalanceTransaction>> list(
     String customerId, [
-    ListCouponsRequest? request,
+    ListCustomerBalanceTransactionsRequest? request,
   ]) async {
     final map = await get(
       _buildPath(customerId),
