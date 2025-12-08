@@ -2845,6 +2845,10 @@ ListCustomerBalanceTransactionsRequest
     _$ListCustomerBalanceTransactionsRequestFromJson(
             Map<String, dynamic> json) =>
         ListCustomerBalanceTransactionsRequest(
+          created: json['created'] == null
+              ? null
+              : CreatedRequest.fromJson(
+                  json['created'] as Map<String, dynamic>),
           endingBefore: json['ending_before'] as String?,
           limit: (json['limit'] as num?)?.toInt(),
           startingAfter: json['starting_after'] as String?,
@@ -2860,6 +2864,7 @@ Map<String, dynamic> _$ListCustomerBalanceTransactionsRequestToJson(
     }
   }
 
+  writeNotNull('created', instance.created?.toJson());
   writeNotNull('ending_before', instance.endingBefore);
   writeNotNull('limit', instance.limit);
   writeNotNull('starting_after', instance.startingAfter);
