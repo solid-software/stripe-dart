@@ -46,6 +46,10 @@ class Customer extends Message {
   /// invoices. This balance is only taken into account after invoices finalize.
   final int balance;
 
+  /// Mailing and shipping address for the customer. Appears on invoices
+  /// emailed to this customer.
+  final Shipping? shipping;
+
   Customer({
     required this.object,
     required this.id,
@@ -57,6 +61,7 @@ class Customer extends Message {
     this.metadata,
     this.name,
     this.defaultSource,
+    this.shipping,
   });
 
   factory Customer.fromJson(Map<String, dynamic> json) =>
@@ -82,4 +87,30 @@ class InvoiceSettings {
       _$InvoiceSettingsFromJson(json);
 
   Map<String, dynamic> toJson() => _$InvoiceSettingsToJson(this);
+}
+
+/// Mailing and shipping address for the customer. Appears on invoices emailed
+/// to this customer.
+/// https://docs.stripe.com/api/customers/object#customer_object-shipping
+@JsonSerializable()
+class Shipping {
+  /// Customer shipping address.
+  final Address address;
+
+  /// Customer name.
+  final String name;
+
+  /// Customer phone (including extension).
+  final String? phone;
+
+  const Shipping({
+    required this.address,
+    required this.name,
+    this.phone,
+  });
+
+  factory Shipping.fromJson(Map<String, dynamic> json) =>
+      _$ShippingFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ShippingToJson(this);
 }

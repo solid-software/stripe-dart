@@ -492,6 +492,9 @@ Customer _$CustomerFromJson(Map<String, dynamic> json) => Customer(
       metadata: json['metadata'] as Map<String, dynamic>?,
       name: json['name'] as String?,
       defaultSource: json['default_source'] as String?,
+      shipping: json['shipping'] == null
+          ? null
+          : Shipping.fromJson(json['shipping'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CustomerToJson(Customer instance) {
@@ -514,6 +517,7 @@ Map<String, dynamic> _$CustomerToJson(Customer instance) {
   writeNotNull('name', instance.name);
   writeNotNull('default_source', instance.defaultSource);
   val['balance'] = instance.balance;
+  writeNotNull('shipping', instance.shipping?.toJson());
   return val;
 }
 
@@ -536,6 +540,28 @@ Map<String, dynamic> _$InvoiceSettingsToJson(InvoiceSettings instance) {
   }
 
   writeNotNull('default_payment_method', instance.defaultPaymentMethod);
+  return val;
+}
+
+Shipping _$ShippingFromJson(Map<String, dynamic> json) => Shipping(
+      address: Address.fromJson(json['address'] as Map<String, dynamic>),
+      name: json['name'] as String,
+      phone: json['phone'] as String?,
+    );
+
+Map<String, dynamic> _$ShippingToJson(Shipping instance) {
+  final val = <String, dynamic>{
+    'address': instance.address.toJson(),
+    'name': instance.name,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('phone', instance.phone);
   return val;
 }
 
@@ -1895,6 +1921,9 @@ CreateCustomerRequest _$CreateCustomerRequestFromJson(
       name: json['name'] as String?,
       paymentMethod: json['payment_method'] as String?,
       phoneNumber: json['phone_number'] as String?,
+      shipping: json['shipping'] == null
+          ? null
+          : ShippingRequest.fromJson(json['shipping'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CreateCustomerRequestToJson(
@@ -1914,6 +1943,30 @@ Map<String, dynamic> _$CreateCustomerRequestToJson(
   writeNotNull('name', instance.name);
   writeNotNull('payment_method', instance.paymentMethod);
   writeNotNull('phone_number', instance.phoneNumber);
+  writeNotNull('shipping', instance.shipping?.toJson());
+  return val;
+}
+
+ShippingRequest _$ShippingRequestFromJson(Map<String, dynamic> json) =>
+    ShippingRequest(
+      address: Address.fromJson(json['address'] as Map<String, dynamic>),
+      name: json['name'] as String,
+      phone: json['phone'] as String?,
+    );
+
+Map<String, dynamic> _$ShippingRequestToJson(ShippingRequest instance) {
+  final val = <String, dynamic>{
+    'address': instance.address.toJson(),
+    'name': instance.name,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('phone', instance.phone);
   return val;
 }
 
@@ -3120,6 +3173,9 @@ UpdateCustomerRequest _$UpdateCustomerRequestFromJson(
           ? null
           : InvoiceSettings.fromJson(
               json['invoice_settings'] as Map<String, dynamic>),
+      shipping: json['shipping'] == null
+          ? null
+          : ShippingRequest.fromJson(json['shipping'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UpdateCustomerRequestToJson(
@@ -3140,6 +3196,7 @@ Map<String, dynamic> _$UpdateCustomerRequestToJson(
   writeNotNull('payment_method', instance.paymentMethod);
   writeNotNull('phone_number', instance.phoneNumber);
   writeNotNull('invoice_settings', instance.invoiceSettings?.toJson());
+  writeNotNull('shipping', instance.shipping?.toJson());
   val['id'] = instance.id;
   return val;
 }

@@ -17,6 +17,7 @@ class UpdateCustomerRequest extends _CustomerRequest {
     String? paymentMethod,
     String? phoneNumber,
     InvoiceSettings? invoiceSettings,
+    ShippingRequest? shipping,
   }) : super(
           address: address,
           description: description,
@@ -26,6 +27,7 @@ class UpdateCustomerRequest extends _CustomerRequest {
           paymentMethod: paymentMethod,
           phoneNumber: phoneNumber,
           invoiceSettings: invoiceSettings,
+          shipping: shipping,
         );
 
   factory UpdateCustomerRequest.fromJson(Map<String, dynamic> json) =>
