@@ -544,15 +544,16 @@ Map<String, dynamic> _$InvoiceSettingsToJson(InvoiceSettings instance) {
 }
 
 Shipping _$ShippingFromJson(Map<String, dynamic> json) => Shipping(
-      address: json['address'] == null
-          ? null
-          : Address.fromJson(json['address'] as Map<String, dynamic>),
-      name: json['name'] as String?,
+      address: Address.fromJson(json['address'] as Map<String, dynamic>),
+      name: json['name'] as String,
       phone: json['phone'] as String?,
     );
 
 Map<String, dynamic> _$ShippingToJson(Shipping instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'address': instance.address.toJson(),
+    'name': instance.name,
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -560,8 +561,6 @@ Map<String, dynamic> _$ShippingToJson(Shipping instance) {
     }
   }
 
-  writeNotNull('address', instance.address?.toJson());
-  writeNotNull('name', instance.name);
   writeNotNull('phone', instance.phone);
   return val;
 }

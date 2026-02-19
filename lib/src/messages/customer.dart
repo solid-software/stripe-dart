@@ -95,17 +95,17 @@ class InvoiceSettings {
 @JsonSerializable()
 class Shipping {
   /// Customer shipping address.
-  final Address? address;
+  final Address address;
 
   /// Customer name.
-  final String? name;
+  final String name;
 
   /// Customer phone (including extension).
   final String? phone;
 
   const Shipping({
-    this.address,
-    this.name,
+    required this.address,
+    required this.name,
     this.phone,
   });
 
