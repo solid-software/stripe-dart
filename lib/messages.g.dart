@@ -1922,6 +1922,9 @@ CreateCustomerRequest _$CreateCustomerRequestFromJson(
       name: json['name'] as String?,
       paymentMethod: json['payment_method'] as String?,
       phoneNumber: json['phone_number'] as String?,
+      shipping: json['shipping'] == null
+          ? null
+          : ShippingRequest.fromJson(json['shipping'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CreateCustomerRequestToJson(
@@ -1941,6 +1944,30 @@ Map<String, dynamic> _$CreateCustomerRequestToJson(
   writeNotNull('name', instance.name);
   writeNotNull('payment_method', instance.paymentMethod);
   writeNotNull('phone_number', instance.phoneNumber);
+  writeNotNull('shipping', instance.shipping?.toJson());
+  return val;
+}
+
+ShippingRequest _$ShippingRequestFromJson(Map<String, dynamic> json) =>
+    ShippingRequest(
+      address: Address.fromJson(json['address'] as Map<String, dynamic>),
+      name: json['name'] as String,
+      phone: json['phone'] as String?,
+    );
+
+Map<String, dynamic> _$ShippingRequestToJson(ShippingRequest instance) {
+  final val = <String, dynamic>{
+    'address': instance.address.toJson(),
+    'name': instance.name,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('phone', instance.phone);
   return val;
 }
 
@@ -3147,6 +3174,9 @@ UpdateCustomerRequest _$UpdateCustomerRequestFromJson(
           ? null
           : InvoiceSettings.fromJson(
               json['invoice_settings'] as Map<String, dynamic>),
+      shipping: json['shipping'] == null
+          ? null
+          : ShippingRequest.fromJson(json['shipping'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UpdateCustomerRequestToJson(
@@ -3167,6 +3197,7 @@ Map<String, dynamic> _$UpdateCustomerRequestToJson(
   writeNotNull('payment_method', instance.paymentMethod);
   writeNotNull('phone_number', instance.phoneNumber);
   writeNotNull('invoice_settings', instance.invoiceSettings?.toJson());
+  writeNotNull('shipping', instance.shipping?.toJson());
   val['id'] = instance.id;
   return val;
 }

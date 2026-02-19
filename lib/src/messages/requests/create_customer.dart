@@ -32,6 +32,10 @@ abstract class _CustomerRequest {
   /// Default invoice settings for this customer.
   final InvoiceSettings? invoiceSettings;
 
+  /// The customer’s shipping information. Appears on invoices emailed to this
+  /// customer.
+  final ShippingRequest? shipping;
+
   _CustomerRequest({
     this.address,
     this.description,
@@ -41,6 +45,7 @@ abstract class _CustomerRequest {
     this.paymentMethod,
     this.phoneNumber,
     this.invoiceSettings,
+    this.shipping,
   });
 }
 
@@ -54,6 +59,7 @@ class CreateCustomerRequest extends _CustomerRequest {
     String? name,
     String? paymentMethod,
     String? phoneNumber,
+    ShippingRequest? shipping,
   }) : super(
           address: address,
           description: description,
@@ -62,10 +68,37 @@ class CreateCustomerRequest extends _CustomerRequest {
           name: name,
           paymentMethod: paymentMethod,
           phoneNumber: phoneNumber,
+          shipping: shipping,
         );
 
   factory CreateCustomerRequest.fromJson(Map<String, dynamic> json) =>
       _$CreateCustomerRequestFromJson(json);
 
   Map<String, dynamic> toJson() => _$CreateCustomerRequestToJson(this);
+}
+
+/// Mailing and shipping address for the customer. Appears on invoices emailed
+/// to this customer.
+/// https://docs.stripe.com/api/customers/object#customer_object-shipping
+@JsonSerializable()
+class ShippingRequest {
+  /// Customer shipping address.
+  final Address address;
+
+  /// Customer name.
+  final String name;
+
+  /// Customer phone (including extension).
+  final String? phone;
+
+  const ShippingRequest({
+    required this.address,
+    required this.name,
+    this.phone,
+  });
+
+  factory ShippingRequest.fromJson(Map<String, dynamic> json) =>
+      _$ShippingRequestFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ShippingRequestToJson(this);
 }
