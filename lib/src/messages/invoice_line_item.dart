@@ -101,10 +101,10 @@ class InvoiceLineItemPeriod extends Message {
 /// https://docs.stripe.com/api/invoices/object#invoice_object-lines-data-parent
 @JsonSerializable()
 class InvoiceLineItemParent extends Message {
-  /// Details about the invoice item that generated this line item
+  /// Details about the invoice item that generated this line item.
   final InvoiceLineItemInvoiceItemDetails? invoiceItemDetails;
 
-  /// The type of parent that generated this line item
+  /// The type of parent that generated this line item.
   final InvoiceLineItemParentType type;
 
   const InvoiceLineItemParent({
@@ -122,7 +122,7 @@ class InvoiceLineItemParent extends Message {
 /// https://docs.stripe.com/api/invoices/object#invoice_object-lines-data-parent-invoice_item_details
 @JsonSerializable()
 class InvoiceLineItemInvoiceItemDetails extends Message {
-  /// The invoice item that generated this line item
+  /// The invoice item that generated this line item.
   final String? invoiceItem;
 
   const InvoiceLineItemInvoiceItemDetails({
