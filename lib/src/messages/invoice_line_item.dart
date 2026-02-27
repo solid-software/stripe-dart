@@ -34,6 +34,9 @@ class InvoiceLineItem extends Message {
   /// creation.
   final Map<String, dynamic>? metadata;
 
+  /// The parent that generated this line item.
+  final InvoiceLineItemParent? parent;
+
   /// The period this line_item covers. For subscription line items, this is the
   /// subscription period. For prorations, this starts when the proration was
   /// calculated, and ends at the period end of the subscription. For invoice
@@ -58,6 +61,7 @@ class InvoiceLineItem extends Message {
     this.description,
     this.invoice,
     this.metadata,
+    this.parent,
     this.period,
     this.price,
     this.quantity,
@@ -92,4 +96,53 @@ class InvoiceLineItemPeriod extends Message {
 
   @override
   Map<String, dynamic> toJson() => _$InvoiceLineItemPeriodToJson(this);
+}
+
+/// https://docs.stripe.com/api/invoices/object#invoice_object-lines-data-parent
+@JsonSerializable()
+class InvoiceLineItemParent extends Message {
+  /// Details about the invoice item that generated this line item.
+  final InvoiceLineItemInvoiceItemDetails? invoiceItemDetails;
+
+  /// The type of parent that generated this line item.
+  final InvoiceLineItemParentType type;
+
+  const InvoiceLineItemParent({
+    required this.type,
+    this.invoiceItemDetails,
+  });
+
+  factory InvoiceLineItemParent.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceLineItemParentFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$InvoiceLineItemParentToJson(this);
+}
+
+/// https://docs.stripe.com/api/invoices/object#invoice_object-lines-data-parent-invoice_item_details
+@JsonSerializable()
+class InvoiceLineItemInvoiceItemDetails extends Message {
+  /// The invoice item that generated this line item.
+  final String? invoiceItem;
+
+  const InvoiceLineItemInvoiceItemDetails({
+    this.invoiceItem,
+  });
+
+  factory InvoiceLineItemInvoiceItemDetails.fromJson(
+          Map<String, dynamic> json) =>
+      _$InvoiceLineItemInvoiceItemDetailsFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() =>
+      _$InvoiceLineItemInvoiceItemDetailsToJson(this);
+}
+
+/// https://docs.stripe.com/api/invoices/object#invoice_object-lines-data-parent-type
+enum InvoiceLineItemParentType {
+  @JsonValue('invoice_item_details')
+  invoiceItemDetails,
+
+  @JsonValue('subscription_item_details')
+  subscriptionItemDetails,
 }

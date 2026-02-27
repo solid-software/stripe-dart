@@ -1145,6 +1145,10 @@ InvoiceLineItem _$InvoiceLineItemFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       invoice: json['invoice'] as String?,
       metadata: json['metadata'] as Map<String, dynamic>?,
+      parent: json['parent'] == null
+          ? null
+          : InvoiceLineItemParent.fromJson(
+              json['parent'] as Map<String, dynamic>),
       period: json['period'] == null
           ? null
           : InvoiceLineItemPeriod.fromJson(
@@ -1172,6 +1176,7 @@ Map<String, dynamic> _$InvoiceLineItemToJson(InvoiceLineItem instance) {
   writeNotNull('description', instance.description);
   writeNotNull('invoice', instance.invoice);
   writeNotNull('metadata', instance.metadata);
+  writeNotNull('parent', instance.parent?.toJson());
   writeNotNull('period', instance.period?.toJson());
   writeNotNull('price', instance.price?.toJson());
   writeNotNull('quantity', instance.quantity);
@@ -1196,6 +1201,57 @@ Map<String, dynamic> _$InvoiceLineItemPeriodToJson(
       'start': const TimestampConverter().toJson(instance.start),
       'end': const TimestampConverter().toJson(instance.end),
     };
+
+InvoiceLineItemParent _$InvoiceLineItemParentFromJson(
+        Map<String, dynamic> json) =>
+    InvoiceLineItemParent(
+      type: $enumDecode(_$InvoiceLineItemParentTypeEnumMap, json['type']),
+      invoiceItemDetails: json['invoice_item_details'] == null
+          ? null
+          : InvoiceLineItemInvoiceItemDetails.fromJson(
+              json['invoice_item_details'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$InvoiceLineItemParentToJson(
+    InvoiceLineItemParent instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('invoice_item_details', instance.invoiceItemDetails?.toJson());
+  val['type'] = _$InvoiceLineItemParentTypeEnumMap[instance.type]!;
+  return val;
+}
+
+const _$InvoiceLineItemParentTypeEnumMap = {
+  InvoiceLineItemParentType.invoiceItemDetails: 'invoice_item_details',
+  InvoiceLineItemParentType.subscriptionItemDetails:
+      'subscription_item_details',
+};
+
+InvoiceLineItemInvoiceItemDetails _$InvoiceLineItemInvoiceItemDetailsFromJson(
+        Map<String, dynamic> json) =>
+    InvoiceLineItemInvoiceItemDetails(
+      invoiceItem: json['invoice_item'] as String?,
+    );
+
+Map<String, dynamic> _$InvoiceLineItemInvoiceItemDetailsToJson(
+    InvoiceLineItemInvoiceItemDetails instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('invoice_item', instance.invoiceItem);
+  return val;
+}
 
 PauseCollection _$PauseCollectionFromJson(Map<String, dynamic> json) =>
     PauseCollection(
