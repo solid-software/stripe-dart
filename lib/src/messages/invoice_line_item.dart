@@ -140,6 +140,9 @@ class InvoiceLineItemInvoiceItemDetails extends Message {
 
 /// https://docs.stripe.com/api/invoices/object#invoice_object-lines-data-parent-type
 enum InvoiceLineItemParentType {
+  @JsonValue('invoice_item_details')
   invoiceItemDetails,
+
+  @JsonValue('subscription_item_details')
   subscriptionItemDetails,
 }

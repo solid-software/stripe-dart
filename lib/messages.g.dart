@@ -1228,8 +1228,9 @@ Map<String, dynamic> _$InvoiceLineItemParentToJson(
 }
 
 const _$InvoiceLineItemParentTypeEnumMap = {
-  InvoiceLineItemParentType.invoiceItemDetails: 'invoiceItemDetails',
-  InvoiceLineItemParentType.subscriptionItemDetails: 'subscriptionItemDetails',
+  InvoiceLineItemParentType.invoiceItemDetails: 'invoice_item_details',
+  InvoiceLineItemParentType.subscriptionItemDetails:
+      'subscription_item_details',
 };
 
 InvoiceLineItemInvoiceItemDetails _$InvoiceLineItemInvoiceItemDetailsFromJson(
