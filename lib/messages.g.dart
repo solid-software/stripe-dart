@@ -1286,7 +1286,10 @@ Price _$PriceFromJson(Map<String, dynamic> json) => Price(
       : Recurring.fromJson(json['recurring'] as Map<String, dynamic>),
   unitAmount: (json['unit_amount'] as num).toInt(),
   lookupKey: json['lookup_key'] as String?,
-  taxBehavior: json['tax_behavior'] as String?,
+  taxBehavior: $enumDecodeNullable(
+    _$PriceTaxBehaviorEnumMap,
+    json['tax_behavior'],
+  ),
 );
 
 Map<String, dynamic> _$PriceToJson(Price instance) => <String, dynamic>{
@@ -1299,7 +1302,7 @@ Map<String, dynamic> _$PriceToJson(Price instance) => <String, dynamic>{
   'recurring': ?instance.recurring?.toJson(),
   'unit_amount': instance.unitAmount,
   'lookup_key': ?instance.lookupKey,
-  'tax_behavior': ?instance.taxBehavior,
+  'tax_behavior': ?_$PriceTaxBehaviorEnumMap[instance.taxBehavior],
 };
 
 const _$_PriceObjectEnumMap = {_PriceObject.price: 'price'};
@@ -1307,6 +1310,12 @@ const _$_PriceObjectEnumMap = {_PriceObject.price: 'price'};
 const _$PriceTypeEnumMap = {
   PriceType.one_time: 'one_time',
   PriceType.recurring: 'recurring',
+};
+
+const _$PriceTaxBehaviorEnumMap = {
+  PriceTaxBehavior.inclusive: 'inclusive',
+  PriceTaxBehavior.exclusive: 'exclusive',
+  PriceTaxBehavior.unspecified: 'unspecified',
 };
 
 Product _$ProductFromJson(Map<String, dynamic> json) => Product(
