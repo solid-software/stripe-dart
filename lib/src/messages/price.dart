@@ -38,6 +38,10 @@ class Price extends Message {
   /// This may be up to 200 characters.
   final String? lookupKey;
 
+  /// One of inclusive, exclusive or unspecified. Once specified as either
+  /// inclusive or exclusive, it cannot be changed.
+  final String? taxBehavior;
+
   Price({
     required this.object,
     required this.id,
@@ -48,6 +52,7 @@ class Price extends Message {
     required this.recurring,
     required this.unitAmount,
     this.lookupKey,
+    this.taxBehavior,
   });
 
   factory Price.fromJson(Map<String, dynamic> json) => _$PriceFromJson(json);
