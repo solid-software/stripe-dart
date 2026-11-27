@@ -5,6 +5,11 @@ enum _PriceObject { price }
 // ignore: constant_identifier_names
 enum PriceType { one_time, recurring }
 
+/// Specifies whether the price is considered inclusive of taxes or exclusive of taxes.
+///
+/// https://docs.stripe.com/api/prices/object#price_object-tax_behavior
+enum PriceTaxBehavior { inclusive, exclusive, unspecified }
+
 /// https://stripe.com/docs/api/charges/object
 @JsonSerializable()
 class Price extends Message {
@@ -38,6 +43,14 @@ class Price extends Message {
   /// This may be up to 200 characters.
   final String? lookupKey;
 
+  /// Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-codes-tax-behavior#setting-a-default-tax-behavior-(recommended))
+  /// was not provided in the Stripe Tax settings.
+  ///
+  /// Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+  ///
+  /// https://docs.stripe.com/api/prices/object#price_object-tax_behavior
+  final PriceTaxBehavior? taxBehavior;
+
   Price({
     required this.object,
     required this.id,
@@ -48,6 +61,7 @@ class Price extends Message {
     required this.recurring,
     required this.unitAmount,
     this.lookupKey,
+    this.taxBehavior,
   });
 
   factory Price.fromJson(Map<String, dynamic> json) => _$PriceFromJson(json);
